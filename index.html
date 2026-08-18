@@ -40,7 +40,7 @@
     header {
       background-color: #161616;
       display: grid;
-      grid-template-columns: 1fr auto 1fr; /* 3 equal columns */
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
       padding: 1rem 2rem;
       border-bottom: 1px solid #222222;
@@ -113,7 +113,7 @@
       min-height: calc(100vh - 80px);
     }
 
-    /* Left Column: Typography matching source image */
+    /* Left Column: Typography */
     .hero-content {
       flex: 1;
       display: flex;
@@ -159,7 +159,61 @@
       display: block;
     }
 
-    /* Responsive adjustments */
+    /* Full-Width Footer Section */
+    footer {
+      width: 100%;
+      background-color: #0a0a0a;
+      border-top: 1px solid #1f1f1f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-banner-container {
+      width: 100%;
+      background-color: #050505;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 1.5rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .footer-banner-img {
+      width: 100%;
+      max-width: 1200px; /* Constrains image on ultra-wide screens while staying full-width responsive */
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .footer-bottom {
+      width: 100%;
+      max-width: 1200px;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #52525b;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-bottom-links a {
+      color: #52525b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-bottom-links a:hover {
+      color: #a1a1aa;
+    }
+
+    /* Responsive Adjustments */
     @media (max-width: 900px) {
       header {
         display: flex;
@@ -184,6 +238,16 @@
 
       .hero-image-container {
         min-height: 350px;
+      }
+
+      .footer-banner-container {
+        padding: 2rem 1rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
       }
     }
   </style>
@@ -234,7 +298,21 @@
     </section>
   </main>
 
-</body>
-</html>
+  <!-- Full-Width Footer Section -->
+  <footer>
+    <div class="footer-banner-container">
+      <img src="footer-photo.jpg" alt="Purpose-Built For The Frontline" class="footer-banner-img" />
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2026 PAiGE Link Inc. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#contact">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
