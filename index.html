@@ -39,16 +39,12 @@
       padding-left: 3rem; 
     }
 
-    /* Custom digital/tech style text for logo */
-    .logo {
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 2.2rem;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      color: #82E600;
-      text-decoration: none;
-      text-transform: uppercase;
-      position: relative;
+    /* Logo Image Styling */
+    .logo-img {
+      height: 40px; /* Adjust height to match your desired sizing */
+      width: auto;
+      display: block;
+      object-fit: contain;
     }
 
     .nav-link {
@@ -145,7 +141,10 @@
   <!-- Header Navigation -->
   <header>
     <div class="logo-container">
-      <a href="#" class="logo">PAiGE</a>
+      <a href="#">
+        <!-- Replace 'logo.png' with your uploaded logo file name/path -->
+        <img src="logo.png" alt="PAIGE Logo" class="logo-img" />
+      </a>
     </div>
     <a href="#login" class="nav-link">Login</a>
   </header>
@@ -160,7 +159,7 @@
 
     <!-- Right Column -->
     <section class="hero-image-container">
-      <!-- Replace 'hero-photo.jpg' with the actual path or URL of your image -->
+      <!-- Replace 'hero-photo.jpg' with your hero image file name/path -->
       <img src="hero-photo.jpg" alt="Industrial floor communication" class="hero-image" />
     </section>
   </main>
