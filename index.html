@@ -1,1 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAIGE - Coming Soon</title>
+  <style>
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
+    body {
+      background-color: #0b0b0b;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navigation Bar */
+    header {
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid #282828;
+    }
+
+    .logo-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      /* Offset slightly to account for the login link on the right */
+      padding-left: 3rem; 
+    }
+
+    /* Custom digital/tech style text for logo */
+    .logo {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: #82E600;
+      text-decoration: none;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .nav-link {
+      color: #8e8e8e;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+    }
+
+    /* Main Content Layout */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* Left Column: Text Content */
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 4rem 5%;
+      z-index: 2;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-content h2 {
+      color: #82E600;
+      font-size: clamp(1.25rem, 2.5vw, 2.25rem);
+      font-weight: 600;
+      line-height: 1.25;
+      max-width: 600px;
+    }
+
+    /* Right Column: Hero Image */
+    .hero-image-container {
+      flex: 1;
+      position: relative;
+      background-color: #121212;
+      overflow: hidden;
+      min-height: 400px;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* Mobile Responsive Breakpoint */
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem;
+      }
+      
+      .logo-container {
+        padding-left: 0;
+      }
+
+      main {
+        flex-direction: column;
+      }
+
+      .hero-content {
+        padding: 3rem 1.5rem;
+        align-items: center;
+        text-align: center;
+      }
+
+      .hero-image-container {
+        min-height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="logo-container">
+      <a href="#" class="logo">PAiGE</a>
+    </div>
+    <a href="#login" class="nav-link">Login</a>
+  </header>
+
+  <!-- Split Hero Section -->
+  <main>
+    <!-- Left Column -->
+    <section class="hero-content">
+      <h1>Coming Soon</h1>
+      <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
+    </section>
+
+    <!-- Right Column -->
+    <section class="hero-image-container">
+      <!-- Replace 'hero-photo.jpg' with the actual path or URL of your image -->
+      <img src="hero-photo.jpg" alt="Industrial floor communication" class="hero-image" />
+    </section>
+  </main>
+
+</body>
+</html>
