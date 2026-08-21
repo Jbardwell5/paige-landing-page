@@ -59,7 +59,7 @@
       object-fit: contain;
     }
 
-    /* Main Content Layout - Equal Symmetrical Split */
+    /* Main Content Layout */
     main {
       flex: 1;
       display: flex;
@@ -74,7 +74,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      padding: 4rem 4% 4rem 6%;
+      padding: 4rem 3% 4rem 6%;
       z-index: 2;
     }
 
@@ -153,7 +153,7 @@
       transform: scale(0.98);
     }
 
-    /* Right Column: Hero Image (Perfectly Centered on Right Half) */
+    /* Right Column: Hero Image (Spaced Off Left Boundary Line) */
     .hero-image-container {
       flex: 1;
       position: relative;
@@ -163,11 +163,12 @@
       align-items: center;
       justify-content: center;
       min-height: 500px;
-      padding: 2rem;
+      padding: 2rem 3rem 2rem 4rem; /* Extra left padding to create clear separation */
     }
 
     .hero-image {
       width: 100%;
+      max-width: 92%; /* Gives margin off the dividing space */
       height: 100%;
       max-height: 80vh;
       object-fit: contain;
@@ -284,6 +285,10 @@
       .hero-image-container {
         min-height: 380px;
         padding: 1rem;
+      }
+
+      .hero-image {
+        max-width: 100%;
       }
 
       .footer-bottom {
