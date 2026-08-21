@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAIGE - Coming Soon</title>
+  <title>PAiGE - Frontline & Industrial Communications</title>
   
   <!-- Apple Touch Icon & Favicon -->
   <link rel="apple-touch-icon" href="apple-touch-logo.png">
@@ -12,7 +12,7 @@
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Font Awesome CDN for Social Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -36,18 +36,14 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Navigation Bar (Grid layout for perfect centering) */
+    /* Header Navigation (Minimal & Dark) */
     header {
-      background-color: #161616;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      background-color: #000000;
+      display: flex;
+      justify-content: center;
       align-items: center;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #222222;
-    }
-
-    .header-left {
-      /* Empty placeholder to balance the grid */
+      padding: 0.75rem 2rem;
+      border-bottom: 1px solid #1a1a1a;
     }
 
     .logo-container {
@@ -57,52 +53,10 @@
     }
 
     .logo-img {
-      height: 125px;
+      height: 50px;
       width: auto;
       display: block;
       object-fit: contain;
-    }
-
-    /* Header Navigation Right Group */
-    .header-right {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 1.5rem;
-    }
-
-    .social-links {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .social-icon {
-      color: #71717a;
-      font-size: 1.2rem;
-      text-decoration: none;
-      transition: color 0.2s ease, transform 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .social-icon:hover {
-      color: #ffffff;
-      transform: translateY(-1px);
-    }
-
-    .nav-link {
-      color: #71717a;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-      margin-left: 0.25rem;
-    }
-
-    .nav-link:hover {
-      color: #ffffff;
     }
 
     /* Main Content Layout */
@@ -110,10 +64,10 @@
       flex: 1;
       display: flex;
       flex-direction: row;
-      min-height: calc(100vh - 80px);
+      min-height: calc(100vh - 70px);
     }
 
-    /* Left Column: Typography */
+    /* Left Column: Hero Content */
     .hero-content {
       flex: 1;
       display: flex;
@@ -141,88 +95,97 @@
       letter-spacing: -0.03em;
       max-width: 620px;
     }
-/* Update your form CSS */
-.email-signup-form {
-  margin-top: 2.5rem; /* Pushes the pill down for better breathing room */
-  display: flex;
-  align-items: center;
-  background-color: #161616;
-  border: 1px solid #333333;
-  border-radius: 50px;
-  padding: 0.35rem 0.35rem 0.35rem 1.25rem;
-  width: 100%;
-  max-width: 480px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.email-signup-form:focus-within {
-  border-color: #80E600;
-  box-shadow: 0 0 12px rgba(128, 230, 0, 0.2);
-}
 
-.email-input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 500;
-  width: 100%;
-}
+    /* Form Bubble */
+    .email-signup-form {
+      margin-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      background-color: #161616;
+      border: 1px solid #333333;
+      border-radius: 50px;
+      padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+      width: 100%;
+      max-width: 480px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.email-input::placeholder {
-  color: #666666;
-}
+    .email-signup-form:focus-within {
+      border-color: #80E600;
+      box-shadow: 0 0 12px rgba(128, 230, 0, 0.2);
+    }
 
-.submit-btn {
-  background-color: #80E600;
-  color: #050505;
-  border: none;
-  border-radius: 40px;
-  padding: 0.75rem 1.75rem;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  white-space: nowrap;
-}
+    .email-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      width: 100%;
+    }
 
-.submit-btn:hover {
-  background-color: #92fc00;
-  transform: scale(1.02);
-}
+    .email-input::placeholder {
+      color: #666666;
+    }
 
-.submit-btn:active {
-  transform: scale(0.98);
-}
-    /* Right Column: Hero Image */
+    .submit-btn {
+      background-color: #80E600;
+      color: #050505;
+      border: none;
+      border-radius: 40px;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      white-space: nowrap;
+    }
+
+    .submit-btn:hover {
+      background-color: #92fc00;
+      transform: scale(1.02);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Right Column: Hero Image (Framed to show entire diagram) */
     .hero-image-container {
-      flex: 1;
+      flex: 1.2;
       position: relative;
-      background-color: #0d0d0d;
+      background-color: #050505;
       overflow: hidden;
-      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+      padding: 2rem;
     }
 
     .hero-image {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center;
+      max-height: 85vh;
+      object-fit: contain;
+      object-position: center left;
       display: block;
     }
 
-    /* Full-Width Footer Section */
+    /* Footer Section */
     footer {
       width: 100%;
-      background-color: #0a0a0a;
+      background-color: #0d0d0d;
       border-top: 1px solid #1f1f1f;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
+    /* Banner Image */
     .footer-banner-container {
       width: 100%;
       background-color: #050505;
@@ -235,21 +198,60 @@
 
     .footer-banner-img {
       width: 100%;
-      max-width: 1200px; /* Constrains image on ultra-wide screens while staying full-width responsive */
+      max-width: 1200px;
       height: auto;
       display: block;
       object-fit: contain;
     }
 
+    /* Grey Brand Block with Socials */
+    .footer-brand-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem 1.5rem 1.5rem;
+      background-color: #0d0d0d;
+      gap: 1.25rem;
+    }
+
+    .footer-grey-logo {
+      height: 65px;
+      width: auto;
+      opacity: 0.85;
+      filter: grayscale(100%) brightness(1.2);
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .social-icon {
+      color: #71717a;
+      font-size: 1.35rem;
+      text-decoration: none;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .social-icon:hover {
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    /* Bottom Legal Bar */
     .footer-bottom {
       width: 100%;
       max-width: 1200px;
-      padding: 1.5rem 2rem;
+      padding: 1.5rem 2rem 2.5rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: #52525b;
       font-size: 0.85rem;
+      border-top: 1px solid #18181b;
     }
 
     .footer-bottom-links {
@@ -269,33 +271,23 @@
 
     /* Responsive Adjustments */
     @media (max-width: 900px) {
-      header {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem 1.5rem;
-      }
-      
-      .header-right {
-        justify-content: center;
-      }
-
       main {
         flex-direction: column;
       }
 
       .hero-content {
-        padding: 4rem 2rem;
+        padding: 3rem 1.5rem;
         align-items: center;
         text-align: center;
       }
 
       .hero-image-container {
-        min-height: 350px;
+        min-height: 380px;
+        padding: 1rem;
       }
 
-      .footer-banner-container {
-        padding: 2rem 1rem;
+      .hero-image {
+        object-position: center;
       }
 
       .footer-bottom {
@@ -308,17 +300,57 @@
 </head>
 <body>
 
-  <!-- Header Navigation -->
+  <!-- Minimal Header Navigation -->
   <header>
-    <div class="header-left"></div>
-
     <div class="logo-container">
       <a href="#">
         <img src="apple-touch-logo.png" alt="PAiGE Logo" class="logo-img" />
       </a>
     </div>
+  </header>
 
-    <div class="header-right">
+  <!-- Split Hero Section -->
+  <main>
+    <!-- Left Column -->
+    <section class="hero-content">
+      <h1>Coming Soon</h1>
+      <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
+
+      <!-- Email Capture Form -->
+      <form class="email-signup-form" id="leadForm">
+        <input 
+          type="email" 
+          id="emailInput"
+          class="email-input" 
+          placeholder="Enter your email to learn more..." 
+          required 
+        />
+        <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
+      </form>
+    </section>
+
+    <!-- Right Column -->
+    <section class="hero-image-container">
+      <img 
+        src="hero-photo.webp" 
+        fetchpriority="high" 
+        loading="eager" 
+        alt="Shop floor comms device diagram" 
+        class="hero-image"
+      />
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-banner-container">
+      <img src="footer-photo.webp" loading="lazy" alt="Purpose-Built For The Frontline" class="footer-banner-img" />
+    </div>
+
+    <!-- Grey PAiGE Brand Block & Socials -->
+    <div class="footer-brand-section">
+      <img src="apple-touch-logo.png" alt="PAiGE" class="footer-grey-logo" />
+
       <div class="social-links">
         <a href="https://x.com/paigelinkhq" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="X (Twitter)">
           <i class="fa-brands fa-x-twitter"></i>
@@ -333,40 +365,9 @@
           <i class="fa-brands fa-linkedin-in"></i>
         </a>
       </div>
-
     </div>
-  </header>
 
-  <!-- Split Hero Section -->
-  <main>
-    <!-- Left Column -->
-    <section class="hero-content">
-      <h1>Coming Soon</h1>
-      <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
-      <!-- Email Contact Form Bubble -->
-<form class="email-signup-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Thank you for connecting!');">
-  <input 
-    type="email" 
-    class="email-input" 
-    placeholder="Enter your email to learn more..." 
-    required 
-  />
-  <button type="submit" class="submit-btn">CONTACT</button>
-</form>
-    </section>
-
-    <!-- Right Column -->
-    <section class="hero-image-container">
-      <img src="hero-photo.webp" fetchpriority="high" loading="eager" alt="Shop floor comms" />
-    </section>
-  </main>
-
-  <!-- Full-Width Footer Section -->
-  <footer>
-    <div class="footer-banner-container">
-      <img src="footer-photo.webp" loading="lazy" alt="Purpose-Built For The Frontline" />
-    </div>
-    
+    <!-- Legal Footer Bar -->
     <div class="footer-bottom">
       <p>&copy; 2026 PAiGE Link LLC. All rights reserved.</p>
       <div class="footer-bottom-links">
@@ -377,5 +378,50 @@
     </div>
   </footer>
 
+  <!-- Firebase Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Standard Firebase Web SDK configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "paigelink-landing.firebaseapp.com",
+      projectId: "paigelink-landing",
+      storageBucket: "paigelink-landing.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById('leadForm');
+    const emailInput = document.getElementById('emailInput');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = emailInput.value;
+
+      submitBtn.innerText = "SENDING...";
+      submitBtn.disabled = true;
+
+      try {
+        await addDoc(collection(db, "leads"), {
+          email: email,
+          timestamp: serverTimestamp()
+        });
+        alert("Thanks for connecting! We will be in touch shortly.");
+        emailInput.value = '';
+      } catch (error) {
+        console.error("Error submitting lead: ", error);
+        alert("There was an issue submitting your request. Please try again.");
+      } finally {
+        submitBtn.innerText = "CONTACT";
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
