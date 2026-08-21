@@ -379,49 +379,52 @@
     </div>
   </footer>
 
-  <!-- Firebase Integration -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+<!-- Firebase Integration -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "paigelink-landing.firebaseapp.com",
-      projectId: "paigelink-landing",
-      storageBucket: "paigelink-landing.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+  // Real Firebase configuration pasted from your console
+  const firebaseConfig = {
+    apiKey: "AIzaSyCp0OoXW6kFurcYnKuvQDQ3dSZgXtVpXOE",
+    authDomain: "paigelink-landing.firebaseapp.com",
+    projectId: "paigelink-landing",
+    storageBucket: "paigelink-landing.firebasestorage.app",
+    messagingSenderId: "1087272062200",
+    appId: "1:1087272062200:web:170e73754c69b29fc77f0d",
+    measurementId: "G-1KS7LRCVQ4"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    const form = document.getElementById('leadForm');
-    const emailInput = document.getElementById('emailInput');
-    const submitBtn = document.getElementById('submitBtn');
+  const form = document.getElementById('leadForm');
+  const emailInput = document.getElementById('emailInput');
+  const submitBtn = document.getElementById('submitBtn');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = emailInput.value;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailInput.value;
 
-      submitBtn.innerText = "SENDING...";
-      submitBtn.disabled = true;
+    submitBtn.innerText = "SENDING...";
+    submitBtn.disabled = true;
 
-      try {
-        await addDoc(collection(db, "leads"), {
-          email: email,
-          timestamp: serverTimestamp()
-        });
-        alert("Thanks for connecting! We will be in touch shortly.");
-        emailInput.value = '';
-      } catch (error) {
-        console.error("Error submitting lead: ", error);
-        alert("There was an issue submitting your request. Please try again.");
-      } finally {
-        submitBtn.innerText = "CONTACT";
-        submitBtn.disabled = false;
-      }
-    });
-  </script>
+    try {
+      await addDoc(collection(db, "leads"), {
+        email: email,
+        timestamp: serverTimestamp()
+      });
+      alert("Thanks for connecting! We will be in touch shortly.");
+      emailInput.value = '';
+    } catch (error) {
+      console.error("Error submitting lead: ", error);
+      alert("There was an issue submitting your request. Please try again.");
+    } finally {
+      submitBtn.innerText = "CONTACT";
+      submitBtn.disabled = false;
+    }
+  });
+</script>
 </body>
 </html>
