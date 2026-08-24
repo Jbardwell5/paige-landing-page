@@ -65,42 +65,43 @@
       display: flex;
       flex-direction: row;
       min-height: calc(100vh - 110px);
+      align-items: center;
     }
 
-    /* Left Column: Hero Content */
+    /* Left Column: Hero Content (Slightly narrower to give room to image) */
     .hero-content {
-      flex: 1;
+      flex: 0 0 42%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      padding: 4rem 3% 4rem 6%;
+      padding: 4rem 2% 4rem 5%;
       z-index: 2;
     }
 
     .hero-content h1 {
-      font-size: clamp(3.5rem, 6.5vw, 6rem);
+      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
       font-weight: 800;
       line-height: 0.95;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
       letter-spacing: -0.04em;
       color: #ffffff;
     }
 
     .hero-content h2 {
       color: #80E600;
-      font-size: clamp(1.5rem, 2.75vw, 2.5rem);
+      font-size: clamp(1.4rem, 2.4vw, 2.25rem);
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: -0.03em;
-      max-width: 620px;
+      max-width: 580px;
     }
 
     /* Form & Wrapper */
     .form-wrapper {
       width: 100%;
       max-width: 480px;
-      margin-top: 2.5rem;
+      margin-top: 2.25rem;
     }
 
     .email-signup-form {
@@ -175,9 +176,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Right Column: Hero Image */
+    /* Right Column: Hero Image (Expanded 20% wider) */
     .hero-image-container {
-      flex: 1;
+      flex: 0 0 58%;
       position: relative;
       background-color: #050505;
       overflow: hidden;
@@ -185,14 +186,14 @@
       align-items: center;
       justify-content: center;
       min-height: 500px;
-      padding: 2rem 3rem 2rem 4rem;
+      padding: 2rem 2rem 2rem 0;
     }
 
     .hero-image {
       width: 100%;
-      max-width: 92%;
-      height: 100%;
-      max-height: 80vh;
+      max-width: 100%;
+      height: auto;
+      max-height: 85vh;
       object-fit: contain;
       object-position: center;
       display: block;
@@ -305,6 +306,7 @@
       }
 
       .hero-content {
+        flex: 1 1 100%;
         padding: 2.5rem 1.25rem 1.5rem 1.25rem;
         align-items: center;
         text-align: center;
@@ -342,6 +344,7 @@
       }
 
       .hero-image-container {
+        flex: 1 1 100%;
         min-height: 340px;
         padding: 1rem;
       }
@@ -378,7 +381,7 @@
     <!-- Left Column: Copy & Email Capture -->
     <section class="hero-content">
       <h1>Coming Soon</h1>
-      <h2>Modernizing Frontline &amp; Industrial Shop floor comms @ PAiGE Link</h2>
+      <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
 
       <div class="form-wrapper">
         <form class="email-signup-form" id="leadForm">
@@ -386,7 +389,7 @@
             type="email" 
             id="emailInput"
             class="email-input" 
-            placeholder="Enter your email..." 
+            placeholder="Enter your email to learn more..." 
             required 
           />
           <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
@@ -403,7 +406,7 @@
         src="hero-photo.webp" 
         fetchpriority="high" 
         loading="eager" 
-        alt="Shop floor comms device diagram" 
+        alt="Industrial Floor Communication Device Diagram" 
         class="hero-image"
       />
     </section>
