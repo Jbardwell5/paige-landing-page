@@ -74,12 +74,12 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center; /* Centers the inner wrapper within the 50% column */
+      align-items: center;
       padding: 3rem 4%;
       z-index: 2;
     }
 
-    /* Inner Wrapper to keep elements left-aligned relative to each other */
+    /* Inner Wrapper */
     .hero-text-block {
       display: flex;
       flex-direction: column;
@@ -89,7 +89,7 @@
       width: 100%;
     }
 
-    /* "Coming Soon" (~10% scaled down from previous clamp) */
+    /* "Coming Soon" */
     .hero-text-block h1 {
       font-size: clamp(3.6rem, 6.75vw, 6.2rem);
       font-weight: 800;
@@ -107,7 +107,7 @@
       letter-spacing: -0.03em;
     }
 
-    /* Form Bubble */
+    /* Form Bubble Container */
     .email-signup-form {
       margin-top: 2.25rem;
       display: flex;
@@ -118,7 +118,9 @@
       padding: 0.35rem 0.35rem 0.35rem 1.25rem;
       width: 100%;
       max-width: 480px;
+      min-height: 52px;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
     }
 
     .email-signup-form:focus-within {
@@ -162,6 +164,18 @@
 
     .submit-btn:active {
       transform: scale(0.98);
+    }
+
+    /* Inline Thank You Message inside Bubble */
+    .form-success-msg {
+      display: none;
+      color: #80E600;
+      font-size: 0.95rem;
+      font-weight: 700;
+      width: 100%;
+      text-align: center;
+      padding: 0.25rem 0.5rem;
+      letter-spacing: 0.01em;
     }
 
     /* Right Column: Hero Image */
@@ -341,6 +355,11 @@
             required 
           />
           <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
+          
+          <!-- Success Message Container -->
+          <div class="form-success-msg" id="successMsg">
+            <i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> Thank you! We'll be in touch shortly.
+          </div>
         </form>
       </div>
     </section>
@@ -414,6 +433,7 @@
     const form = document.getElementById('leadForm');
     const emailInput = document.getElementById('emailInput');
     const submitBtn = document.getElementById('submitBtn');
+    const successMsg = document.getElementById('successMsg');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -427,14 +447,19 @@
           email: email,
           timestamp: serverTimestamp()
         });
-        alert("Thanks for connecting! We will be in touch shortly.");
-        emailInput.value = '';
+
+        // Hide input and button, then reveal the green bubble message
+        emailInput.style.display = 'none';
+        submitBtn.style.display = 'none';
+        form.style.padding = '0.85rem 1.25rem';
+        form.style.borderColor = '#80E600';
+        successMsg.style.display = 'block';
+
       } catch (error) {
         console.error("Error submitting lead: ", error);
-        alert("There was an issue submitting your request. Please try again.");
-      } finally {
         submitBtn.innerText = "CONTACT";
         submitBtn.disabled = false;
+        alert("There was an issue submitting your request. Please try again.");
       }
     });
   </script>
