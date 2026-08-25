@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAiGE - Frontline & Industrial Communications</title>
+  <title>PAiGE - Frontline &amp; Industrial Communications</title>
   
   <!-- Apple Touch Icon & Favicon -->
   <link rel="apple-touch-icon" href="apple-touch-logo.png">
@@ -65,46 +65,43 @@
       display: flex;
       flex-direction: row;
       min-height: calc(100vh - 110px);
-      align-items: center;
+      width: 100%;
     }
 
-    /* Left Column: Hero Content (Slightly narrower to give room to image) */
+    /* Left Column: Hero Content (Centered within 50% width) */
     .hero-content {
-      flex: 0 0 42%;
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      padding: 4rem 2% 4rem 5%;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 4%;
       z-index: 2;
     }
 
+    /* "Coming Soon" 15% larger */
     .hero-content h1 {
-      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+      font-size: clamp(4rem, 7.5vw, 6.9rem);
       font-weight: 800;
       line-height: 0.95;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
       letter-spacing: -0.04em;
       color: #ffffff;
     }
 
     .hero-content h2 {
       color: #80E600;
-      font-size: clamp(1.4rem, 2.4vw, 2.25rem);
+      font-size: clamp(1.5rem, 2.75vw, 2.5rem);
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.1;
       letter-spacing: -0.03em;
-      max-width: 580px;
+      max-width: 620px;
     }
 
-    /* Form & Wrapper */
-    .form-wrapper {
-      width: 100%;
-      max-width: 480px;
-      margin-top: 2.25rem;
-    }
-
+    /* Form Bubble */
     .email-signup-form {
+      margin-top: 2.5rem;
       display: flex;
       align-items: center;
       background-color: #161616;
@@ -112,6 +109,7 @@
       border-radius: 50px;
       padding: 0.35rem 0.35rem 0.35rem 1.25rem;
       width: 100%;
+      max-width: 480px;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -128,7 +126,6 @@
       font-size: 0.95rem;
       font-weight: 500;
       width: 100%;
-      min-width: 0;
     }
 
     .email-input::placeholder {
@@ -148,7 +145,6 @@
       cursor: pointer;
       transition: background-color 0.2s ease, transform 0.1s ease;
       white-space: nowrap;
-      flex-shrink: 0;
     }
 
     .submit-btn:hover {
@@ -160,46 +156,30 @@
       transform: scale(0.98);
     }
 
-    /* Modern Success Message */
-    .success-message {
-      color: #80E600;
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-top: 0.85rem;
-      padding-left: 0.5rem;
-      text-align: left;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Right Column: Hero Image (Expanded 20% wider) */
+    /* Right Column: Hero Image (Aligned starting under "E" to right edge) */
     .hero-image-container {
-      flex: 0 0 58%;
+      flex: 1;
       position: relative;
       background-color: #050505;
       overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       min-height: 500px;
-      padding: 2rem 2rem 2rem 0;
+      padding: 1.5rem 1rem 1.5rem 0; /* Shifted left padding to align with header logo 'E' */
     }
 
     .hero-image {
       width: 100%;
-      max-width: 100%;
-      height: auto;
-      max-height: 85vh;
+      max-width: 98%; /* Maximized horizontally toward edge */
+      height: 100%;
+      max-height: 92vh; /* Made larger overall */
       object-fit: contain;
-      object-position: center;
+      object-position: right center;
       display: block;
     }
 
-    /* Footer Section */
+    /* Compact Footer Section */
     footer {
       width: 100%;
       background-color: #0d0d0d;
@@ -209,6 +189,7 @@
       align-items: center;
     }
 
+    /* Banner Image */
     .footer-banner-container {
       width: 100%;
       background-color: #050505;
@@ -227,6 +208,7 @@
       object-fit: contain;
     }
 
+    /* Green Brand Block with Socials */
     .footer-brand-section {
       width: 100%;
       display: flex;
@@ -263,6 +245,7 @@
       transform: translateY(-2px);
     }
 
+    /* Bottom Legal Bar */
     .footer-bottom {
       width: 100%;
       max-width: 1200px;
@@ -290,71 +273,27 @@
       color: #a1a1aa;
     }
 
-    /* Mobile Responsive Optimizations */
+    /* Responsive Adjustments */
     @media (max-width: 900px) {
-      header {
-        padding: 0.5rem 1rem;
-      }
-
-      .logo-img {
-        height: 55px;
-      }
-
       main {
         flex-direction: column;
-        min-height: auto;
       }
 
       .hero-content {
-        flex: 1 1 100%;
-        padding: 2.5rem 1.25rem 1.5rem 1.25rem;
+        padding: 3rem 1.5rem;
         align-items: center;
         text-align: center;
       }
 
-      .hero-content h1 {
-        font-size: 2.75rem;
-        margin-bottom: 1rem;
-      }
-
-      .hero-content h2 {
-        font-size: 1.35rem;
-      }
-
-      .form-wrapper {
-        margin-top: 1.75rem;
-      }
-
-      .email-signup-form {
-        padding: 0.25rem 0.25rem 0.25rem 1rem;
-      }
-
-      .email-input {
-        font-size: 0.85rem;
-      }
-
-      .submit-btn {
-        padding: 0.65rem 1.25rem;
-        font-size: 0.75rem;
-      }
-
-      .success-message {
-        text-align: center;
-        padding-left: 0;
-      }
-
       .hero-image-container {
-        flex: 1 1 100%;
-        min-height: 340px;
+        min-height: 380px;
         padding: 1rem;
+        justify-content: center;
       }
 
       .hero-image {
         max-width: 100%;
-      }
-
-      .footer-green-logo {
-        height: 80px;
+        object-position: center;
       }
 
       .footer-bottom {
@@ -367,7 +306,7 @@
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Minimal Header Navigation -->
   <header>
     <div class="logo-container">
       <a href="#">
@@ -376,48 +315,45 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Split Hero Section -->
   <main>
-    <!-- Left Column: Copy & Email Capture -->
+    <!-- Left Column -->
     <section class="hero-content">
       <h1>Coming Soon</h1>
       <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
 
-      <div class="form-wrapper">
-        <form class="email-signup-form" id="leadForm">
-          <input 
-            type="email" 
-            id="emailInput"
-            class="email-input" 
-            placeholder="Enter your email to learn more..." 
-            required 
-          />
-          <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
-        </form>
-        <div id="formSuccess" class="success-message" style="display: none;">
-          ✓ Thanks for connecting! We will be in touch shortly.
-        </div>
-      </div>
+      <!-- Email Capture Form -->
+      <form class="email-signup-form" id="leadForm">
+        <input 
+          type="email" 
+          id="emailInput"
+          class="email-input" 
+          placeholder="Enter your email to learn more..." 
+          required 
+        />
+        <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
+      </form>
     </section>
 
-    <!-- Right Column: Product Image -->
+    <!-- Right Column -->
     <section class="hero-image-container">
       <img 
         src="hero-photo.webp" 
         fetchpriority="high" 
         loading="eager" 
-        alt="Industrial Floor Communication Device Diagram" 
+        alt="Shop floor comms device diagram" 
         class="hero-image"
       />
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- Footer Section -->
   <footer>
     <div class="footer-banner-container">
       <img src="footer-photo.webp" loading="lazy" alt="Purpose-Built For The Frontline" class="footer-banner-img" />
     </div>
 
+    <!-- Green PAiGE Brand Block & Socials -->
     <div class="footer-brand-section">
       <img src="apple-touch-logo.png" alt="PAiGE" class="footer-green-logo" />
 
@@ -437,6 +373,7 @@
       </div>
     </div>
 
+    <!-- Legal Footer Bar -->
     <div class="footer-bottom">
       <p>&copy; 2026 PAiGE Link LLC. All rights reserved.</p>
       <div class="footer-bottom-links">
@@ -447,19 +384,18 @@
     </div>
   </footer>
 
-  <!-- Firebase Script Integration -->
+  <!-- Firebase Integration -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyCp0OoXW6kFurcYnKuvQDQ3dSZgXtVpXOE",
+      apiKey: "YOUR_API_KEY",
       authDomain: "paigelink-landing.firebaseapp.com",
       projectId: "paigelink-landing",
-      storageBucket: "paigelink-landing.firebasestorage.app",
-      messagingSenderId: "1087272062200",
-      appId: "1:1087272062200:web:170e73754c69b29fc77f0d",
-      measurementId: "G-1KS7LRCVQ4"
+      storageBucket: "paigelink-landing.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -468,7 +404,6 @@
     const form = document.getElementById('leadForm');
     const emailInput = document.getElementById('emailInput');
     const submitBtn = document.getElementById('submitBtn');
-    const successMsg = document.getElementById('formSuccess');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -482,19 +417,12 @@
           email: email,
           timestamp: serverTimestamp()
         });
-
+        alert("Thanks for connecting! We will be in touch shortly.");
         emailInput.value = '';
-        submitBtn.innerText = "SENT!";
-        successMsg.style.display = "block";
-        
-        setTimeout(() => {
-          submitBtn.innerText = "CONTACT";
-          submitBtn.disabled = false;
-        }, 4000);
-
       } catch (error) {
         console.error("Error submitting lead: ", error);
         alert("There was an issue submitting your request. Please try again.");
+      } finally {
         submitBtn.innerText = "CONTACT";
         submitBtn.disabled = false;
       }
