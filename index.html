@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAiGE - Frontline & Industrial Communications</title>
+  <title>PAiGE - Frontline &amp; Industrial Communications</title>
   
   <!-- Apple Touch Icon & Favicon -->
   <link rel="apple-touch-icon" href="apple-touch-logo.png">
@@ -65,40 +65,51 @@
       display: flex;
       flex-direction: row;
       min-height: calc(100vh - 110px);
+      width: 100%;
     }
 
-    /* Left Column: Hero Content */
+    /* Left Column: Hero Content Block */
     .hero-content {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      padding: 4rem 3% 4rem 6%;
+      align-items: center;
+      padding: 3rem 4%;
       z-index: 2;
     }
 
-    .hero-content h1 {
-      font-size: clamp(3.5rem, 6.5vw, 6rem);
+    /* Inner Wrapper */
+    .hero-text-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      max-width: 620px;
+      width: 100%;
+    }
+
+    /* "Coming Soon" */
+    .hero-text-block h1 {
+      font-size: clamp(3.6rem, 6.75vw, 6.2rem);
       font-weight: 800;
       line-height: 0.95;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
       letter-spacing: -0.04em;
       color: #ffffff;
     }
 
-    .hero-content h2 {
+    .hero-text-block h2 {
       color: #80E600;
-      font-size: clamp(1.5rem, 2.75vw, 2.5rem);
+      font-size: clamp(1.5rem, 2.5vw, 2.3rem);
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: -0.03em;
-      max-width: 620px;
     }
 
     /* Form Bubble Container */
     .email-signup-form {
-      margin-top: 2.5rem;
+      margin-top: 2.25rem;
       display: flex;
       align-items: center;
       background-color: #161616;
@@ -108,8 +119,8 @@
       width: 100%;
       max-width: 480px;
       min-height: 52px;
-      position: relative;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
     }
 
     .email-signup-form:focus-within {
@@ -155,20 +166,16 @@
       transform: scale(0.98);
     }
 
-    /* Inline Thank You Message inside Pill Bubble */
-    .thank-you-msg {
+    /* Inline Thank You Message inside Bubble */
+    .form-success-msg {
       display: none;
-      align-items: center;
-      gap: 0.6rem;
       color: #80E600;
-      font-weight: 700;
       font-size: 0.95rem;
+      font-weight: 700;
       width: 100%;
-      padding: 0.35rem 0.5rem;
-    }
-
-    .thank-you-msg i {
-      font-size: 1.1rem;
+      text-align: center;
+      padding: 0.25rem 0.5rem;
+      letter-spacing: 0.01em;
     }
 
     /* Right Column: Hero Image */
@@ -179,22 +186,22 @@
       overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       min-height: 500px;
-      padding: 2rem 3rem 2rem 4rem;
+      padding: 1.5rem 1rem 1.5rem 0;
     }
 
     .hero-image {
       width: 100%;
-      max-width: 92%;
+      max-width: 98%;
       height: 100%;
-      max-height: 80vh;
+      max-height: 92vh;
       object-fit: contain;
-      object-position: center;
+      object-position: right center;
       display: block;
     }
 
-    /* Compact Footer Section */
+    /* Footer Section */
     footer {
       width: 100%;
       background-color: #0d0d0d;
@@ -293,6 +300,9 @@
 
       .hero-content {
         padding: 3rem 1.5rem;
+      }
+
+      .hero-text-block {
         align-items: center;
         text-align: center;
       }
@@ -300,10 +310,12 @@
       .hero-image-container {
         min-height: 380px;
         padding: 1rem;
+        justify-content: center;
       }
 
       .hero-image {
         max-width: 100%;
+        object-position: center;
       }
 
       .footer-bottom {
@@ -329,26 +341,27 @@
   <main>
     <!-- Left Column -->
     <section class="hero-content">
-      <h1>Coming Soon</h1>
-      <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
+      <div class="hero-text-block">
+        <h1>Coming Soon</h1>
+        <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
 
-      <!-- Email Capture Form -->
-      <form class="email-signup-form" id="leadForm">
-        <input 
-          type="email" 
-          id="emailInput"
-          class="email-input" 
-          placeholder="Enter your email to learn more..." 
-          required 
-        />
-        <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
-        
-        <!-- Inline Thank You Message -->
-        <div class="thank-you-msg" id="thankYouMsg">
-          <i class="fa-solid fa-circle-check"></i>
-          <span>Thank you! We'll be in touch.</span>
-        </div>
-      </form>
+        <!-- Email Capture Form -->
+        <form class="email-signup-form" id="leadForm">
+          <input 
+            type="email" 
+            id="emailInput"
+            class="email-input" 
+            placeholder="Enter your email to learn more..." 
+            required 
+          />
+          <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
+          
+          <!-- Success Message Container -->
+          <div class="form-success-msg" id="successMsg">
+            <i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> Thank you! We'll be in touch shortly.
+          </div>
+        </form>
+      </div>
     </section>
 
     <!-- Right Column -->
@@ -420,7 +433,7 @@
     const form = document.getElementById('leadForm');
     const emailInput = document.getElementById('emailInput');
     const submitBtn = document.getElementById('submitBtn');
-    const thankYouMsg = document.getElementById('thankYouMsg');
+    const successMsg = document.getElementById('successMsg');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -434,17 +447,19 @@
           email: email,
           timestamp: serverTimestamp()
         });
-        
-        // Hide input & submit button, show inline thank you message
+
+        // Hide input and button, then reveal the green bubble message
         emailInput.style.display = 'none';
         submitBtn.style.display = 'none';
-        thankYouMsg.style.display = 'flex';
-        
+        form.style.padding = '0.85rem 1.25rem';
+        form.style.borderColor = '#80E600';
+        successMsg.style.display = 'block';
+
       } catch (error) {
         console.error("Error submitting lead: ", error);
-        alert("There was an issue submitting your request. Please try again.");
         submitBtn.innerText = "CONTACT";
         submitBtn.disabled = false;
+        alert("There was an issue submitting your request. Please try again.");
       }
     });
   </script>
