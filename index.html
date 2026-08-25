@@ -119,7 +119,7 @@
       width: 100%;
       max-width: 480px;
       min-height: 52px;
-      transition: all 0.3s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
       position: relative;
     }
 
@@ -453,7 +453,6 @@
         submitBtn.style.display = 'none';
         form.style.padding = '0.85rem 1.25rem';
         form.style.borderColor = '#80E600';
-        form.style.boxShadow = '0 0 12px rgba(128, 230, 0, 0.2)';
         successMsg.style.display = 'block';
 
       } catch (error) {
