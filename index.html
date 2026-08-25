@@ -68,40 +68,48 @@
       width: 100%;
     }
 
-    /* Left Column: Hero Content (Centered within 50% width) */
+    /* Left Column: Hero Content Block */
     .hero-content {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
+      align-items: center; /* Centers the inner wrapper within the 50% column */
       padding: 3rem 4%;
       z-index: 2;
     }
 
-    /* "Coming Soon" 15% larger */
-    .hero-content h1 {
-      font-size: clamp(4rem, 7.5vw, 6.9rem);
+    /* Inner Wrapper to keep elements left-aligned relative to each other */
+    .hero-text-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      max-width: 620px;
+      width: 100%;
+    }
+
+    /* "Coming Soon" (~10% scaled down from previous clamp) */
+    .hero-text-block h1 {
+      font-size: clamp(3.6rem, 6.75vw, 6.2rem);
       font-weight: 800;
       line-height: 0.95;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
       letter-spacing: -0.04em;
       color: #ffffff;
     }
 
-    .hero-content h2 {
+    .hero-text-block h2 {
       color: #80E600;
-      font-size: clamp(1.5rem, 2.75vw, 2.5rem);
+      font-size: clamp(1.5rem, 2.5vw, 2.3rem);
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: -0.03em;
-      max-width: 620px;
     }
 
     /* Form Bubble */
     .email-signup-form {
-      margin-top: 2.5rem;
+      margin-top: 2.25rem;
       display: flex;
       align-items: center;
       background-color: #161616;
@@ -156,7 +164,7 @@
       transform: scale(0.98);
     }
 
-    /* Right Column: Hero Image (Aligned starting under "E" to right edge) */
+    /* Right Column: Hero Image */
     .hero-image-container {
       flex: 1;
       position: relative;
@@ -166,20 +174,20 @@
       align-items: center;
       justify-content: flex-end;
       min-height: 500px;
-      padding: 1.5rem 1rem 1.5rem 0; /* Shifted left padding to align with header logo 'E' */
+      padding: 1.5rem 1rem 1.5rem 0;
     }
 
     .hero-image {
       width: 100%;
-      max-width: 98%; /* Maximized horizontally toward edge */
+      max-width: 98%;
       height: 100%;
-      max-height: 92vh; /* Made larger overall */
+      max-height: 92vh;
       object-fit: contain;
       object-position: right center;
       display: block;
     }
 
-    /* Compact Footer Section */
+    /* Footer Section */
     footer {
       width: 100%;
       background-color: #0d0d0d;
@@ -189,7 +197,6 @@
       align-items: center;
     }
 
-    /* Banner Image */
     .footer-banner-container {
       width: 100%;
       background-color: #050505;
@@ -208,7 +215,6 @@
       object-fit: contain;
     }
 
-    /* Green Brand Block with Socials */
     .footer-brand-section {
       width: 100%;
       display: flex;
@@ -245,7 +251,6 @@
       transform: translateY(-2px);
     }
 
-    /* Bottom Legal Bar */
     .footer-bottom {
       width: 100%;
       max-width: 1200px;
@@ -281,6 +286,9 @@
 
       .hero-content {
         padding: 3rem 1.5rem;
+      }
+
+      .hero-text-block {
         align-items: center;
         text-align: center;
       }
@@ -319,20 +327,22 @@
   <main>
     <!-- Left Column -->
     <section class="hero-content">
-      <h1>Coming Soon</h1>
-      <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
+      <div class="hero-text-block">
+        <h1>Coming Soon</h1>
+        <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
 
-      <!-- Email Capture Form -->
-      <form class="email-signup-form" id="leadForm">
-        <input 
-          type="email" 
-          id="emailInput"
-          class="email-input" 
-          placeholder="Enter your email to learn more..." 
-          required 
-        />
-        <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
-      </form>
+        <!-- Email Capture Form -->
+        <form class="email-signup-form" id="leadForm">
+          <input 
+            type="email" 
+            id="emailInput"
+            class="email-input" 
+            placeholder="Enter your email to learn more..." 
+            required 
+          />
+          <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
+        </form>
+      </div>
     </section>
 
     <!-- Right Column -->
