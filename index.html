@@ -413,10 +413,11 @@
     </div>
   </footer>
 
-  <!-- Firebase Integration -->
+  <!-- Firebase & Analytics Integration -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
@@ -424,11 +425,14 @@
       projectId: "paigelink-landing",
       storageBucket: "paigelink-landing.appspot.com",
       messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      appId: "YOUR_APP_ID",
+      measurementId: "G-XXXXXXXXXX" // Make sure to replace this with your actual G- Measurement ID from the Firebase console
     };
 
+    // Initialize Firebase Services
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const analytics = getAnalytics(app); // Starts automatic page_view & session tracking
 
     const form = document.getElementById('leadForm');
     const emailInput = document.getElementById('emailInput');
@@ -446,6 +450,11 @@
         await addDoc(collection(db, "leads"), {
           email: email,
           timestamp: serverTimestamp()
+        });
+
+        // Log custom lead conversion event in Firebase Analytics
+        logEvent(analytics, 'generate_lead', {
+          method: 'landing_page_form'
         });
 
         // Hide input and button, then reveal the green bubble message
