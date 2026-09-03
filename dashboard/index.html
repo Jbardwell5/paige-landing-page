@@ -67,7 +67,39 @@
     }
 
     .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#222 1px, transparent 1px); background-size: 20px 20px; opacity: 0.5; z-index: 2; }
-    .map-beacon { position: absolute; background: #121212; border: 1px solid #80E600; padding: 6px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; color: #80E600; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(128, 230, 0, 0.2); z-index: 3; }
+    
+    /* Breathing Animation for Beacons */
+    @keyframes beaconPulse {
+      0% {
+        box-shadow: 0 0 5px rgba(128, 230, 0, 0.4);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 18px rgba(128, 230, 0, 0.9), 0 0 30px rgba(128, 230, 0, 0.4);
+        transform: scale(1.04);
+      }
+      100% {
+        box-shadow: 0 0 5px rgba(128, 230, 0, 0.4);
+        transform: scale(1);
+      }
+    }
+
+    .map-beacon { 
+      position: absolute; 
+      background: #121212; 
+      border: 1px solid #80E600; 
+      padding: 6px 10px; 
+      border-radius: 4px; 
+      font-size: 0.75rem; 
+      font-weight: 700; 
+      color: #80E600; 
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
+      z-index: 3;
+      transition: top 2s ease, left 2s ease;
+      animation: beaconPulse 3s infinite ease-in-out;
+    }
     
     .dispatch-composer { padding: 16px; background: #0A0A0A; }
     .composer-target { font-size: 0.75rem; color: #888; font-weight: 700; margin-bottom: 8px; }
@@ -240,6 +272,22 @@
     feed.insertBefore(newLog, feed.firstChild);
     input.value = '';
   }
+
+  // Live GPS Telemetry Drift (simulates real-time unit position shifts)
+  setInterval(() => {
+    const beacons = document.querySelectorAll('.map-beacon');
+    
+    beacons.forEach(beacon => {
+      const deltaX = (Math.random() - 0.5) * 0.8;
+      const deltaY = (Math.random() - 0.5) * 0.8;
+
+      let currentTop = parseFloat(beacon.style.top);
+      let currentLeft = parseFloat(beacon.style.left);
+
+      beacon.style.top = `${(currentTop + deltaY).toFixed(2)}%`;
+      beacon.style.left = `${(currentLeft + deltaX).toFixed(2)}%`;
+    });
+  }, 2500);
 </script>
 </body>
 </html>
