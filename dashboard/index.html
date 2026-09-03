@@ -37,17 +37,22 @@
     .center-pane { display: flex; flex-direction: column; background: #050505; }
     .map-viewport { flex: 1; position: relative; background: #050505; border-bottom: 1px solid #1A1A1A; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     
-    /* Self-Contained Vector Background (Zero File/Script Dependencies) */
+    /* Map Layout Container */
     .map-wrapper {
       position: relative;
-      width: 90%;
-      height: 90%;
-      background-color: #050505;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 600'%3E%3Cg stroke='%2380E600' fill='none' stroke-width='2.5'%3E%3Cpath d='M 50 50 L 950 50 L 950 250 L 750 250 L 750 550 L 50 550 Z' stroke-width='4'/%3E%3Cline x1='50' y1='200' x2='750' y2='200' stroke-dasharray='5,5'/%3E%3Cline x1='400' y1='200' x2='400' y2='550'/%3E%3Cline x1='550' y1='200' x2='550' y2='550'/%3E%3Crect x='70' y='70' width='130' height='110'/%3E%3Crect x='210' y='70' width='130' height='110'/%3E%3Crect x='350' y='70' width='130' height='110'/%3E%3Crect x='490' y='70' width='130' height='110'/%3E%3Crect x='630' y='70' width='130' height='110'/%3E%3Crect x='770' y='70' width='160' height='110'/%3E%3Crect x='70' y='220' width='310' height='140'/%3E%3Crect x='70' y='380' width='310' height='150'/%3E%3Crect x='420' y='220' width='110' height='180'/%3E%3Crect x='570' y='220' width='160' height='150'/%3E%3Crect x='570' y='400' width='160' height='130'/%3E%3C/g%3E%3Cg fill='%2380E600' font-family='sans-serif' font-weight='bold'%3E%3Ctext x='70' y='40' font-size='13'%3EMANUFACTURING FACILITY SCHEMATIC%3C/text%3E%3Ctext x='800' y='40' font-size='11' opacity='0.7'%3ECAD_SCALE: 1:1500%3C/text%3E%3Ctext x='70' y='65' font-size='10' opacity='0.8'%3ENORTH HIGH-BAY // MAIN EQUIPMENT ASSEMBLY%3C/text%3E%3Ctext x='85' y='90' font-size='9'%3EBAY 01%3C/text%3E%3Ctext x='225' y='90' font-size='9'%3EBAY 02%3C/text%3E%3Ctext x='365' y='90' font-size='9'%3EBAY 03%3C/text%3E%3Ctext x='505' y='90' font-size='9'%3EBAY 04%3C/text%3E%3Ctext x='645' y='90' font-size='9'%3EBAY 05%3C/text%3E%3Ctext x='785' y='90' font-size='9'%3EBAY 06%3C/text%3E%3Ctext x='70' y='215' font-size='10' opacity='0.8'%3EBAYS 07-09 // FABRICATION %26 CNC%3C/text%3E%3Ctext x='420' y='215' font-size='10' opacity='0.8'%3ETOOL CRIB%3C/text%3E%3Ctext x='570' y='215' font-size='10' opacity='0.8'%3ESHIPPING %26 DOCKS%3C/text%3E%3C/g%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      filter: drop-shadow(0px 0px 3px rgba(128, 230, 0, 0.6));
+      width: 92%;
+      height: 92%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .schematic-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0px 0px 6px rgba(128, 230, 0, 0.4));
+      z-index: 1;
     }
 
     .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#1A1A1A 1px, transparent 1px); background-size: 20px 20px; opacity: 0.6; z-index: 2; pointer-events: none; }
@@ -154,7 +159,9 @@
     <div class="center-pane">
       <div class="pane-header">Facility Telemetry &amp; Live Map</div>
       <div class="map-viewport">
-        <div class="map-wrapper"></div>
+        <div class="map-wrapper">
+          <img src="facility-schematic.png" alt="Facility Floorplan Schematic" class="schematic-img" />
+        </div>
         <div class="map-grid"></div>
         
         <div class="map-beacon" style="top: 35%; left: 42%;">
@@ -232,4 +239,39 @@
     }
   }
 
-  function sendDispatch()
+  function sendDispatch() {
+    const input = document.getElementById('msgInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const feed = document.getElementById('auditFeed');
+    const newLog = document.createElement('div');
+    newLog.className = `log-item ${currentPriority === 'PRIORITY' ? 'priority' : ''}`;
+    
+    newLog.innerHTML = `
+      <div class="log-header"><span>To: ${selectedTarget}</span><span>JUST NOW</span></div>
+      <div class="log-text">${text}</div>
+      <div class="log-status">✓ DISPATCHED</div>
+    `;
+
+    feed.insertBefore(newLog, feed.firstChild);
+    input.value = '';
+  }
+
+  // Telemetry beacon drifting animation
+  setInterval(() => {
+    const beacons = document.querySelectorAll('.map-beacon');
+    beacons.forEach(beacon => {
+      const deltaX = (Math.random() - 0.5) * 0.8;
+      const deltaY = (Math.random() - 0.5) * 0.8;
+
+      let currentTop = parseFloat(beacon.style.top);
+      let currentLeft = parseFloat(beacon.style.left);
+
+      beacon.style.top = `${(currentTop + deltaY).toFixed(2)}%`;
+      beacon.style.left = `${(currentLeft + deltaX).toFixed(2)}%`;
+    });
+  }, 2500);
+</script>
+</body>
+</html>
