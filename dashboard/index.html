@@ -36,8 +36,11 @@
     /* Pane 2: Facility Map & Dispatch Composer */
     .center-pane { display: flex; flex-direction: column; background: #050505; }
     .map-viewport { flex: 1; position: relative; background: #0D0D0D; border-bottom: 1px solid #1A1A1A; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-    .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#222 1px, transparent 1px); background-size: 20px 20px; opacity: 0.5; }
-    .map-beacon { position: absolute; background: #121212; border: 1px solid #80E600; padding: 6px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; color: #80E600; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(128, 230, 0, 0.2); }
+    
+    /* Blueprint & Grid Styling */
+    .map-image { width: 100%; height: 100%; object-fit: contain; opacity: 0.35; pointer-events: none; z-index: 1; }
+    .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#222 1px, transparent 1px); background-size: 20px 20px; opacity: 0.5; z-index: 2; }
+    .map-beacon { position: absolute; background: #121212; border: 1px solid #80E600; padding: 6px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; color: #80E600; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(128, 230, 0, 0.2); z-index: 3; }
     
     .dispatch-composer { padding: 16px; background: #0A0A0A; }
     .composer-target { font-size: 0.75rem; color: #888; font-weight: 700; margin-bottom: 8px; }
@@ -64,7 +67,7 @@
 
   <header>
     <div class="brand">
-      <img src="../apple-touch-logo.png" alt="PAiGE">
+      <img src="/apple-touch-logo.png" alt="PAiGE">
       PAiGE DEMO COMMAND CENTER
     </div>
     <span class="live-badge">SYSTEM LIVE</span>
@@ -72,33 +75,33 @@
 
   <div class="dashboard-container">
     
-    <!-- Pane 1: Fleet Roster -->
     <div class="pane">
       <div class="pane-header">
         <span>Fleet Roster</span>
         <span style="color:#80E600;">25 Active</span>
       </div>
       <div class="roster-list">
-        <div class="device-card selected">
+        <div class="device-card selected" onclick="selectDevice(this, 'ALL UNITS (BROADCAST)')">
           <div class="device-name">ALL UNITS (BROADCAST)</div>
           <div class="device-meta"><span>Target: Entire Plant</span><span>100% Signal</span></div>
         </div>
-        <div class="device-card">
+        <div class="device-card" onclick="selectDevice(this, 'CPH2495 (CNC CELL 02)')">
           <div class="device-name">CPH2495 (CNC CELL 02)</div>
           <div class="device-meta"><span>Zone: CNC Line 2</span><span>Batt: 84%</span></div>
         </div>
-        <div class="device-card">
+        <div class="device-card" onclick="selectDevice(this, 'UNIT 2 - JOHN')">
           <div class="device-name">UNIT 2 - JOHN</div>
           <div class="device-meta"><span>Zone: Assembly B</span><span>Batt: 38%</span></div>
         </div>
       </div>
     </div>
 
-    <!-- Pane 2: Facility Telemetry & Dispatch Composer -->
     <div class="center-pane">
       <div class="pane-header">Facility Telemetry &amp; Live Map</div>
       <div class="map-viewport">
+        <img src="/facility-schematic.png" alt="Facility Blueprint" class="map-image" />
         <div class="map-grid"></div>
+        
         <div class="map-beacon" style="top: 35%; left: 42%;">
           <i class="fa-solid fa-signal" style="font-size: 10px;"></i> CNC CELL 02
         </div>
@@ -122,7 +125,6 @@
       </div>
     </div>
 
-    <!-- Pane 3: Audit Trail -->
     <div class="pane" style="border-right: none;">
       <div class="pane-header">Live Audit Log</div>
       <div class="audit-feed" id="auditFeed">
