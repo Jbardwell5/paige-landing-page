@@ -91,19 +91,20 @@
 
     /* Coming Soon Pill Badge */
     .coming-soon-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background-color: rgba(128, 230, 0, 0.08);
-      border: 1px solid rgba(128, 230, 0, 0.3);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: #80E600;
-      letter-spacing: 0.08em;
-      margin-bottom: 1.25rem;
-    }
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;                           /* Reduced gap slightly for a tighter dot-to-text layout */
+  background-color: rgba(128, 230, 0, 0.08);
+  border: 1px solid rgba(128, 230, 0, 0.3);
+  padding: 4px 12px;                  /* Reduced padding from 6px 14px for a sleeker pill */
+  border-radius: 20px;
+  font-size: 0.7rem;                  /* Scaled down slightly from 0.75rem for better contrast against H1 */
+  font-weight: 800;
+  color: #80E600;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.75rem;             /* Increased from 1.25rem to push the H1 down */
+  margin-left: 0;                     /* Ensures explicit left alignment */
+}
 
     .status-dot {
       font-size: 9px;
@@ -118,13 +119,13 @@
 
     /* Clean White Main Headline */
     .hero-text-block h1 {
-      font-size: clamp(2.2rem, 4vw, 3.5rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: #ffffff;
-      margin-bottom: 1.5rem;
-    }
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.15;        /* Increased from 1.05 to give text breathing room */
+  letter-spacing: -0.01em;  /* Relaxed from -0.03em so letters don't collide */
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
 
     /* Primary CTA Button: Launch Admin Dashboard */
     .btn-demo-trigger {
