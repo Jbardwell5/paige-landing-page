@@ -89,27 +89,72 @@
       width: 100%;
     }
 
-    /* "Coming Soon" */
-    .hero-text-block h1 {
-      font-size: clamp(3.6rem, 6.75vw, 6.2rem);
+    /* Coming Soon Pill Badge */
+    .coming-soon-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: rgba(128, 230, 0, 0.08);
+      border: 1px solid rgba(128, 230, 0, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
       font-weight: 800;
-      line-height: 0.95;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.04em;
-      color: #ffffff;
+      color: #80E600;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
     }
 
-    .hero-text-block h2 {
-      color: #80E600;
-      font-size: clamp(1.5rem, 2.5vw, 2.3rem);
+    .status-dot {
+      font-size: 9px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    /* Clean White Main Headline */
+    .hero-text-block h1 {
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.05;
       letter-spacing: -0.03em;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Primary CTA Button: Launch Admin Dashboard */
+    .btn-demo-trigger {
+      background-color: #80E600;
+      color: #050505;
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      padding: 0.9rem 1.8rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 15px rgba(128, 230, 0, 0.25);
+    }
+
+    .btn-demo-trigger:hover {
+      background-color: #92fc00;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 25px rgba(128, 230, 0, 0.45);
     }
 
     /* Form Bubble Container */
     .email-signup-form {
-      margin-top: 2.25rem;
+      margin-top: 0.25rem;
       display: flex;
       align-items: center;
       background-color: #161616;
@@ -342,14 +387,25 @@
     <!-- Left Column -->
     <section class="hero-content">
       <div class="hero-text-block">
-        <h1>Coming Soon</h1>
-        <h2>Modernizing Frontline &amp; Industrial Floor Communication</h2>
+        
+        <!-- Subtle Green Pill Badge -->
+        <div class="coming-soon-badge">
+          <span class="status-dot">●</span> COMING SOON
+        </div>
 
-        <!-- Email Capture Form -->
+        <!-- Clean White Main Headline -->
+        <h1>Modernizing Frontline &amp; Industrial Floor Communication</h1>
+
+        <!-- Primary CTA: Launch Admin Dashboard -->
+        <button id="demoBtn" class="btn-demo-trigger">
+          <i class="fa-solid fa-gauge-high"></i> LAUNCH ADMIN DASHBOARD
+        </button>
+
+        <!-- Secondary Email Capture -->
         <form class="email-signup-form" id="leadForm">
           <input 
             type="email" 
-            id="emailInput"
+            id="emailInput" 
             class="email-input" 
             placeholder="Enter your email to learn more..." 
             required 
@@ -426,18 +482,32 @@
       storageBucket: "paigelink-landing.appspot.com",
       messagingSenderId: "1087272062200",
       appId: "1:1087272062200:web:1a4f43d9a8cb9196c77f0d",
-      measurementId: "G-D7YPPK7JQ0" // Make sure to replace this with your actual G- Measurement ID from the Firebase console
+      measurementId: "G-D7YPPK7JQ0"
     };
 
     // Initialize Firebase Services
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const analytics = getAnalytics(app); // Starts automatic page_view & session tracking
+    const analytics = getAnalytics(app);
 
     const form = document.getElementById('leadForm');
     const emailInput = document.getElementById('emailInput');
     const submitBtn = document.getElementById('submitBtn');
     const successMsg = document.getElementById('successMsg');
+    const demoBtn = document.getElementById('demoBtn');
+
+    // Launch Dashboard Handler
+    const launchDemo = () => {
+      logEvent(analytics, 'launch_demo', { source: 'hero_button' });
+      window.location.href = '/dashboard#demo';
+    };
+
+    demoBtn.addEventListener('click', launchDemo);
+
+    // Auto-launch if someone opens paigelink.com/#demo directly
+    if (window.location.hash === '#demo') {
+      launchDemo();
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
