@@ -35,9 +35,8 @@
     
     /* Pane 2: Facility Map & Dispatch Composer */
     .center-pane { display: flex; flex-direction: column; background: #050505; }
-    .map-viewport { flex: 1; position: relative; background: #080808; border-bottom: 1px solid #1A1A1A; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .map-viewport { flex: 1; position: relative; background: #050505; border-bottom: 1px solid #1A1A1A; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     
-    /* Fixed Blueprint Color Tinting */
     .map-wrapper {
       position: relative;
       width: 100%;
@@ -45,28 +44,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #080808;
+      background: #050505;
     }
     
+    /* Colorize line art to green while keeping dark canvas background */
     .map-image { 
       width: 100%; 
       height: 100%; 
       object-fit: contain; 
       pointer-events: none; 
       z-index: 1;
-      filter: invert(1) brightness(0.9) contrast(150%);
-    }
-    
-    .map-tint {
-      position: absolute;
-      inset: 0;
-      background-color: #80E600;
-      mix-blend-mode: multiply;
-      pointer-events: none;
-      z-index: 2;
+      /* Inverts dark background, clamps values, and drops zero-offset green shadows on pixel details */
+      filter: invert(1) opacity(0) drop-shadow(0px 0px 0px #80E600) drop-shadow(0px 0px 0px #80E600);
     }
 
-    .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#222 1px, transparent 1px); background-size: 20px 20px; opacity: 0.5; z-index: 2; }
+    .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#1A1A1A 1px, transparent 1px); background-size: 20px 20px; opacity: 0.6; z-index: 2; }
     
     /* Breathing Animation for Beacons */
     @keyframes beaconPulse {
@@ -172,7 +164,6 @@
       <div class="map-viewport">
         <div class="map-wrapper">
           <img src="facility-schematic.png" alt="Facility Blueprint" class="map-image" />
-          <div class="map-tint"></div>
         </div>
         <div class="map-grid"></div>
         
