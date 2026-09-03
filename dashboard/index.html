@@ -35,9 +35,9 @@
     
     /* Pane 2: Facility Map & Dispatch Composer */
     .center-pane { display: flex; flex-direction: column; background: #050505; }
-    .map-viewport { flex: 1; position: relative; background: #0D0D0D; border-bottom: 1px solid #1A1A1A; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .map-viewport { flex: 1; position: relative; background: #080808; border-bottom: 1px solid #1A1A1A; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     
-    /* Blueprint Container & Exact Color Tinting */
+    /* Fixed Blueprint Color Tinting */
     .map-wrapper {
       position: relative;
       width: 100%;
@@ -45,6 +45,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: #080808;
     }
     
     .map-image { 
@@ -53,17 +54,16 @@
       object-fit: contain; 
       pointer-events: none; 
       z-index: 1;
-      filter: grayscale(100%) contrast(200%) brightness(1.2);
+      filter: invert(1) brightness(0.9) contrast(150%);
     }
     
     .map-tint {
       position: absolute;
       inset: 0;
       background-color: #80E600;
-      mix-blend-mode: screen;
-      opacity: 0.85;
+      mix-blend-mode: multiply;
       pointer-events: none;
-      z-index: 1;
+      z-index: 2;
     }
 
     .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#222 1px, transparent 1px); background-size: 20px 20px; opacity: 0.5; z-index: 2; }
@@ -273,7 +273,7 @@
     input.value = '';
   }
 
-  // Live GPS Telemetry Drift (simulates real-time unit position shifts)
+  // Live GPS Telemetry Drift
   setInterval(() => {
     const beacons = document.querySelectorAll('.map-beacon');
     
