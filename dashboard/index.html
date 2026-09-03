@@ -141,41 +141,52 @@
 
   </div>
 
-  <script>
-    let currentPriority = 'INFO';
+<script>
+  let currentPriority = 'INFO';
+  let selectedTarget = 'ALL UNITS (BROADCAST)';
 
-    function setPriority(type) {
-      currentPriority = type;
-      const btnInfo = document.getElementById('btnInfo');
-      const btnPriority = document.getElementById('btnPriority');
+  // Select device from fleet roster
+  function selectDevice(element, targetName) {
+    document.querySelectorAll('.device-card').forEach(card => card.classList.remove('selected'));
+    element.classList.add('selected');
+    selectedTarget = targetName;
+    document.getElementById('targetName').innerText = targetName;
+  }
 
-      if (type === 'INFO') {
-        btnInfo.className = 'p-btn active-info';
-        btnPriority.className = 'p-btn';
-      } else {
-        btnInfo.className = 'p-btn';
-        btnPriority.className = 'p-btn active-priority';
-      }
+  // Set message priority
+  function setPriority(type) {
+    currentPriority = type;
+    const btnInfo = document.getElementById('btnInfo');
+    const btnPriority = document.getElementById('btnPriority');
+
+    if (type === 'INFO') {
+      btnInfo.className = 'p-btn active-info';
+      btnPriority.className = 'p-btn';
+    } else {
+      btnInfo.className = 'p-btn';
+      btnPriority.className = 'p-btn active-priority';
     }
+  }
 
-    function sendDispatch() {
-      const input = document.getElementById('msgInput');
-      const text = input.value.trim();
-      if (!text) return;
+  // Send message to audit log
+  function sendDispatch() {
+    const input = document.getElementById('msgInput');
+    const text = input.value.trim();
+    if (!text) return;
 
-      const feed = document.getElementById('auditFeed');
-      const newLog = document.createElement('div');
-      newLog.className = `log-item ${currentPriority === 'PRIORITY' ? 'priority' : ''}`;
-      
-      newLog.innerHTML = `
-        <div class="log-header"><span>To: ALL UNITS</span><span>JUST NOW</span></div>
-        <div class="log-text">${text}</div>
-        <div class="log-status">✓ DISPATCHED</div>
-      `;
+    const feed = document.getElementById('auditFeed');
+    const newLog = document.createElement('div');
+    newLog.className = `log-item ${currentPriority === 'PRIORITY' ? 'priority' : ''}`;
+    
+    newLog.innerHTML = `
+      <div class="log-header"><span>To: ${selectedTarget}</span><span>JUST NOW</span></div>
+      <div class="log-text">${text}</div>
+      <div class="log-status">✓ DISPATCHED</div>
+    `;
 
-      feed.insertBefore(newLog, feed.firstChild);
-      input.value = '';
-    }
-  </script>
+    feed.insertBefore(newLog, feed.firstChild);
+    input.value = '';
+  }
+</script>
 </body>
 </html>
