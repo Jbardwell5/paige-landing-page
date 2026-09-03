@@ -1,0 +1,402 @@
+import React, { useState } from 'react';
+
+export default function AdminDashboard() {
+  const [priorityMode, setPriorityMode] = useState('INFO'); // 'INFO' | 'TASK' | 'PRIORITY'
+  const [messageText, setMessageText] = useState('');
+  const [selectedRecipient, setSelectedRecipient] = useState('ALL UNITS (25)');
+
+  // Dynamic Theme Colors
+  const themeColors = {
+    INFO: '#00FF66',
+    TASK: '#FFAA00',
+    PRIORITY: '#FF3333'
+  };
+
+  const activeColor = themeColors[priorityMode];
+  const isTyped = messageText.trim().length > 0;
+
+  // 1. LIVE LOG STATE
+  const [logs, setLogs] = useState([
+    {
+      id: 1,
+      to: 'CPH2495',
+      type: 'PRIORITY',
+      text: 'Hydraulic Pressure Drop Line 2',
+      time: '12m AGO',
+      status: 'ACKNOWLEDGED'
+    },
+    {
+      id: 2,
+      to: 'ALL UNITS',
+      type: 'TASK',
+      text: 'Shift changeover checklist ready',
+      time: '45m AGO',
+      status: 'DELIVERED'
+    }
+  ]);
+
+  // 2. DISPATCH SUBMIT HANDLER
+  const handleSend = () => {
+    if (!isTyped) return;
+    const newLog = {
+      id: Date.now(),
+      to: selectedRecipient,
+      type: priorityMode,
+      text: messageText.trim(),
+      time: 'JUST NOW',
+      status: 'DELIVERED'
+    };
+    setLogs([newLog, ...logs]);
+    setMessageText('');
+  };
+
+  // 3. KEYBOARD SHORTCUT LISTENER (Cmd+Enter or Ctrl+Enter)
+  const handleKeyDown = (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: '280px 1fr 360px',
+      height: '100vh',
+      gap: '12px',
+      padding: '12px',
+      backgroundColor: '#0B110C',
+      color: '#888',
+      fontFamily: 'monospace',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
+      
+      {/* 1. LEFT PANE: FLEET ROSTER */}
+      <aside style={{
+        backgroundColor: '#111A13',
+        border: '1px solid #1A281E',
+        borderRadius: '6px',
+        padding: '16px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px'
+      }}>
+        <div style={{ fontSize: '12px', color: '#FFF', fontWeight: 'bold', borderBottom: '1px solid #1A281E', paddingBottom: '8px' }}>
+          FLEET ROSTER (25 DEVICES)
+        </div>
+
+        {/* Global Broadcast Selector */}
+        <div 
+          onClick={() => setSelectedRecipient('ALL UNITS (25)')}
+          style={{
+            border: selectedRecipient === 'ALL UNITS (25)' ? `1px solid ${activeColor}` : '1px solid #1A281E',
+            borderRadius: '4px',
+            padding: '10px',
+            backgroundColor: selectedRecipient === 'ALL UNITS (25)' ? 'rgba(255,255,255,0.04)' : 'transparent',
+            cursor: 'pointer'
+          }}
+        >
+          <div style={{ fontSize: '13px', color: selectedRecipient === 'ALL UNITS (25)' ? activeColor : '#FFF', fontWeight: 'bold' }}>
+            ● BROADCAST ALL UNITS
+          </div>
+          <div style={{ fontSize: '10px', color: '#666', marginTop: '4px' }}>TARGET: 25 CONNECTED</div>
+        </div>
+        
+        {/* Device Item 1 */}
+        <div 
+          onClick={() => setSelectedRecipient('CPH2495 (CNC CELL 02)')}
+          style={{
+            border: selectedRecipient === 'CPH2495 (CNC CELL 02)' ? `1px solid ${activeColor}` : '1px solid #1A281E',
+            borderRadius: '4px',
+            padding: '10px',
+            backgroundColor: selectedRecipient === 'CPH2495 (CNC CELL 02)' ? 'rgba(255,255,255,0.04)' : 'transparent',
+            cursor: 'pointer'
+          }}
+        >
+          <div style={{ fontSize: '13px', color: selectedRecipient === 'CPH2495 (CNC CELL 02)' ? activeColor : '#FFF', fontWeight: 'bold' }}>
+            ● CPH2495
+          </div>
+          <div style={{ fontSize: '10px', color: '#666', marginTop: '4px' }}>ZONE: CNC CELL 02 | BATT: 84%</div>
+        </div>
+
+        {/* Device Item 2 */}
+        <div 
+          onClick={() => setSelectedRecipient('UNIT 2 - JOHN')}
+          style={{ 
+            border: selectedRecipient === 'UNIT 2 - JOHN' ? `1px solid ${activeColor}` : '1px solid #1A281E',
+            borderRadius: '4px', 
+            padding: '10px',
+            backgroundColor: selectedRecipient === 'UNIT 2 - JOHN' ? 'rgba(255,255,255,0.04)' : 'transparent',
+            cursor: 'pointer'
+          }}
+        >
+          <div style={{ fontSize: '13px', color: selectedRecipient === 'UNIT 2 - JOHN' ? activeColor : '#FFF', fontWeight: 'bold' }}>
+            ○ UNIT 2 - JOHN
+          </div>
+          <div style={{ fontSize: '10px', color: '#666', marginTop: '4px' }}>ZONE: ASSEMBLY B | BATT: 38%</div>
+        </div>
+      </aside>
+
+      {/* 2. CENTER PANE: MAP & DISPATCH COMPOSER */}
+      <main style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        
+        {/* CAD Facility Map Viewport */}
+        <div style={{
+          flex: 1.2,
+          backgroundColor: '#0D140F',
+          border: '1px solid #1A281E',
+          borderRadius: '6px',
+          padding: '12px',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          justify: 'center',
+          alignItems: 'center'
+        }}>
+          {/* Header Overlay */}
+          <div style={{
+            position: 'absolute',
+            top: '12px',
+            left: '12px',
+            fontSize: '11px',
+            color: '#00FF66',
+            fontWeight: 'bold',
+            letterSpacing: '1px',
+            zIndex: 10,
+            backgroundColor: 'rgba(11, 17, 12, 0.85)',
+            padding: '4px 8px',
+            borderRadius: '3px',
+            border: '1px solid #1A281E'
+          }}>
+            FACILITY SCHEMATIC // LIVE TELEMETRY
+          </div>
+
+          {/* Base Map Image Container */}
+          <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <img 
+              src="./facility-schematic.png" 
+              alt="Facility Map" 
+              style={{
+                maxWidth: '100%',
+                maxHeight: '100%',
+                objectFit: 'contain',
+                opacity: 0.85,
+                filter: 'brightness(0.9) contrast(1.1)'
+              }} 
+            />
+
+            {/* Interactive Beacon - Zone 02 */}
+            <div 
+              onClick={() => setSelectedRecipient('CPH2495 (CNC CELL 02)')}
+              style={{
+                position: 'absolute',
+                top: '35%',
+                left: '42%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: activeColor,
+                boxShadow: `0 0 12px ${activeColor}`
+              }} />
+              <span style={{
+                fontSize: '10px',
+                color: activeColor,
+                backgroundColor: 'rgba(11, 17, 12, 0.9)',
+                padding: '2px 6px',
+                borderRadius: '3px',
+                border: `1px solid ${activeColor}`
+              }}>
+                CPH2495 (CNC CELL 02)
+              </span>
+            </div>
+
+            {/* Interactive Beacon - Line B */}
+            <div 
+              onClick={() => setSelectedRecipient('UNIT 2 - JOHN')}
+              style={{
+                position: 'absolute',
+                top: '60%',
+                left: '70%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: '#FFAA00',
+                boxShadow: '0 0 8px #FFAA00'
+              }} />
+              <span style={{
+                fontSize: '9px',
+                color: '#FFAA00',
+                backgroundColor: 'rgba(11, 17, 12, 0.9)',
+                padding: '2px 5px',
+                borderRadius: '3px',
+                border: '1px solid #FFAA00'
+              }}>
+                UNIT 2 - JOHN
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+        {/* 3-Tier Priority Dispatch Composer */}
+        <div style={{
+          flex: 0.8,
+          backgroundColor: '#111A13',
+          border: `1px solid ${isTyped ? activeColor : '#1A281E'}`,
+          borderRadius: '6px',
+          padding: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          justify: 'space-between',
+          transition: 'all 0.3s ease'
+        }}>
+          <div>
+            <div style={{ fontSize: '11px', color: activeColor, marginBottom: '6px', fontWeight: 'bold' }}>
+              TARGET RECIPIENT: {selectedRecipient}
+            </div>
+            <textarea
+              rows={3}
+              placeholder="COMPOSE BROADCAST DISPATCH..."
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              onKeyDown={handleKeyDown}
+              style={{
+                width: '100%',
+                backgroundColor: 'transparent',
+                border: 'none',
+                color: '#FFF',
+                fontFamily: 'monospace',
+                fontSize: '15px',
+                outline: 'none',
+                resize: 'none'
+              }}
+            />
+          </div>
+
+          <div>
+            {/* Priority Mode Switcher */}
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+              {['INFO', 'TASK', 'PRIORITY'].map((mode) => {
+                const isSelected = priorityMode === mode;
+                const mColor = themeColors[mode];
+                return (
+                  <button
+                    key={mode}
+                    onClick={() => setPriorityMode(mode)}
+                    style={{
+                      flex: 1,
+                      padding: '8px',
+                      backgroundColor: 'transparent',
+                      border: isSelected ? `2px solid ${mColor}` : `1px solid ${mColor}`,
+                      opacity: isSelected ? 1.0 : 0.45,
+                      color: mColor,
+                      fontFamily: 'monospace',
+                      fontWeight: 'bold',
+                      fontSize: '11px',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      boxShadow: isSelected ? `0 0 10px ${mColor}66` : 'none'
+                    }}
+                  >
+                    {mode}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Trigger Action Button */}
+            <button
+              disabled={!isTyped}
+              onClick={handleSend}
+              style={{
+                width: '100%',
+                padding: '12px',
+                borderRadius: '4px',
+                border: 'none',
+                backgroundColor: isTyped ? activeColor : '#1A241C',
+                color: isTyped ? '#0B110C' : '#334436',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                fontSize: '13px',
+                cursor: isTyped ? 'pointer' : 'not-allowed',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              SEND {priorityMode} PAGE (Cmd + Enter)
+            </button>
+          </div>
+        </div>
+      </main>
+
+      {/* 3. RIGHT PANE: LIVE LOGS & AUDIT FEED */}
+      <aside style={{
+        backgroundColor: '#111A13',
+        border: '1px solid #1A281E',
+        borderRadius: '6px',
+        padding: '16px',
+        overflowY: 'auto'
+      }}>
+        <div style={{ fontSize: '12px', color: '#FFF', fontWeight: 'bold', borderBottom: '1px solid #1A281E', paddingBottom: '8px', marginBottom: '12px' }}>
+          LIVE ACTIVITY LOG
+        </div>
+
+        {/* Dynamic Log Feed */}
+        {logs.map((log) => {
+          const logColor = themeColors[log.type] || '#00FF66';
+          return (
+            <div 
+              key={log.id} 
+              style={{ 
+                border: `1px solid ${logColor}`, 
+                borderRadius: '4px', 
+                padding: '10px', 
+                marginBottom: '8px',
+                backgroundColor: 'rgba(255,255,255,0.01)' 
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#888' }}>
+                <span>TO: {log.to}</span>
+                <span>{log.time}</span>
+              </div>
+              <div style={{ fontSize: '10px', color: logColor, margin: '4px 0', fontWeight: 'bold' }}>
+                [{log.type}]
+              </div>
+              <div style={{ fontSize: '12px', color: '#FFF' }}>
+                {log.text}
+              </div>
+              <div style={{ display: 'flex', gap: '6px', marginTop: '8px' }}>
+                <span style={{ 
+                  fontSize: '9px', 
+                  backgroundColor: logColor, 
+                  color: '#0B110C', 
+                  padding: '2px 4px', 
+                  borderRadius: '2px', 
+                  fontWeight: 'bold' 
+                }}>
+                  {log.status}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </aside>
+
+    </div>
+  );
+}
