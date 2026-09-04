@@ -37,6 +37,38 @@
 
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: #80E600; font-size: 0.9rem; letter-spacing: 0.05em; }
     .brand img { height: 28px; }
+
+    /* Header View Switcher Toggle */
+    .view-switcher {
+      display: flex;
+      background: #111;
+      padding: 3px;
+      border-radius: 6px;
+      border: 1px solid #222;
+      gap: 2px;
+    }
+
+    .view-toggle-btn {
+      background: transparent;
+      border: none;
+      color: #777;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .view-toggle-btn:hover { color: #FFF; }
+    .view-toggle-btn.active {
+      background: rgba(128, 230, 0, 0.15);
+      color: #80E600;
+      border: 1px solid rgba(128, 230, 0, 0.4);
+    }
     
     /* Header Right Actions */
     .header-actions { display: flex; align-items: center; gap: 10px; }
@@ -78,6 +110,10 @@
     .center-pane { display: flex; flex-direction: column; background: #050505; }
     .map-viewport { flex: 1; position: relative; background: #050505; border-bottom: 1px solid #1A1A1A; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     
+    /* View Switch Containers */
+    .view-canvas { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .view-canvas.hidden { display: none !important; }
+
     /* Map Layout Container */
     .map-wrapper {
       position: relative;
@@ -98,14 +134,72 @@
 
     .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#1A1A1A 1px, transparent 1px); background-size: 20px 20px; opacity: 0.6; z-index: 2; pointer-events: none; }
     
-    /* --- Dot + Pill Beacon Styling --- */
+    /* Fleet View Custom Map Graphic Layout */
+    .fleet-map-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, #0d131a 0%, #050505 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Central Hub Hub Indicator */
+    .hub-node {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(10, 10, 10, 0.9);
+      border: 2px solid #80E600;
+      border-radius: 8px;
+      padding: 8px 14px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(128, 230, 0, 0.25);
+      z-index: 4;
+    }
+    .hub-title { font-size: 0.75rem; font-weight: 800; color: #FFF; letter-spacing: 0.05em; }
+    .hub-sub { font-size: 0.65rem; color: #80E600; font-weight: 700; margin-top: 2px; }
+
+    /* Geofence Ring */
+    .geofence-ring {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border: 1px dashed rgba(128, 230, 0, 0.4);
+      border-radius: 50%;
+      background: rgba(128, 230, 0, 0.02);
+      pointer-events: none;
+      z-index: 2;
+      animation: geofencePulse 4s infinite ease-in-out;
+    }
+    .geofence-tag {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: rgba(128, 230, 0, 0.7);
+      letter-spacing: 0.08em;
+      background: #050505;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    @keyframes geofencePulse {
+      0%, 100% { border-color: rgba(128, 230, 0, 0.3); background: rgba(128, 230, 0, 0.02); }
+      50% { border-color: rgba(128, 230, 0, 0.6); background: rgba(128, 230, 0, 0.05); }
+    }
+
+    /* Dot + Pill Beacon Styling */
     .map-beacon { 
       position: absolute; 
       display: flex; 
       align-items: center; 
       gap: 6px; 
-      z-index: 3; 
-      transform: translate(-4px, -4px); /* Centers dot on exact coordinates */
+      z-index: 5; 
+      transform: translate(-4px, -4px);
       transition: top 2s ease, left 2s ease, transform 0.2s ease;
       cursor: pointer;
     }
@@ -115,7 +209,6 @@
       z-index: 10;
     }
 
-    /* Pulsing Pinpoint Dot */
     .beacon-dot {
       width: 8px;
       height: 8px;
@@ -280,7 +373,17 @@
         <img src="apple-touch-logo.png" alt="PAiGE">
         COMMAND CENTER
       </div>
+
+      <div class="view-switcher">
+        <button id="toggleFacilityBtn" class="view-toggle-btn active" onclick="switchMainView('facility')">
+          <i class="fa-solid fa-industry"></i> FACILITY VIEW
+        </button>
+        <button id="toggleFleetBtn" class="view-toggle-btn" onclick="switchMainView('fleet')">
+          <i class="fa-solid fa-truck-fast"></i> FLEET &amp; DOCK OPS
+        </button>
+      </div>
     </div>
+    
     <div class="header-actions">
       <button class="audio-toggle-btn" id="audioToggle" onclick="toggleAudioMute()">
         <i class="fa-solid fa-volume-high" id="audioIcon"></i>
@@ -294,10 +397,11 @@
     
     <div class="pane">
       <div class="pane-header">
-        <span>Fleet Roster</span>
-        <span style="color:#80E600;">5 Active</span>
+        <span id="rosterTitle">Facility Roster</span>
+        <span style="color:#80E600;" id="rosterCount">5 Active</span>
       </div>
-      <div class="roster-list">
+      
+      <div class="roster-list" id="facilityRoster">
         <div class="device-card selected" data-target="ALL UNITS (BROADCAST)" onclick="selectDevice('ALL UNITS (BROADCAST)')">
           <div class="device-name">ALL UNITS (BROADCAST)</div>
           <div class="device-meta"><span>Target: Entire Plant</span><span>100% Signal</span></div>
@@ -323,40 +427,94 @@
           <div class="device-meta"><span>Zone: Shipping &amp; Docks</span><span>Batt: 71%</span></div>
         </div>
       </div>
+
+      <div class="roster-list" id="fleetRoster" style="display: none;">
+        <div class="device-card selected" data-target="ALL FLEET UNITS" onclick="selectDevice('ALL FLEET UNITS')">
+          <div class="device-name">ALL FLEET UNITS</div>
+          <div class="device-meta"><span>Target: Mobile Fleet</span><span>GPS Live</span></div>
+        </div>
+        <div class="device-card" data-target="TRUCK #12 - INBOUND" onclick="selectDevice('TRUCK #12 - INBOUND')">
+          <div class="device-name">TRUCK #12 - INBOUND</div>
+          <div class="device-meta"><span>ETA: 8 Mins (Dock 4)</span><span>GPS: Active</span></div>
+        </div>
+        <div class="device-card" data-target="TRUCK #08 - STAGED" onclick="selectDevice('TRUCK #08 - STAGED')">
+          <div class="device-name">TRUCK #08 - STAGED</div>
+          <div class="device-meta"><span>Location: Bay 2 Area</span><span>Batt: 91%</span></div>
+        </div>
+        <div class="device-card" data-target="VAN #04 - FIELD TECH" onclick="selectDevice('VAN #04 - FIELD TECH')">
+          <div class="device-name">VAN #04 - FIELD TECH</div>
+          <div class="device-meta"><span>Zone: Offsite Site B</span><span>GPS: Active</span></div>
+        </div>
+      </div>
     </div>
 
     <div class="center-pane">
-      <div class="pane-header">Facility Telemetry &amp; Live Map</div>
+      <div class="pane-header" id="mapTitle">Facility Telemetry &amp; Live Map</div>
       <div class="map-viewport">
-        <div class="map-wrapper">
-          <img src="facility-schematic.png" alt="Facility Floorplan Schematic" class="schematic-img" />
-        </div>
-        <div class="map-grid"></div>
         
-        <div class="map-beacon" data-target="CPH2495 (CNC CELL 02)" style="top: 35%; left: 42%;" onclick="selectDevice('CPH2495 (CNC CELL 02)')">
-          <div class="beacon-dot"></div>
-          <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> CNC CELL 02</div>
+        <div id="facilityViewCanvas" class="view-canvas">
+          <div class="map-wrapper">
+            <img src="facility-schematic.png" alt="Facility Floorplan Schematic" class="schematic-img" />
+          </div>
+          <div class="map-grid"></div>
+          
+          <div class="map-beacon" data-target="CPH2495 (CNC CELL 02)" style="top: 35%; left: 42%;" onclick="selectDevice('CPH2495 (CNC CELL 02)')">
+            <div class="beacon-dot"></div>
+            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> CNC CELL 02</div>
+          </div>
+          
+          <div class="map-beacon" data-target="UNIT 2 - JOHN" style="top: 60%; left: 68%;" onclick="selectDevice('UNIT 2 - JOHN')">
+            <div class="beacon-dot"></div>
+            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 2 - JOHN</div>
+          </div>
+          
+          <div class="map-beacon" data-target="UNIT 3 - SARAH" style="top: 25%; left: 22%;" onclick="selectDevice('UNIT 3 - SARAH')">
+            <div class="beacon-dot"></div>
+            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 3 - SARAH</div>
+          </div>
+          
+          <div class="map-beacon" data-target="FORKLIFT 04" style="top: 72%; left: 28%;" onclick="selectDevice('FORKLIFT 04')">
+            <div class="beacon-dot"></div>
+            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> FORKLIFT 04</div>
+          </div>
+          
+          <div class="map-beacon" data-target="UNIT 5 - MIKE" style="top: 68%; left: 52%;" onclick="selectDevice('UNIT 5 - MIKE')">
+            <div class="beacon-dot"></div>
+            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 5 - MIKE</div>
+          </div>
         </div>
-        
-        <div class="map-beacon" data-target="UNIT 2 - JOHN" style="top: 60%; left: 68%;" onclick="selectDevice('UNIT 2 - JOHN')">
-          <div class="beacon-dot"></div>
-          <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 2 - JOHN</div>
+
+        <div id="fleetViewCanvas" class="view-canvas hidden">
+          <div class="fleet-map-bg"></div>
+          <div class="map-grid"></div>
+
+          <div class="geofence-ring">
+            <span class="geofence-tag">5-MILE GEOFENCE BOUNDARY</span>
+          </div>
+
+          <div class="hub-node">
+            <div class="hub-title"><i class="fa-solid fa-warehouse" style="color: #80E600;"></i> MAIN FACILITY DOCKS</div>
+            <div class="hub-sub">AUTO-PREP ACTIVE</div>
+          </div>
+
+          <div class="map-beacon" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 18%; left: 18%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
+            <div class="beacon-dot" style="background-color: #FFB000; box-shadow: 0 0 8px #FFB000;"></div>
+            <div class="beacon-pill" style="border-color: #FFB000; color: #FFB000;">
+              <i class="fa-solid fa-truck" style="font-size: 8px;"></i> TRUCK #12 (8 MIN ETA)
+            </div>
+          </div>
+
+          <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 62%; left: 58%;" onclick="selectDevice('TRUCK #08 - STAGED')">
+            <div class="beacon-dot"></div>
+            <div class="beacon-pill"><i class="fa-solid fa-truck-ramp-box" style="font-size: 8px;"></i> TRUCK #08 (STAGED)</div>
+          </div>
+
+          <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 80%; left: 22%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
+            <div class="beacon-dot"></div>
+            <div class="beacon-pill"><i class="fa-solid fa-van-shuttle" style="font-size: 8px;"></i> VAN #04 (FIELD)</div>
+          </div>
         </div>
-        
-        <div class="map-beacon" data-target="UNIT 3 - SARAH" style="top: 25%; left: 22%;" onclick="selectDevice('UNIT 3 - SARAH')">
-          <div class="beacon-dot"></div>
-          <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 3 - SARAH</div>
-        </div>
-        
-        <div class="map-beacon" data-target="FORKLIFT 04" style="top: 72%; left: 28%;" onclick="selectDevice('FORKLIFT 04')">
-          <div class="beacon-dot"></div>
-          <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> FORKLIFT 04</div>
-        </div>
-        
-        <div class="map-beacon" data-target="UNIT 5 - MIKE" style="top: 68%; left: 52%;" onclick="selectDevice('UNIT 5 - MIKE')">
-          <div class="beacon-dot"></div>
-          <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 5 - MIKE</div>
-        </div>
+
       </div>
 
       <div class="dispatch-composer">
@@ -412,6 +570,8 @@
   let selectedTarget = 'ALL UNITS (BROADCAST)';
   let activeFilter = 'ALL';
   let isAudioMuted = false;
+  let activeView = 'facility';
+  let geofenceTriggered = false;
   
   // Audio Synthesizer via Web Audio API
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -434,7 +594,7 @@
   }
 
   function playDispatchSound(type) {
-    if (isAudioMuted) return; // Guard clause for muted state
+    if (isAudioMuted) return;
 
     if (audioCtx.state === 'suspended') audioCtx.resume();
     
@@ -446,14 +606,14 @@
     const now = audioCtx.currentTime;
 
     if (type === 'INFO') {
-      osc.frequency.setValueAtTime(440, now); // Quiet blip
+      osc.frequency.setValueAtTime(440, now);
       gain.gain.setValueAtTime(0.08, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
       osc.start(now);
       osc.stop(now + 0.15);
     } else if (type === 'TASK') {
-      osc.frequency.setValueAtTime(587.33, now); // D5 Tone
-      osc.frequency.setValueAtTime(880, now + 0.1); // A5 Tone
+      osc.frequency.setValueAtTime(587.33, now);
+      osc.frequency.setValueAtTime(880, now + 0.1);
       gain.gain.setValueAtTime(0.1, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
       osc.start(now);
@@ -467,6 +627,86 @@
       osc.start(now);
       osc.stop(now + 0.35);
     }
+  }
+
+  // --- View Switching Logic ---
+  function switchMainView(viewName) {
+    activeView = viewName;
+    const facilityBtn = document.getElementById('toggleFacilityBtn');
+    const fleetBtn = document.getElementById('toggleFleetBtn');
+    const facilityCanvas = document.getElementById('facilityViewCanvas');
+    const fleetCanvas = document.getElementById('fleetViewCanvas');
+    const facilityRoster = document.getElementById('facilityRoster');
+    const fleetRoster = document.getElementById('fleetRoster');
+    const rosterTitle = document.getElementById('rosterTitle');
+    const rosterCount = document.getElementById('rosterCount');
+    const mapTitle = document.getElementById('mapTitle');
+
+    if (viewName === 'facility') {
+      facilityBtn.classList.add('active');
+      fleetBtn.classList.remove('active');
+      
+      facilityCanvas.classList.remove('hidden');
+      fleetCanvas.classList.add('hidden');
+
+      facilityRoster.style.display = 'flex';
+      fleetRoster.style.display = 'none';
+
+      rosterTitle.innerText = 'Facility Roster';
+      rosterCount.innerText = '5 Active';
+      mapTitle.innerText = 'Facility Telemetry & Live Map';
+
+      selectDevice('ALL UNITS (BROADCAST)');
+    } else {
+      fleetBtn.classList.add('active');
+      facilityBtn.classList.remove('active');
+
+      fleetCanvas.classList.remove('hidden');
+      facilityCanvas.classList.add('hidden');
+
+      fleetRoster.style.display = 'flex';
+      facilityRoster.style.display = 'none';
+
+      rosterTitle.innerText = 'Fleet Roster';
+      rosterCount.innerText = '3 Vehicles Active';
+      mapTitle.innerText = 'GPS Fleet Tracking & Dock Geofence';
+
+      selectDevice('ALL FLEET UNITS');
+
+      // Trigger Geofence Automated Demo Simulation
+      if (!geofenceTriggered) {
+        geofenceTriggered = true;
+        simulateGeofenceEvent();
+      }
+    }
+  }
+
+  // Automated Geofence & Dock Notification Simulation
+  function simulateGeofenceEvent() {
+    setTimeout(() => {
+      const truck = document.getElementById('truck12Beacon');
+      if (truck) {
+        truck.style.top = '38%';
+        truck.style.left = '36%';
+      }
+
+      setTimeout(() => {
+        // Post automated dispatch message
+        const feed = document.getElementById('auditFeed');
+        const autoLog = document.createElement('div');
+        autoLog.className = 'log-item task';
+        autoLog.setAttribute('data-type', 'TASK');
+        autoLog.innerHTML = `
+          <div class="log-header"><span>To: DOCK OPERATOR (BAY 4)</span><span>AUTOMATED</span></div>
+          <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter. Prep Dock 4 for staging.</div>
+          <div class="log-status">✓ AUTO-DISPATCH SENT</div>
+        `;
+        feed.insertBefore(autoLog, feed.firstChild);
+        playDispatchSound('TASK');
+
+        triggerBeaconFlash('TRUCK #12 - INBOUND', 'TASK');
+      }, 2000);
+    }, 1000);
   }
 
   // Unified selection handler for Roster Cards & Direct Map Nodes
@@ -573,20 +813,17 @@
       <div class="log-status">✓ DISPATCHED (${currentPriority})</div>
     `;
 
-    // Apply active filter state to new item
     if (activeFilter !== 'ALL' && activeFilter !== currentPriority) {
       newLog.style.display = 'none';
     }
 
     feed.insertBefore(newLog, feed.firstChild);
     
-    // Trigger visual feed flash & sound audio chime
     playDispatchSound(currentPriority);
     feed.classList.remove('flash-feed-info', 'flash-feed-task', 'flash-feed-priority');
-    void feed.offsetWidth; // Force reflow
+    void feed.offsetWidth;
     feed.classList.add(`flash-feed-${priorityClass}`);
 
-    // Map Beacon Feedback Flash
     triggerBeaconFlash(selectedTarget, currentPriority);
 
     input.value = '';
@@ -599,7 +836,7 @@
 
     beacons.forEach(beacon => {
       const beaconTarget = beacon.getAttribute('data-target');
-      if (target === 'ALL UNITS (BROADCAST)' || target === beaconTarget) {
+      if (target === 'ALL UNITS (BROADCAST)' || target === 'ALL FLEET UNITS' || target === beaconTarget) {
         beacon.classList.add(flashClass);
         setTimeout(() => beacon.classList.remove(flashClass), 3000);
       }
@@ -610,6 +847,9 @@
   setInterval(() => {
     const beacons = document.querySelectorAll('.map-beacon');
     beacons.forEach(beacon => {
+      // Don't drift truck 12 if it's animating
+      if (beacon.id === 'truck12Beacon') return;
+
       const deltaX = (Math.random() - 0.5) * 0.8;
       const deltaY = (Math.random() - 0.5) * 0.8;
 
