@@ -1,1 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAiGE - Supported Hardware Ecosystem</title>
+  
+  <link rel="apple-touch-icon" href="../assets/apple-touch-logo.png">
+  <link rel="icon" type="image/png" href="../assets/apple-touch-logo.png">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #050505;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Navigation Bar */
+    header {
+      background-color: #000000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .logo-container { flex: 1; display: flex; align-items: center; }
+    .logo-img { height: 48px; width: auto; object-fit: contain; }
+
+    .header-main-nav { display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex: 1; }
+    .header-utility-nav { display: flex; align-items: center; justify-content: flex-end; flex: 1; }
+
+    .nav-link {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover, .nav-link.active { color: #80E600; }
+
+    .nav-link-admin {
+      color: #71717a;
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+      opacity: 0.85;
+    }
+
+    .nav-link-admin:hover { color: #ffffff; opacity: 1; }
+
+    /* Page Main Container */
+    main {
+      flex: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hardware-hero {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 4rem auto;
+    }
+
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: rgba(128, 230, 0, 0.08);
+      border: 1px solid rgba(128, 230, 0, 0.3);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #80E600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hardware-hero h1 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hardware-hero p {
+      color: #a1a1aa;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffffff;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 0.75rem;
+    }
+
+    .section-title i { color: #80E600; }
+
+    /* Tier Grid (3 Columns) */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+      margin-bottom: 4rem;
+    }
+
+    .hardware-card {
+      background: #0d0d0d;
+      border: 1px solid #1f1f1f;
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .hardware-card:hover {
+      border-color: rgba(128, 230, 0, 0.4);
+      transform: translateY(-3px);
+    }
+
+    /* Highlight Featured/Enterprise Card */
+    .hardware-card.featured {
+      border-color: rgba(128, 230, 0, 0.3);
+      background: linear-gradient(180deg, #101509 0%, #0d0d0d 100%);
+    }
+
+    .tier-tag {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #80E600;
+      margin-bottom: 0.5rem;
+    }
+
+    .device-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .device-sub {
+      color: #71717a;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .spec-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .spec-list li {
+      color: #a1a1aa;
+      font-size: 0.88rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spec-list li i {
+      color: #80E600;
+      font-size: 0.8rem;
+    }
+
+    .btn-card {
+      width: 100%;
+      background-color: #18181b;
+      color: #ffffff;
+      border: 1px solid #27272a;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-card:hover {
+      background-color: #80E600;
+      color: #050505;
+      border-color: #80E600;
+    }
+
+    /* Warehouse 2-Column Grid */
+    .warehouse-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #0d0d0d;
+      border-top: 1px solid #1f1f1f;
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #52525b;
+      font-size: 0.8rem;
+    }
+
+    footer a { color: #52525b; text-decoration: none; }
+    footer a:hover { color: #a1a1aa; }
+
+    @media (max-width: 950px) {
+      .tier-grid { grid-template-columns: 1fr; }
+      .warehouse-grid { grid-template-columns: 1fr; }
+      header { flex-direction: column; gap: 1rem; }
+      footer { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <a href="../index.html">
+        <img src="../assets/apple-touch-logo.png" alt="PAiGE Logo" class="logo-img" />
+      </a>
+    </div>
+
+    <nav class="header-main-nav">
+      <a href="../features/index.html" class="nav-link">Features</a>
+      <a href="index.html" class="nav-link active">Hardware</a>
+      <a href="../index.html#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <nav class="header-utility-nav">
+      <a href="../dashboard#demo" class="nav-link-admin">Admin Login</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hardware-hero">
+      <div class="category-badge">Tested &amp; Certified</div>
+      <h1>Purpose-Built Industrial Hardware Options</h1>
+      <p>PAiGE integrates seamlessly across ultra-rugged mobile handhelds, dedicated push-to-talk smart radios, and barcode scanning systems.</p>
+    </section>
+
+    <div class="section-title">
+      <i class="fa-solid fa-layer-group"></i>
+      Standard Operational Tiers
+    </div>
+
+    <section class="tier-grid">
+      <div class="hardware-card">
+        <div>
+          <div class="tier-tag">Tier 1 • Value</div>
+          <div class="device-title">Kyocera DuraForce Ultra 5G</div>
+          <div class="device-sub">Ultra-rugged baseline performance built for harsh shop floor environments.</div>
+          <ul class="spec-list">
+            <li><i class="fa-solid fa-check"></i> MIL-STD-810H &amp; IP68 Waterproof</li>
+            <li><i class="fa-solid fa-check"></i> Sapphire Shield™ Touchscreen</li>
+            <li><i class="fa-solid fa-check"></i> Glove &amp; Wet Touch Operation</li>
+            <li><i class="fa-solid fa-check"></i> Ultra-Loud Dual Front Speakers</li>
+          </ul>
+        </div>
+        <a href="../index.html#contact" class="btn-card">Deploy Tier 1</a>
+      </div>
+
+      <div class="hardware-card">
+        <div>
+          <div class="tier-tag">Tier 2 • Pro</div>
+          <div class="device-title">Samsung Galaxy XCover</div>
+          <div class="device-sub">Slim, durable, and highly versatile device with customizable hardware keys.</div>
+          <ul class="spec-list">
+            <li><i class="fa-solid fa-check"></i> Programmable XCover Side Button</li>
+            <li><i class="fa-solid fa-check"></i> Knox Vault Security Integration</li>
+            <li><i class="fa-solid fa-check"></i> Replaceable Battery Capability</li>
+            <li><i class="fa-solid fa-check"></i> Light, Ergonomic Form Factor</li>
+          </ul>
+        </div>
+        <a href="../index.html#contact" class="btn-card">Deploy Tier 2</a>
+      </div>
+
+      <div class="hardware-card featured">
+        <div>
+          <div class="tier-tag">Tier 3 • Enterprise</div>
+          <div class="device-title">Sonim XP10 Smart Radio</div>
+          <div class="device-sub">The ultimate mission-critical handheld smart radio for extreme environments.</div>
+          <ul class="spec-list">
+            <li><i class="fa-solid fa-check"></i> Dedicated Tactile PTT &amp; SOS Buttons</li>
+            <li><i class="fa-solid fa-check"></i> 100dB+ Noise Cancelling Audio</li>
+            <li><i class="fa-solid fa-check"></i> Class I, Div 2 Hazardous Location Rated</li>
+            <li><i class="fa-solid fa-check"></i> Multi-Shift Ultra-Battery Life</li>
+          </ul>
+        </div>
+        <a href="../index.html#contact" class="btn-card">Deploy Tier 3</a>
+      </div>
+    </section>
+
+    <div class="section-title">
+      <i class="fa-solid fa-barcode"></i>
+      Logistics &amp; RF Scanning Devices
+    </div>
+
+    <section class="warehouse-grid">
+      <div class="hardware-card">
+        <div>
+          <div class="tier-tag">Warehouse Edition</div>
+          <div class="device-title">Zebra TC22 / TC27</div>
+          <div class="device-sub">Streamline comms and high-speed inventory scanning on a single device.</div>
+          <ul class="spec-list">
+            <li><i class="fa-solid fa-check"></i> Integrated SE4710 / SE55 1D/2D Scanner</li>
+            <li><i class="fa-solid fa-check"></i> Enterprise Wi-Fi 6E &amp; 5G Connectivity</li>
+            <li><i class="fa-solid fa-check"></i> PAiGE Background Alerting Overlay</li>
+          </ul>
+        </div>
+        <a href="../index.html#contact" class="btn-card">Select Zebra Series</a>
+      </div>
+
+      <div class="hardware-card">
+        <div>
+          <div class="tier-tag">Warehouse Edition</div>
+          <div class="device-title">Honeywell ScanPal EDA52</div>
+          <div class="device-sub">Reliable RF scanning terminal engineered for fast-paced fulfillment hubs.</div>
+          <ul class="spec-list">
+            <li><i class="fa-solid fa-check"></i> Honeywell S0703 Enterprise Scan Engine</li>
+            <li><i class="fa-solid fa-check"></i> Rugged Drop Specs for Concrete Floors</li>
+            <li><i class="fa-solid fa-check"></i> Seamless PAiGE Priority Notification Sync</li>
+          </ul>
+        </div>
+        <a href="../index.html#contact" class="btn-card">Select Honeywell Series</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 PAiGE Link LLC. All rights reserved.</p>
+    <div style="display: flex; gap: 1.5rem;">
+      <a href="../index.html#privacy">Privacy Policy</a>
+      <a href="../index.html#terms">Terms of Service</a>
+      <a href="../index.html#contact">Contact Support</a>
+    </div>
+  </footer>
+
+</body>
+</html>
