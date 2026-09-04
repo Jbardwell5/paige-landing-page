@@ -15,6 +15,26 @@
     
     /* Top Bar */
     header { height: 50px; background: #000; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; }
+    .header-left { display: flex; align-items: center; gap: 16px; }
+    
+    /* Back Button Styling */
+    .back-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #333;
+      color: #AAA;
+      font-size: 0.75rem;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .back-btn:hover { background: rgba(255, 255, 255, 0.12); border-color: #80E600; color: #80E600; }
+
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: #80E600; font-size: 0.9rem; letter-spacing: 0.05em; }
     .brand img { height: 28px; }
     
@@ -86,8 +106,13 @@
       gap: 6px; 
       z-index: 3; 
       transform: translate(-4px, -4px); /* Centers dot on exact coordinates */
-      transition: top 2s ease, left 2s ease;
+      transition: top 2s ease, left 2s ease, transform 0.2s ease;
       cursor: pointer;
+    }
+
+    .map-beacon:hover {
+      transform: translate(-4px, -4px) scale(1.08);
+      z-index: 10;
     }
 
     /* Pulsing Pinpoint Dot */
@@ -132,7 +157,14 @@
       align-items: center;
       gap: 5px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.8);
-      transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.2s ease;
+    }
+
+    /* Active Direct Map Selection State */
+    .map-beacon.active .beacon-pill {
+      background: #80E600;
+      color: #000;
+      box-shadow: 0 0 12px rgba(128, 230, 0, 0.8);
     }
 
     /* Map Beacon Active Trigger States */
@@ -240,9 +272,14 @@
 <body>
 
   <header>
-    <div class="brand">
-      <img src="apple-touch-logo.png" alt="PAiGE">
-      COMMAND CENTER
+    <div class="header-left">
+      <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> BACK
+      </a>
+      <div class="brand">
+        <img src="apple-touch-logo.png" alt="PAiGE">
+        COMMAND CENTER
+      </div>
     </div>
     <div class="header-actions">
       <button class="audio-toggle-btn" id="audioToggle" onclick="toggleAudioMute()">
@@ -261,27 +298,27 @@
         <span style="color:#80E600;">5 Active</span>
       </div>
       <div class="roster-list">
-        <div class="device-card selected" onclick="selectDevice(this, 'ALL UNITS (BROADCAST)')">
+        <div class="device-card selected" data-target="ALL UNITS (BROADCAST)" onclick="selectDevice('ALL UNITS (BROADCAST)')">
           <div class="device-name">ALL UNITS (BROADCAST)</div>
           <div class="device-meta"><span>Target: Entire Plant</span><span>100% Signal</span></div>
         </div>
-        <div class="device-card" onclick="selectDevice(this, 'CPH2495 (CNC CELL 02)')">
+        <div class="device-card" data-target="CPH2495 (CNC CELL 02)" onclick="selectDevice('CPH2495 (CNC CELL 02)')">
           <div class="device-name">CPH2495 (CNC CELL 02)</div>
           <div class="device-meta"><span>Zone: CNC Line 2</span><span>Batt: 84%</span></div>
         </div>
-        <div class="device-card" onclick="selectDevice(this, 'UNIT 2 - JOHN')">
+        <div class="device-card" data-target="UNIT 2 - JOHN" onclick="selectDevice('UNIT 2 - JOHN')">
           <div class="device-name">UNIT 2 - JOHN</div>
           <div class="device-meta"><span>Zone: Assembly B</span><span>Batt: 38%</span></div>
         </div>
-        <div class="device-card" onclick="selectDevice(this, 'UNIT 3 - SARAH')">
+        <div class="device-card" data-target="UNIT 3 - SARAH" onclick="selectDevice('UNIT 3 - SARAH')">
           <div class="device-name">UNIT 3 - SARAH</div>
           <div class="device-meta"><span>Zone: High Bay A</span><span>Batt: 92%</span></div>
         </div>
-        <div class="device-card" onclick="selectDevice(this, 'FORKLIFT 04')">
+        <div class="device-card" data-target="FORKLIFT 04" onclick="selectDevice('FORKLIFT 04')">
           <div class="device-name">FORKLIFT 04</div>
           <div class="device-meta"><span>Zone: Staging Bay</span><span>Batt: 65%</span></div>
         </div>
-        <div class="device-card" onclick="selectDevice(this, 'UNIT 5 - MIKE')">
+        <div class="device-card" data-target="UNIT 5 - MIKE" onclick="selectDevice('UNIT 5 - MIKE')">
           <div class="device-name">UNIT 5 - MIKE</div>
           <div class="device-meta"><span>Zone: Shipping &amp; Docks</span><span>Batt: 71%</span></div>
         </div>
@@ -296,27 +333,27 @@
         </div>
         <div class="map-grid"></div>
         
-        <div class="map-beacon" data-target="CPH2495 (CNC CELL 02)" style="top: 35%; left: 42%;">
+        <div class="map-beacon" data-target="CPH2495 (CNC CELL 02)" style="top: 35%; left: 42%;" onclick="selectDevice('CPH2495 (CNC CELL 02)')">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> CNC CELL 02</div>
         </div>
         
-        <div class="map-beacon" data-target="UNIT 2 - JOHN" style="top: 60%; left: 68%;">
+        <div class="map-beacon" data-target="UNIT 2 - JOHN" style="top: 60%; left: 68%;" onclick="selectDevice('UNIT 2 - JOHN')">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 2 - JOHN</div>
         </div>
         
-        <div class="map-beacon" data-target="UNIT 3 - SARAH" style="top: 25%; left: 22%;">
+        <div class="map-beacon" data-target="UNIT 3 - SARAH" style="top: 25%; left: 22%;" onclick="selectDevice('UNIT 3 - SARAH')">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 3 - SARAH</div>
         </div>
         
-        <div class="map-beacon" data-target="FORKLIFT 04" style="top: 72%; left: 28%;">
+        <div class="map-beacon" data-target="FORKLIFT 04" style="top: 72%; left: 28%;" onclick="selectDevice('FORKLIFT 04')">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> FORKLIFT 04</div>
         </div>
         
-        <div class="map-beacon" data-target="UNIT 5 - MIKE" style="top: 68%; left: 52%;">
+        <div class="map-beacon" data-target="UNIT 5 - MIKE" style="top: 68%; left: 52%;" onclick="selectDevice('UNIT 5 - MIKE')">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 5 - MIKE</div>
         </div>
@@ -432,11 +469,29 @@
     }
   }
 
-  function selectDevice(element, targetName) {
-    document.querySelectorAll('.device-card').forEach(card => card.classList.remove('selected'));
-    element.classList.add('selected');
+  // Unified selection handler for Roster Cards & Direct Map Nodes
+  function selectDevice(targetName) {
     selectedTarget = targetName;
     document.getElementById('targetName').innerText = targetName;
+
+    // Update Fleet Roster cards selection state
+    document.querySelectorAll('.device-card').forEach(card => {
+      if (card.getAttribute('data-target') === targetName) {
+        card.classList.add('selected');
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        card.classList.remove('selected');
+      }
+    });
+
+    // Update Map Beacons selection state
+    document.querySelectorAll('.map-beacon').forEach(beacon => {
+      if (beacon.getAttribute('data-target') === targetName) {
+        beacon.classList.add('active');
+      } else {
+        beacon.classList.remove('active');
+      }
+    });
   }
 
   function setPriority(type) {
