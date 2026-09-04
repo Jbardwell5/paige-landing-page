@@ -14,7 +14,7 @@
     body { background-color: #080808; color: #E0E0E0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
     
     /* Top Bar */
-    header { height: 50px; background: #000; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; }
+    header { height: 50px; background: #000; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; flex-shrink: 0; }
     .header-left { display: flex; align-items: center; gap: 16px; }
     
     /* Back Button Styling */
@@ -92,8 +92,12 @@
     .audio-toggle-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: #555; }
     .audio-toggle-btn.is-muted { color: #666; border-color: #222; background: rgba(0, 0, 0, 0.4); }
     
-    /* Main 3-Pane Layout */
-    .dashboard-container { flex: 1; display: grid; grid-template-columns: 280px 1fr 340px; height: calc(100vh - 50px); }
+    /* Workspace Views Wrapper */
+    .workspace-wrapper { flex: 1; height: calc(100vh - 50px); position: relative; overflow: hidden; }
+
+    /* Main 3-Pane Layout (Facility & Fleet Views) */
+    .dashboard-container { display: grid; grid-template-columns: 280px 1fr 340px; height: 100%; width: 100%; position: absolute; inset: 0; }
+    .dashboard-container.hidden { display: none !important; }
     
     /* Pane Base Styles */
     .pane { border-right: 1px solid #1A1A1A; display: flex; flex-direction: column; background: #0A0A0A; }
@@ -365,6 +369,272 @@
     @keyframes feedFlashInfo { 0% { background-color: rgba(128, 230, 0, 0.15); } 100% { background-color: transparent; } }
     @keyframes feedFlashTask { 0% { background-color: rgba(255, 176, 0, 0.15); } 100% { background-color: transparent; } }
     @keyframes feedFlashPriority { 0% { background-color: rgba(255, 51, 51, 0.2); } 100% { background-color: transparent; } }
+
+    /* ==========================================================================
+       VIEW 3: HIERARCHY & MATRIX CONTAINER
+       ========================================================================== */
+    .hierarchy-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      inset: 0;
+      background: #080808;
+    }
+    .hierarchy-container.hidden { display: none !important; }
+
+    /* Hierarchy Split-Pane */
+    .hierarchy-split {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      overflow: hidden;
+    }
+
+    .hierarchy-left-pane {
+      background: #0A0A0A;
+      border-right: 1px solid #1A1A1A;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hierarchy-right-pane {
+      background: #050505;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+
+    /* Actions Sub-Bar */
+    .tree-actions {
+      padding: 8px 12px;
+      background: #0E0E0E;
+      border-bottom: 1px solid #1A1A1A;
+      display: flex;
+      gap: 8px;
+    }
+    .action-btn-sm {
+      background: #141414;
+      border: 1px solid #262626;
+      color: #888;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+    .action-btn-sm:hover { color: #80E600; border-color: rgba(128, 230, 0, 0.4); background: rgba(128, 230, 0, 0.05); }
+
+    /* Tree Node Area */
+    .tree-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 12px;
+    }
+
+    .tree-node {
+      margin-bottom: 6px;
+      user-select: none;
+    }
+    .tree-node-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      background: #111;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #DDD;
+      transition: all 0.15s ease;
+    }
+    .tree-node-content:hover { background: #161616; border-color: #333; }
+    .tree-node-content.selected {
+      background: rgba(128, 230, 0, 0.08);
+      border-color: #80E600;
+      color: #80E600;
+    }
+
+    .tree-node-content.drag-over {
+      border-color: #80E600 !important;
+      background: rgba(128, 230, 0, 0.2) !important;
+    }
+
+    .tree-children {
+      margin-left: 20px;
+      padding-left: 10px;
+      border-left: 1px dashed #262626;
+      margin-top: 4px;
+    }
+
+    .node-icon { color: #80E600; font-size: 0.8rem; width: 14px; text-align: center; }
+    .node-title { flex: 1; }
+    .node-tag {
+      font-size: 0.62rem;
+      background: #1C1C1C;
+      color: #777;
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid #282828;
+    }
+
+    /* Unassigned Roster Dock */
+    .unassigned-dock {
+      border-top: 1px solid #1A1A1A;
+      background: #0D0D0D;
+      padding: 12px;
+    }
+    .dock-header {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #777;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .unassigned-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .draggable-worker {
+      background: #141414;
+      border: 1px dashed #333;
+      padding: 8px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #AAA;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .draggable-worker:hover { border-color: #80E600; color: #FFF; background: #1A1A1A; }
+    .draggable-worker:active { cursor: grabbing; opacity: 0.5; }
+
+    /* Matrix Settings Layout */
+    .matrix-section {
+      background: #0A0A0A;
+      border: 1px solid #1C1C1C;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .matrix-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #80E600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Channel Checkboxes Matrix */
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 10px;
+    }
+    .channel-card {
+      background: #111;
+      border: 1px solid #222;
+      padding: 10px 12px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .channel-card:hover { border-color: #333; }
+    .channel-card.active { border-color: rgba(128, 230, 0, 0.4); background: rgba(128, 230, 0, 0.03); }
+    .channel-info { display: flex; flex-direction: column; }
+    .channel-name { font-size: 0.8rem; font-weight: 700; color: #FFF; }
+    .channel-access { font-size: 0.68rem; color: #666; margin-top: 2px; }
+
+    /* Custom Checkbox */
+    .checkbox-custom {
+      width: 18px;
+      height: 18px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1A1A1A;
+      color: transparent;
+      transition: all 0.2s ease;
+    }
+    .channel-card.active .checkbox-custom {
+      background: #80E600;
+      border-color: #80E600;
+      color: #000;
+    }
+
+    /* PTT Privileges Controls */
+    .privilege-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #141414;
+    }
+    .privilege-row:last-child { border-bottom: none; }
+    .priv-label { font-size: 0.8rem; font-weight: 700; color: #CCC; }
+    .priv-desc { font-size: 0.68rem; color: #666; }
+
+    .matrix-select {
+      background: #121212;
+      border: 1px solid #2A2A2A;
+      color: #80E600;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Shift Override Rule Engine Bottom Bar */
+    .rule-engine-bar {
+      height: 48px;
+      background: #000;
+      border-top: 1px solid #1C1C1C;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+    }
+    .rule-title { font-size: 0.72rem; font-weight: 800; color: #777; letter-spacing: 0.08em; display: flex; align-items: center; gap: 8px; }
+    .rule-active { font-size: 0.75rem; color: #DDD; font-weight: 700; }
+    .rule-active span { color: #80E600; }
+    .rule-btn {
+      background: rgba(128, 230, 0, 0.1);
+      border: 1px solid rgba(128, 230, 0, 0.4);
+      color: #80E600;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .rule-btn:hover { background: #80E600; color: #000; }
   </style>
 </head>
 <body>
@@ -375,7 +645,7 @@
         <i class="fa-solid fa-arrow-left"></i> BACK
       </a>
       <div class="brand">
-        <img src="apple-touch-logo.png" alt="PAiGE">
+        <img src="apple-touch-logo.png" alt="PAiGE" onerror="this.style.display='none'">
         COMMAND CENTER
       </div>
 
@@ -385,6 +655,9 @@
         </button>
         <button id="toggleFleetBtn" class="view-toggle-btn" onclick="switchMainView('fleet')">
           <i class="fa-solid fa-truck-fast"></i> FLEET &amp; DOCK OPS
+        </button>
+        <button id="toggleHierarchyBtn" class="view-toggle-btn" onclick="switchMainView('hierarchy')">
+          <i class="fa-solid fa-sitemap"></i> HIERARCHY &amp; MATRIX
         </button>
       </div>
     </div>
@@ -398,173 +671,397 @@
     </div>
   </header>
 
-  <div class="dashboard-container">
-    
-    <div class="pane">
-      <div class="pane-header">
-        <span id="rosterTitle">Facility Roster</span>
-        <span style="color:#80E600;" id="rosterCount">5 Active</span>
-      </div>
+  <div class="workspace-wrapper">
+
+    <div class="dashboard-container" id="spatialDashboard">
       
-      <div class="roster-list" id="facilityRoster">
-        <div class="device-card selected" data-target="ALL UNITS (BROADCAST)" onclick="selectDevice('ALL UNITS (BROADCAST)')">
-          <div class="device-name">ALL UNITS (BROADCAST)</div>
-          <div class="device-meta"><span>Target: Entire Plant</span><span>100% Signal</span></div>
+      <div class="pane">
+        <div class="pane-header">
+          <span id="rosterTitle">Facility Roster</span>
+          <span style="color:#80E600;" id="rosterCount">5 Active</span>
         </div>
-        <div class="device-card" data-target="CPH2495 (CNC CELL 02)" onclick="selectDevice('CPH2495 (CNC CELL 02)')">
-          <div class="device-name">CPH2495 (CNC CELL 02)</div>
-          <div class="device-meta"><span>Zone: CNC Line 2</span><span>Batt: 84%</span></div>
-        </div>
-        <div class="device-card" data-target="UNIT 2 - JOHN" onclick="selectDevice('UNIT 2 - JOHN')">
-          <div class="device-name">UNIT 2 - JOHN</div>
-          <div class="device-meta"><span>Zone: Assembly B</span><span>Batt: 38%</span></div>
-        </div>
-        <div class="device-card" data-target="UNIT 3 - SARAH" onclick="selectDevice('UNIT 3 - SARAH')">
-          <div class="device-name">UNIT 3 - SARAH</div>
-          <div class="device-meta"><span>Zone: High Bay A</span><span>Batt: 92%</span></div>
-        </div>
-        <div class="device-card" data-target="FORKLIFT 04" onclick="selectDevice('FORKLIFT 04')">
-          <div class="device-name">FORKLIFT 04</div>
-          <div class="device-meta"><span>Zone: Staging Bay</span><span>Batt: 65%</span></div>
-        </div>
-        <div class="device-card" data-target="UNIT 5 - MIKE" onclick="selectDevice('UNIT 5 - MIKE')">
-          <div class="device-name">UNIT 5 - MIKE</div>
-          <div class="device-meta"><span>Zone: Shipping &amp; Docks</span><span>Batt: 71%</span></div>
-        </div>
-      </div>
-
-      <div class="roster-list" id="fleetRoster" style="display: none;">
-        <div class="device-card selected" data-target="ALL FLEET UNITS" onclick="selectDevice('ALL FLEET UNITS')">
-          <div class="device-name">ALL FLEET UNITS</div>
-          <div class="device-meta"><span>Target: Mobile Fleet</span><span>GPS Live</span></div>
-        </div>
-        <div class="device-card" data-target="TRUCK #12 - INBOUND" onclick="selectDevice('TRUCK #12 - INBOUND')">
-          <div class="device-name">TRUCK #12 - INBOUND</div>
-          <div class="device-meta"><span>ETA: 8 Mins (Dock 4)</span><span>HWY 29 East</span></div>
-        </div>
-        <div class="device-card" data-target="TRUCK #08 - STAGED" onclick="selectDevice('TRUCK #08 - STAGED')">
-          <div class="device-name">TRUCK #08 - STAGED</div>
-          <div class="device-meta"><span>Location: I-41 Corridor</span><span>Batt: 91%</span></div>
-        </div>
-        <div class="device-card" data-target="VAN #04 - FIELD TECH" onclick="selectDevice('VAN #04 - FIELD TECH')">
-          <div class="device-name">VAN #04 - FIELD TECH</div>
-          <div class="device-meta"><span>Zone: Airport/172 South</span><span>GPS: Active</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="center-pane">
-      <div class="pane-header" id="mapTitle">Facility Telemetry &amp; Live Map</div>
-      <div class="map-viewport">
         
-        <div id="facilityViewCanvas" class="view-canvas">
-          <div class="map-wrapper">
-            <img src="facility-schematic.png" alt="Facility Floorplan Schematic" class="schematic-img" />
+        <div class="roster-list" id="facilityRoster">
+          <div class="device-card selected" data-target="ALL UNITS (BROADCAST)" onclick="selectDevice('ALL UNITS (BROADCAST)')">
+            <div class="device-name">ALL UNITS (BROADCAST)</div>
+            <div class="device-meta"><span>Target: Entire Plant</span><span>100% Signal</span></div>
           </div>
-          <div class="map-grid"></div>
-          
-          <div class="map-beacon" data-target="CPH2495 (CNC CELL 02)" style="top: 35%; left: 42%;" onclick="selectDevice('CPH2495 (CNC CELL 02)')">
-            <div class="beacon-dot"></div>
-            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> CNC CELL 02</div>
+          <div class="device-card" data-target="CPH2495 (CNC CELL 02)" onclick="selectDevice('CPH2495 (CNC CELL 02)')">
+            <div class="device-name">CPH2495 (CNC CELL 02)</div>
+            <div class="device-meta"><span>Zone: CNC Line 2</span><span>Batt: 84%</span></div>
           </div>
-          
-          <div class="map-beacon" data-target="UNIT 2 - JOHN" style="top: 60%; left: 68%;" onclick="selectDevice('UNIT 2 - JOHN')">
-            <div class="beacon-dot"></div>
-            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 2 - JOHN</div>
+          <div class="device-card" data-target="UNIT 2 - JOHN" onclick="selectDevice('UNIT 2 - JOHN')">
+            <div class="device-name">UNIT 2 - JOHN</div>
+            <div class="device-meta"><span>Zone: Assembly B</span><span>Batt: 38%</span></div>
           </div>
-          
-          <div class="map-beacon" data-target="UNIT 3 - SARAH" style="top: 25%; left: 22%;" onclick="selectDevice('UNIT 3 - SARAH')">
-            <div class="beacon-dot"></div>
-            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 3 - SARAH</div>
+          <div class="device-card" data-target="UNIT 3 - SARAH" onclick="selectDevice('UNIT 3 - SARAH')">
+            <div class="device-name">UNIT 3 - SARAH</div>
+            <div class="device-meta"><span>Zone: High Bay A</span><span>Batt: 92%</span></div>
           </div>
-          
-          <div class="map-beacon" data-target="FORKLIFT 04" style="top: 72%; left: 28%;" onclick="selectDevice('FORKLIFT 04')">
-            <div class="beacon-dot"></div>
-            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> FORKLIFT 04</div>
+          <div class="device-card" data-target="FORKLIFT 04" onclick="selectDevice('FORKLIFT 04')">
+            <div class="device-name">FORKLIFT 04</div>
+            <div class="device-meta"><span>Zone: Staging Bay</span><span>Batt: 65%</span></div>
           </div>
-          
-          <div class="map-beacon" data-target="UNIT 5 - MIKE" style="top: 68%; left: 52%;" onclick="selectDevice('UNIT 5 - MIKE')">
-            <div class="beacon-dot"></div>
-            <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 5 - MIKE</div>
+          <div class="device-card" data-target="UNIT 5 - MIKE" onclick="selectDevice('UNIT 5 - MIKE')">
+            <div class="device-name">UNIT 5 - MIKE</div>
+            <div class="device-meta"><span>Zone: Shipping &amp; Docks</span><span>Batt: 71%</span></div>
           </div>
         </div>
 
-        <div id="fleetViewCanvas" class="view-canvas hidden">
-          <div class="fleet-map-bg"></div>
-          <div class="map-grid"></div>
-
-          <div class="geofence-ring">
-            <span class="geofence-tag">5-MILE GEOFENCE BOUNDARY</span>
+        <div class="roster-list" id="fleetRoster" style="display: none;">
+          <div class="device-card selected" data-target="ALL FLEET UNITS" onclick="selectDevice('ALL FLEET UNITS')">
+            <div class="device-name">ALL FLEET UNITS</div>
+            <div class="device-meta"><span>Target: Mobile Fleet</span><span>GPS Live</span></div>
           </div>
-
-          <div class="hub-node">
-            <div class="hub-title"><i class="fa-solid fa-warehouse" style="color: #80E600;"></i> MAIN FACILITY DOCKS</div>
-            <div class="hub-sub">AUTO-PREP ACTIVE</div>
+          <div class="device-card" data-target="TRUCK #12 - INBOUND" onclick="selectDevice('TRUCK #12 - INBOUND')">
+            <div class="device-name">TRUCK #12 - INBOUND</div>
+            <div class="device-meta"><span>ETA: 8 Mins (Dock 4)</span><span>HWY 29 East</span></div>
           </div>
+          <div class="device-card" data-target="TRUCK #08 - STAGED" onclick="selectDevice('TRUCK #08 - STAGED')">
+            <div class="device-name">TRUCK #08 - STAGED</div>
+            <div class="device-meta"><span>Location: I-41 Corridor</span><span>Batt: 91%</span></div>
+          </div>
+          <div class="device-card" data-target="VAN #04 - FIELD TECH" onclick="selectDevice('VAN #04 - FIELD TECH')">
+            <div class="device-name">VAN #04 - FIELD TECH</div>
+            <div class="device-meta"><span>Zone: Airport/172 South</span><span>GPS: Active</span></div>
+          </div>
+        </div>
+      </div>
 
-          <div class="map-beacon" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 24%; left: 22%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
-            <div class="beacon-dot" style="background-color: #FFB000; box-shadow: 0 0 8px #FFB000;"></div>
-            <div class="beacon-pill" style="border-color: #FFB000; color: #FFB000;">
-              <i class="fa-solid fa-truck" style="font-size: 8px;"></i> TRUCK #12 (8 MIN ETA)
+      <div class="center-pane">
+        <div class="pane-header" id="mapTitle">Facility Telemetry &amp; Live Map</div>
+        <div class="map-viewport">
+          
+          <div id="facilityViewCanvas" class="view-canvas">
+            <div class="map-wrapper">
+              <img src="facility-schematic.png" alt="Facility Floorplan Schematic" class="schematic-img" />
+            </div>
+            <div class="map-grid"></div>
+            
+            <div class="map-beacon" data-target="CPH2495 (CNC CELL 02)" style="top: 35%; left: 42%;" onclick="selectDevice('CPH2495 (CNC CELL 02)')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> CNC CELL 02</div>
+            </div>
+            
+            <div class="map-beacon" data-target="UNIT 2 - JOHN" style="top: 60%; left: 68%;" onclick="selectDevice('UNIT 2 - JOHN')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 2 - JOHN</div>
+            </div>
+            
+            <div class="map-beacon" data-target="UNIT 3 - SARAH" style="top: 25%; left: 22%;" onclick="selectDevice('UNIT 3 - SARAH')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 3 - SARAH</div>
+            </div>
+            
+            <div class="map-beacon" data-target="FORKLIFT 04" style="top: 72%; left: 28%;" onclick="selectDevice('FORKLIFT 04')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> FORKLIFT 04</div>
+            </div>
+            
+            <div class="map-beacon" data-target="UNIT 5 - MIKE" style="top: 68%; left: 52%;" onclick="selectDevice('UNIT 5 - MIKE')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 5 - MIKE</div>
             </div>
           </div>
 
-          <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 72%; left: 51.5%;" onclick="selectDevice('TRUCK #08 - STAGED')">
-            <div class="beacon-dot"></div>
-            <div class="beacon-pill"><i class="fa-solid fa-truck-ramp-box" style="font-size: 8px;"></i> TRUCK #08 (I-41 N)</div>
+          <div id="fleetViewCanvas" class="view-canvas hidden">
+            <div class="fleet-map-bg"></div>
+            <div class="map-grid"></div>
+
+            <div class="geofence-ring">
+              <span class="geofence-tag">5-MILE GEOFENCE BOUNDARY</span>
+            </div>
+
+            <div class="hub-node">
+              <div class="hub-title"><i class="fa-solid fa-warehouse" style="color: #80E600;"></i> MAIN FACILITY DOCKS</div>
+              <div class="hub-sub">AUTO-PREP ACTIVE</div>
+            </div>
+
+            <div class="map-beacon" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 24%; left: 22%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
+              <div class="beacon-dot" style="background-color: #FFB000; box-shadow: 0 0 8px #FFB000;"></div>
+              <div class="beacon-pill" style="border-color: #FFB000; color: #FFB000;">
+                <i class="fa-solid fa-truck" style="font-size: 8px;"></i> TRUCK #12 (8 MIN ETA)
+              </div>
+            </div>
+
+            <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 72%; left: 51.5%;" onclick="selectDevice('TRUCK #08 - STAGED')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill"><i class="fa-solid fa-truck-ramp-box" style="font-size: 8px;"></i> TRUCK #08 (I-41 N)</div>
+            </div>
+
+            <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 80%; left: 32%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill"><i class="fa-solid fa-van-shuttle" style="font-size: 8px;"></i> VAN #04 (FIELD)</div>
+            </div>
           </div>
 
-          <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 80%; left: 32%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
-            <div class="beacon-dot"></div>
-            <div class="beacon-pill"><i class="fa-solid fa-van-shuttle" style="font-size: 8px;"></i> VAN #04 (FIELD)</div>
+        </div>
+
+        <div class="dispatch-composer">
+          <div class="composer-target">TARGET: <span id="targetName" style="color:#FFF;">ALL UNITS (BROADCAST)</span></div>
+          
+          <div class="priority-selector">
+            <button class="p-btn active-info" id="btnInfo" onclick="setPriority('INFO')">INFO</button>
+            <button class="p-btn" id="btnTask" onclick="setPriority('TASK')">TASK</button>
+            <button class="p-btn" id="btnPriority" onclick="setPriority('PRIORITY')">PRIORITY ALERT</button>
+          </div>
+
+          <div class="input-row">
+            <textarea id="msgInput" class="dispatch-input theme-info" placeholder="Type page or task dispatch..." maxlength="160" oninput="updateCharCount()" onkeydown="handleKeyDown(event)"></textarea>
+            <button class="send-btn theme-info" id="sendBtn" onclick="sendDispatch()">SEND PAGE</button>
+          </div>
+          <div class="char-counter"><span id="charCount">160</span> characters remaining</div>
+        </div>
+      </div>
+
+      <div class="pane" style="border-right: none;">
+        <div class="pane-header">Live Audit Log</div>
+        <div class="pane-3-container">
+          <div class="filter-bar">
+            <button class="filter-tab active" onclick="filterAuditFeed('ALL', this)">ALL</button>
+            <button class="filter-tab" onclick="filterAuditFeed('INFO', this)">INFO</button>
+            <button class="filter-tab" onclick="filterAuditFeed('TASK', this)">TASKS</button>
+            <button class="filter-tab" onclick="filterAuditFeed('PRIORITY', this)">PRIORITY</button>
+          </div>
+          <div class="audit-feed" id="auditFeed">
+            <div class="log-item priority" data-type="PRIORITY">
+              <div class="log-header"><span>To: CPH2495</span><span>12m ago</span></div>
+              <div class="log-text">Hydraulic Pressure Drop Line 2</div>
+              <div class="log-status">✓ ACKNOWLEDGED</div>
+            </div>
+            <div class="log-item task" data-type="TASK">
+              <div class="log-header"><span>To: FORKLIFT 04</span><span>28m ago</span></div>
+              <div class="log-text">Move pallet rack #B4 to Staging Bay</div>
+              <div class="log-status">✓ ASSIGNED</div>
+            </div>
+            <div class="log-item info" data-type="INFO">
+              <div class="log-header"><span>To: ALL UNITS</span><span>45m ago</span></div>
+              <div class="log-text">Shift changeover checklist ready</div>
+              <div class="log-status">✓ DELIVERED</div>
+            </div>
           </div>
         </div>
-
       </div>
 
-      <div class="dispatch-composer">
-        <div class="composer-target">TARGET: <span id="targetName" style="color:#FFF;">ALL UNITS (BROADCAST)</span></div>
-        
-        <div class="priority-selector">
-          <button class="p-btn active-info" id="btnInfo" onclick="setPriority('INFO')">INFO</button>
-          <button class="p-btn" id="btnTask" onclick="setPriority('TASK')">TASK</button>
-          <button class="p-btn" id="btnPriority" onclick="setPriority('PRIORITY')">PRIORITY ALERT</button>
-        </div>
-
-        <div class="input-row">
-          <textarea id="msgInput" class="dispatch-input theme-info" placeholder="Type page or task dispatch..." maxlength="160" oninput="updateCharCount()" onkeydown="handleKeyDown(event)"></textarea>
-          <button class="send-btn theme-info" id="sendBtn" onclick="sendDispatch()">SEND PAGE</button>
-        </div>
-        <div class="char-counter"><span id="charCount">160</span> characters remaining</div>
-      </div>
     </div>
 
-    <div class="pane" style="border-right: none;">
-      <div class="pane-header">Live Audit Log</div>
-      <div class="pane-3-container">
-        <div class="filter-bar">
-          <button class="filter-tab active" onclick="filterAuditFeed('ALL', this)">ALL</button>
-          <button class="filter-tab" onclick="filterAuditFeed('INFO', this)">INFO</button>
-          <button class="filter-tab" onclick="filterAuditFeed('TASK', this)">TASKS</button>
-          <button class="filter-tab" onclick="filterAuditFeed('PRIORITY', this)">PRIORITY</button>
+    <div class="hierarchy-container hidden" id="hierarchyViewContainer">
+      <div class="hierarchy-split">
+        
+        <div class="hierarchy-left-pane">
+          <div class="pane-header">
+            <span>Organization Tree</span>
+            <span style="color:#80E600;" id="treeNodeCount">6 Nodes Active</span>
+          </div>
+
+          <div class="tree-actions">
+            <button class="action-btn-sm" onclick="addNodeModal()"><i class="fa-solid fa-plus"></i> Add Node</button>
+            <button class="action-btn-sm" onclick="expandAllTreeNodes()"><i class="fa-solid fa-folder-open"></i> Expand All</button>
+          </div>
+
+          <div class="tree-scroll-area">
+            
+            <div class="tree-node">
+              <div class="tree-node-content" onclick="selectHierarchyNode('PLANT_MANAGER', this)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'Plant Manager')">
+                <i class="fa-solid fa-chevron-down node-icon"></i>
+                <i class="fa-solid fa-user-gear" style="color: #80E600;"></i>
+                <span class="node-title">Plant Manager (J. Miller)</span>
+                <span class="node-tag">Level 1</span>
+              </div>
+
+              <div class="tree-children">
+                
+                <div class="tree-node">
+                  <div class="tree-node-content" onclick="selectHierarchyNode('FLOOR_SUPERVISOR', this)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'Floor Supervisor')">
+                    <i class="fa-solid fa-chevron-down node-icon"></i>
+                    <i class="fa-solid fa-user-shield" style="color: #80E600;"></i>
+                    <span class="node-title">Floor Supervisor (M. Davis)</span>
+                    <span class="node-tag">Level 2</span>
+                  </div>
+
+                  <div class="tree-children">
+                    
+                    <div class="tree-node">
+                      <div class="tree-node-content selected" onclick="selectHierarchyNode('LOGISTICS_LEAD', this)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'Logistics Lead')">
+                        <i class="fa-solid fa-chevron-down node-icon"></i>
+                        <i class="fa-solid fa-truck-ramp-box" style="color: #80E600;"></i>
+                        <span class="node-title">Logistics Lead (S. Reed)</span>
+                        <span class="node-tag">Team Alpha</span>
+                      </div>
+
+                      <div class="tree-children" id="logisticsChildren">
+                        <div class="tree-node">
+                          <div class="tree-node-content" onclick="selectHierarchyNode('PICKER_01', this)">
+                            <i class="fa-solid fa-user" style="color: #666; font-size: 0.75rem;"></i>
+                            <span class="node-title">Picker 01 (D. Vance)</span>
+                          </div>
+                        </div>
+                        <div class="tree-node">
+                          <div class="tree-node-content" onclick="selectHierarchyNode('PICKER_02', this)">
+                            <i class="fa-solid fa-user" style="color: #666; font-size: 0.75rem;"></i>
+                            <span class="node-title">Picker 02 (A. Smith)</span>
+                          </div>
+                        </div>
+                        <div class="tree-node">
+                          <div class="tree-node-content" onclick="selectHierarchyNode('PICKER_03', this)">
+                            <i class="fa-solid fa-user" style="color: #666; font-size: 0.75rem;"></i>
+                            <span class="node-title">Picker 03 (T. Higgins)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="tree-node">
+                      <div class="tree-node-content" onclick="selectHierarchyNode('ASSEMBLY_LEAD', this)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'Assembly Lead')">
+                        <i class="fa-solid fa-chevron-right node-icon"></i>
+                        <i class="fa-solid fa-microchip" style="color: #888;"></i>
+                        <span class="node-title">Assembly Lead (R. Vance)</span>
+                      </div>
+                    </div>
+
+                    <div class="tree-node">
+                      <div class="tree-node-content" onclick="selectHierarchyNode('MAINT_LEAD', this)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'Maintenance Lead')">
+                        <i class="fa-solid fa-chevron-right node-icon"></i>
+                        <i class="fa-solid fa-wrench" style="color: #888;"></i>
+                        <span class="node-title">Maintenance Lead (B. Cox)</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="unassigned-dock">
+            <div class="dock-header">
+              <span>UNASSIGNED ROSTER (<span id="unassignedCount">2</span>)</span>
+              <span style="font-size: 0.6rem; color: #80E600;">DRAG TO ASSIGN</span>
+            </div>
+            <div class="unassigned-list" id="unassignedList">
+              <div class="draggable-worker" draggable="true" ondragstart="handleDragStart(event, 'J. Doe (Pending Shift)')">
+                <span><i class="fa-solid fa-grip-vertical" style="color: #555; margin-right: 6px;"></i> J. Doe (Pending Shift)</span>
+                <i class="fa-solid fa-clock" style="color: #FFB000; font-size: 0.7rem;"></i>
+              </div>
+              <div class="draggable-worker" draggable="true" ondragstart="handleDragStart(event, 'R. Taylor (On Leave)')">
+                <span><i class="fa-solid fa-grip-vertical" style="color: #555; margin-right: 6px;"></i> R. Taylor (On Leave)</span>
+                <i class="fa-solid fa-user-slash" style="color: #777; font-size: 0.7rem;"></i>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="audit-feed" id="auditFeed">
-          <div class="log-item priority" data-type="PRIORITY">
-            <div class="log-header"><span>To: CPH2495</span><span>12m ago</span></div>
-            <div class="log-text">Hydraulic Pressure Drop Line 2</div>
-            <div class="log-status">✓ ACKNOWLEDGED</div>
+
+        <div class="hierarchy-right-pane">
+          
+          <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #1A1A1A; padding-bottom: 14px;">
+            <div>
+              <h2 id="nodeSelectedTitle" style="font-size: 1.1rem; font-weight: 800; color: #FFF; letter-spacing: 0.03em;">LOGISTICS LEAD (Team Alpha)</h2>
+              <div style="font-size: 0.75rem; color: #777; margin-top: 4px;">Target Device Profile: <span id="targetDeviceTag" style="color: #80E600; font-weight: 700;">Samsung XCover / Enterprise PTT</span></div>
+            </div>
+            <button class="rule-btn" onclick="saveMatrixConfiguration()"><i class="fa-solid fa-floppy-disk"></i> SAVE MATRIX</button>
           </div>
-          <div class="log-item task" data-type="TASK">
-            <div class="log-header"><span>To: FORKLIFT 04</span><span>28m ago</span></div>
-            <div class="log-text">Move pallet rack #B4 to Staging Bay</div>
-            <div class="log-status">✓ ASSIGNED</div>
+
+          <div class="matrix-section">
+            <div class="matrix-title"><i class="fa-solid fa-walkie-talkie"></i> CHANNEL ACCESS &amp; TALK GROUPS</div>
+            <div class="channel-grid">
+              
+              <div class="channel-card active" onclick="toggleChannel(this)">
+                <div class="channel-info">
+                  <span class="channel-name">Team Alpha Channel</span>
+                  <span class="channel-access">Full Duplex / Speak &amp; Listen</span>
+                </div>
+                <div class="checkbox-custom"><i class="fa-solid fa-check" style="font-size: 10px;"></i></div>
+              </div>
+
+              <div class="channel-card active" onclick="toggleChannel(this)">
+                <div class="channel-info">
+                  <span class="channel-name">Leads Broad-Call Channel</span>
+                  <span class="channel-access">Speak &amp; Listen</span>
+                </div>
+                <div class="checkbox-custom"><i class="fa-solid fa-check" style="font-size: 10px;"></i></div>
+              </div>
+
+              <div class="channel-card" onclick="toggleChannel(this)">
+                <div class="channel-info">
+                  <span class="channel-name">Assembly Line 02 Channel</span>
+                  <span class="channel-access">No Access (Restricted)</span>
+                </div>
+                <div class="checkbox-custom"><i class="fa-solid fa-check" style="font-size: 10px;"></i></div>
+              </div>
+
+              <div class="channel-card active" onclick="toggleChannel(this)">
+                <div class="channel-info">
+                  <span class="channel-name">Plant-Wide Emergency</span>
+                  <span class="channel-access">Listen Only (Global Override)</span>
+                </div>
+                <div class="checkbox-custom"><i class="fa-solid fa-check" style="font-size: 10px;"></i></div>
+              </div>
+
+            </div>
           </div>
-          <div class="log-item info" data-type="INFO">
-            <div class="log-header"><span>To: ALL UNITS</span><span>45m ago</span></div>
-            <div class="log-text">Shift changeover checklist ready</div>
-            <div class="log-status">✓ DELIVERED</div>
+
+          <div class="matrix-section">
+            <div class="matrix-title"><i class="fa-solid fa-shield-halved"></i> PTT PRIVILEGES &amp; OVERRIDES</div>
+            
+            <div class="privilege-row">
+              <div>
+                <div class="priv-label">Audio Priority Level</div>
+                <div class="priv-desc">Determines channel talkover authority during active transmissions</div>
+              </div>
+              <select class="matrix-select" id="audioPrioritySelect">
+                <option value="1">Level 1: Standard Worker</option>
+                <option value="2" selected>Level 2: Lead / Supervisor Override</option>
+                <option value="3">Level 3: Executive / Emergency Force</option>
+              </select>
+            </div>
+
+            <div class="privilege-row">
+              <div>
+                <div class="priv-label">Direct PTT Reach</div>
+                <div class="priv-desc">Restricts direct point-to-point voice pinging capability</div>
+              </div>
+              <select class="matrix-select">
+                <option value="reports" selected>Direct Reports Only</option>
+                <option value="department">Entire Department</option>
+                <option value="all">Plant-Wide (Unrestricted)</option>
+              </select>
+            </div>
+
+            <div class="privilege-row">
+              <div>
+                <div class="priv-label">Channel Switching</div>
+                <div class="priv-desc">Allow worker hardware key to manually change active talk groups</div>
+              </div>
+              <select class="matrix-select">
+                <option value="allowed" selected>Allowed (Physical Key)</option>
+                <option value="locked">Locked by Admin</option>
+              </select>
+            </div>
+
+            <div class="privilege-row">
+              <div>
+                <div class="priv-label">Emergency All-Call Broadcast</div>
+                <div class="priv-desc">Permission to initiate plant-wide safety override page</div>
+              </div>
+              <select class="matrix-select">
+                <option value="disabled" selected>Disabled</option>
+                <option value="enabled">Enabled</option>
+              </select>
+            </div>
+
           </div>
+
         </div>
+
+      </div>
+
+      <div class="rule-engine-bar">
+        <div class="rule-title"><i class="fa-solid fa-gears" style="color: #80E600;"></i> SHIFT OVERRIDE RULE ENGINE</div>
+        <div class="rule-active">Active Rule: <span>"Auto-bind Direct Report channels upon Shift Claim (NFC / Barcode ID)"</span></div>
+        <button class="rule-btn" onclick="testShiftOverrideRule()"><i class="fa-solid fa-bolt"></i> TEST RULE ENGINE</button>
       </div>
     </div>
 
@@ -577,6 +1074,7 @@
   let isAudioMuted = false;
   let activeView = 'facility';
   let geofenceTriggered = false;
+  let draggedWorker = null;
   
   // Web Audio Synthesizer
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -634,11 +1132,16 @@
     }
   }
 
-  // --- View Switching Logic ---
+  // --- 3-Way View Switching Logic ---
   function switchMainView(viewName) {
     activeView = viewName;
     const facilityBtn = document.getElementById('toggleFacilityBtn');
     const fleetBtn = document.getElementById('toggleFleetBtn');
+    const hierarchyBtn = document.getElementById('toggleHierarchyBtn');
+
+    const spatialContainer = document.getElementById('spatialDashboard');
+    const hierarchyContainer = document.getElementById('hierarchyViewContainer');
+
     const facilityCanvas = document.getElementById('facilityViewCanvas');
     const fleetCanvas = document.getElementById('fleetViewCanvas');
     const facilityRoster = document.getElementById('facilityRoster');
@@ -647,10 +1150,15 @@
     const rosterCount = document.getElementById('rosterCount');
     const mapTitle = document.getElementById('mapTitle');
 
+    facilityBtn.classList.remove('active');
+    fleetBtn.classList.remove('active');
+    hierarchyBtn.classList.remove('active');
+
     if (viewName === 'facility') {
       facilityBtn.classList.add('active');
-      fleetBtn.classList.remove('active');
-      
+      spatialContainer.classList.remove('hidden');
+      hierarchyContainer.classList.add('hidden');
+
       facilityCanvas.classList.remove('hidden');
       fleetCanvas.classList.add('hidden');
 
@@ -662,9 +1170,10 @@
       mapTitle.innerText = 'Facility Telemetry & Live Map';
 
       selectDevice('ALL UNITS (BROADCAST)');
-    } else {
+    } else if (viewName === 'fleet') {
       fleetBtn.classList.add('active');
-      facilityBtn.classList.remove('active');
+      spatialContainer.classList.remove('hidden');
+      hierarchyContainer.classList.add('hidden');
 
       fleetCanvas.classList.remove('hidden');
       facilityCanvas.classList.add('hidden');
@@ -683,6 +1192,11 @@
         geofenceTriggered = true;
         simulateGeofenceEvent();
       }
+    } else if (viewName === 'hierarchy') {
+      hierarchyBtn.classList.add('active');
+      spatialContainer.classList.add('hidden');
+      hierarchyContainer.classList.remove('hidden');
+      playDispatchSound('INFO');
     }
   }
 
@@ -690,14 +1204,12 @@
   function simulateGeofenceEvent() {
     const truck = document.getElementById('truck12Beacon');
     
-    // Step 1: Move Truck #12 along HWY 29 towards Howard interchange
     setTimeout(() => {
       if (truck) {
         truck.style.top = '36%';
         truck.style.left = '36%';
       }
 
-      // Step 2: Cross 5-Mile Geofence Ring and trigger dispatch
       setTimeout(() => {
         if (truck) {
           truck.style.top = '44%';
@@ -767,7 +1279,7 @@
       btnTask.className = 'p-btn active-task';
       msgInput.classList.add('theme-task');
       sendBtn.classList.add('theme-task');
-    } else {
+    } else if (type === 'PRIORITY') {
       btnPriority.className = 'p-btn active-priority';
       msgInput.classList.add('theme-priority');
       sendBtn.classList.add('theme-priority');
@@ -776,8 +1288,8 @@
 
   function updateCharCount() {
     const input = document.getElementById('msgInput');
-    const counter = document.getElementById('charCount');
-    counter.innerText = 160 - input.value.length;
+    const countDisplay = document.getElementById('charCount');
+    countDisplay.innerText = 160 - input.value.length;
   }
 
   function handleKeyDown(e) {
@@ -787,23 +1299,59 @@
     }
   }
 
-  function triggerBeaconFlash(target, priority) {
-    const beacons = document.querySelectorAll(`.map-beacon[data-target="${target}"]`);
-    beacons.forEach(b => {
-      const cls = priority === 'INFO' ? 'flash-info' : priority === 'TASK' ? 'flash-task' : 'flash-priority';
-      b.classList.add(cls);
-      setTimeout(() => b.classList.remove(cls), 2000);
+  function sendDispatch() {
+    const input = document.getElementById('msgInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const feed = document.getElementById('auditFeed');
+    const newLog = document.createElement('div');
+    const lowerType = currentPriority.toLowerCase();
+
+    newLog.className = `log-item ${lowerType}`;
+    newLog.setAttribute('data-type', currentPriority);
+    newLog.innerHTML = `
+      <div class="log-header"><span>To: ${selectedTarget}</span><span>Just now</span></div>
+      <div class="log-text">${escapeHtml(text)}</div>
+      <div class="log-status">✓ SENT</div>
+    `;
+
+    feed.insertBefore(newLog, feed.firstChild);
+    
+    // Flash feed container
+    feed.classList.remove('flash-feed-info', 'flash-feed-task', 'flash-feed-priority');
+    void feed.offsetWidth;
+    feed.classList.add(`flash-feed-${lowerType}`);
+
+    playDispatchSound(currentPriority);
+    triggerBeaconFlash(selectedTarget, currentPriority);
+
+    input.value = '';
+    updateCharCount();
+  }
+
+  function triggerBeaconFlash(targetName, priorityType) {
+    const lowerType = priorityType.toLowerCase();
+    document.querySelectorAll('.map-beacon').forEach(beacon => {
+      if (beacon.getAttribute('data-target') === targetName || targetName.startsWith('ALL')) {
+        beacon.classList.remove('flash-info', 'flash-task', 'flash-priority');
+        void beacon.offsetWidth;
+        beacon.classList.add(`flash-${lowerType}`);
+
+        setTimeout(() => {
+          beacon.classList.remove(`flash-${lowerType}`);
+        }, 3000);
+      }
     });
   }
 
-  function filterAuditFeed(type, element) {
-    activeFilter = type;
+  function filterAuditFeed(filterType, element) {
+    activeFilter = filterType;
     document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
     element.classList.add('active');
 
-    const items = document.querySelectorAll('.log-item');
-    items.forEach(item => {
-      if (type === 'ALL' || item.getAttribute('data-type') === type) {
+    document.querySelectorAll('.log-item').forEach(item => {
+      if (filterType === 'ALL' || item.getAttribute('data-type') === filterType) {
         item.style.display = 'block';
       } else {
         item.style.display = 'none';
@@ -811,43 +1359,120 @@
     });
   }
 
-  function sendDispatch() {
-    const input = document.getElementById('msgInput');
-    const text = input.value.trim();
-    if (!text) return;
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"']/g, function (s) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s];
+    });
+  }
 
-    const feed = document.getElementById('auditFeed');
-    const log = document.createElement('div');
-    const pClass = currentPriority.toLowerCase();
-    log.className = `log-item ${pClass}`;
-    log.setAttribute('data-type', currentPriority);
+  // --- HIERARCHY & MATRIX INTERACTION LOGIC ---
 
-    const statusMsg = currentPriority === 'INFO' ? '✓ DELIVERED' : currentPriority === 'TASK' ? '✓ ASSIGNED' : '⚡ ALERT SENT';
+  function selectHierarchyNode(nodeKey, element) {
+    document.querySelectorAll('.tree-node-content').forEach(node => node.classList.remove('selected'));
+    element.classList.add('selected');
 
-    log.innerHTML = `
-      <div class="log-header"><span>To: ${selectedTarget}</span><span>Just now</span></div>
-      <div class="log-text">${text}</div>
-      <div class="log-status">${statusMsg}</div>
-    `;
+    const titleElem = document.getElementById('nodeSelectedTitle');
+    const deviceTag = document.getElementById('targetDeviceTag');
+    const prioritySelect = document.getElementById('audioPrioritySelect');
 
-    feed.insertBefore(log, feed.firstChild);
-    
-    // Play audio feedback tone
-    playDispatchSound(currentPriority);
+    if (nodeKey === 'PLANT_MANAGER') {
+      titleElem.innerText = 'PLANT MANAGER (J. Miller)';
+      deviceTag.innerText = 'Sonim XP8 / Enterprise Master Console';
+      prioritySelect.value = '3';
+    } else if (nodeKey === 'FLOOR_SUPERVISOR') {
+      titleElem.innerText = 'FLOOR SUPERVISOR (M. Davis)';
+      deviceTag.innerText = 'Kyocera DuraForce Pro 3';
+      prioritySelect.value = '2';
+    } else if (nodeKey === 'LOGISTICS_LEAD') {
+      titleElem.innerText = 'LOGISTICS LEAD (Team Alpha)';
+      deviceTag.innerText = 'Samsung XCover / Enterprise PTT';
+      prioritySelect.value = '2';
+    } else if (nodeKey.startsWith('PICKER')) {
+      titleElem.innerText = `${element.querySelector('.node-title').innerText}`;
+      deviceTag.innerText = 'Rugged Handheld Scanner (Android 13)';
+      prioritySelect.value = '1';
+    } else {
+      titleElem.innerText = `${element.querySelector('.node-title').innerText}`;
+      deviceTag.innerText = 'Samsung XCover Field Unit';
+      prioritySelect.value = '1';
+    }
 
-    // Visual map beacon pulse
-    triggerBeaconFlash(selectedTarget, currentPriority);
+    playDispatchSound('INFO');
+  }
 
-    // Flash feed container
-    const flashClass = currentPriority === 'INFO' ? 'flash-feed-info' : currentPriority === 'TASK' ? 'flash-feed-task' : 'flash-feed-priority';
-    feed.classList.add(flashClass);
-    setTimeout(() => feed.classList.remove(flashClass), 600);
+  function toggleChannel(card) {
+    card.classList.toggle('active');
+    playDispatchSound('INFO');
+  }
 
-    input.value = '';
-    updateCharCount();
+  function saveMatrixConfiguration() {
+    playDispatchSound('TASK');
+    alert('Hierarchy & Matrix configuration successfully synced to cloud fleet profile.');
+  }
 
-    if (activeFilter !== 'ALL' && activeFilter !== currentPriority) {
-      filterAuditFeed('ALL', document.querySelectorAll('.filter-tab')[0]);
+  function testShiftOverrideRule() {
+    playDispatchSound('PRIORITY');
+    alert('Shift Override Engine simulated: Shift Claim scanned via NFC. All direct report channels auto-bound.');
+  }
+
+  function addNodeModal() {
+    const nodeName = prompt('Enter new node / position title:');
+    if (nodeName) {
+      alert(`Node "${nodeName}" added to pending hierarchy tree layout.`);
+    }
+  }
+
+  function expandAllTreeNodes() {
+    playDispatchSound('INFO');
+  }
+
+  // HTML5 Drag & Drop Logic for Unassigned Roster
+  function handleDragStart(e, workerName) {
+    draggedWorker = workerName;
+    e.dataTransfer.setData('text/plain', workerName);
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drag-over');
+  }
+
+  function handleDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+
+  function handleDrop(e, targetNodeTitle) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+
+    if (draggedWorker) {
+      const childrenContainer = document.getElementById('logisticsChildren');
+      const newNode = document.createElement('div');
+      newNode.className = 'tree-node';
+      newNode.innerHTML = `
+        <div class="tree-node-content" onclick="selectHierarchyNode('NEW_WORKER', this)">
+          <i class="fa-solid fa-user" style="color: #80E600; font-size: 0.75rem;"></i>
+          <span class="node-title">${draggedWorker}</span>
+          <span class="node-tag">Assigned</span>
+        </div>
+      `;
+      childrenContainer.appendChild(newNode);
+
+      // Remove from unassigned dock
+      const unassignedList = document.getElementById('unassignedList');
+      const draggableElems = unassignedList.querySelectorAll('.draggable-worker');
+      draggableElems.forEach(elem => {
+        if (elem.innerText.includes(draggedWorker.split(' ')[0])) {
+          elem.remove();
+        }
+      });
+
+      // Update count
+      const countElem = document.getElementById('unassignedCount');
+      countElem.innerText = Math.max(0, parseInt(countElem.innerText) - 1);
+
+      playDispatchSound('TASK');
+      draggedWorker = null;
     }
   }
 </script>
