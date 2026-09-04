@@ -1,4 +1,4 @@
-<!DOCTYPE ht<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -111,8 +111,14 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.8);
     }
     
-    .dispatch-composer { padding: 16px; background: #0A0A0A; }
-    .composer-target { font-size: 0.75rem; color: #888; font-weight: 700; margin-bottom: 8px; }
+    /* Dispatch Composer Spacing Improvements */
+    .dispatch-composer { 
+      padding: 16px 20px 22px 20px; 
+      background: #0A0A0A; 
+      border-top: 1px solid #1A1A1A; 
+    }
+
+    .composer-target { font-size: 0.75rem; color: #888; font-weight: 700; margin-bottom: 10px; }
     .priority-selector { display: flex; gap: 8px; margin-bottom: 12px; }
     .p-btn { flex: 1; padding: 8px; border: 1px solid #222; background: #121212; color: #888; font-size: 0.75rem; font-weight: 800; border-radius: 4px; cursor: pointer; text-align: center; }
     .p-btn.active-info { border-color: #80E600; color: #80E600; background: rgba(128, 230, 0, 0.08); }
@@ -121,7 +127,7 @@
     .input-row { display: flex; gap: 10px; }
     .dispatch-input { flex: 1; background: #121212; border: 1px solid #262626; color: #FFF; padding: 10px 14px; border-radius: 6px; outline: none; font-size: 0.85rem; }
     .dispatch-input:focus { border-color: #80E600; }
-    .send-btn { background: #80E600; color: #000; border: none; font-weight: 900; padding: 0 18px; border-radius: 6px; cursor: pointer; }
+    .send-btn { background: #80E600; color: #000; border: none; font-weight: 900; padding: 0 20px; border-radius: 6px; cursor: pointer; }
     
     /* Pane 3: Audit Log Feed */
     .audit-feed { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
@@ -185,6 +191,7 @@
         </div>
         <div class="map-grid"></div>
         
+        <!-- Dot + Pill Beacons -->
         <div class="map-beacon" style="top: 35%; left: 42%;">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> CNC CELL 02</div>
