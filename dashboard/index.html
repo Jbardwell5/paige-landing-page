@@ -17,7 +17,28 @@
     header { height: 50px; background: #000; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: #80E600; font-size: 0.9rem; letter-spacing: 0.05em; }
     .brand img { height: 28px; }
+    
+    /* Header Right Actions */
+    .header-actions { display: flex; align-items: center; gap: 10px; }
     .live-badge { background: rgba(128, 230, 0, 0.1); border: 1px solid rgba(128, 230, 0, 0.4); color: #80E600; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; }
+    
+    /* Audio Mute Toggle Button */
+    .audio-toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #333;
+      color: #80E600;
+      font-size: 0.7rem;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .audio-toggle-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: #555; }
+    .audio-toggle-btn.is-muted { color: #666; border-color: #222; background: rgba(0, 0, 0, 0.4); }
     
     /* Main 3-Pane Layout */
     .dashboard-container { flex: 1; display: grid; grid-template-columns: 280px 1fr 340px; height: calc(100vh - 50px); }
@@ -78,6 +99,7 @@
       box-shadow: 0 0 8px #80E600;
       position: relative;
       flex-shrink: 0;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .beacon-dot::after {
@@ -87,6 +109,7 @@
       border: 1px solid #80E600;
       border-radius: 50%;
       animation: ripple 2s infinite ease-out;
+      transition: border-color 0.3s ease;
     }
 
     @keyframes ripple {
@@ -109,7 +132,21 @@
       align-items: center;
       gap: 5px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
+
+    /* Map Beacon Active Trigger States */
+    .map-beacon.flash-info .beacon-dot { background-color: #80E600; box-shadow: 0 0 14px #80E600; }
+    .map-beacon.flash-info .beacon-dot::after { border-color: #80E600; }
+    .map-beacon.flash-info .beacon-pill { border-color: #80E600; color: #80E600; box-shadow: 0 0 12px rgba(128, 230, 0, 0.6); }
+
+    .map-beacon.flash-task .beacon-dot { background-color: #FFB000; box-shadow: 0 0 14px #FFB000; }
+    .map-beacon.flash-task .beacon-dot::after { border-color: #FFB000; }
+    .map-beacon.flash-task .beacon-pill { border-color: #FFB000; color: #FFB000; box-shadow: 0 0 12px rgba(255, 176, 0, 0.6); }
+
+    .map-beacon.flash-priority .beacon-dot { background-color: #FF3333; box-shadow: 0 0 14px #FF3333; }
+    .map-beacon.flash-priority .beacon-dot::after { border-color: #FF3333; }
+    .map-beacon.flash-priority .beacon-pill { border-color: #FF3333; color: #FF3333; box-shadow: 0 0 12px rgba(255, 51, 51, 0.6); }
     
     /* Dispatch Composer Spacing Improvements */
     .dispatch-composer { 
@@ -173,9 +210,15 @@
       font-weight: 700;
     }
     
-    /* Pane 3: Audit Log Feed */
-    .audit-feed { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-    .log-item { background: #121212; border-left: 3px solid #80E600; padding: 10px 12px; border-radius: 0 6px 6px 0; font-size: 0.8rem; }
+    /* Pane 3: Audit Log Feed & Filter Bar */
+    .pane-3-container { position: relative; display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+    .filter-bar { display: flex; gap: 6px; padding: 8px 12px; background: #0E0E0E; border-bottom: 1px solid #1A1A1A; }
+    .filter-tab { flex: 1; padding: 4px 6px; background: #141414; border: 1px solid #222; border-radius: 4px; color: #666; font-size: 0.65rem; font-weight: 800; cursor: pointer; text-align: center; transition: all 0.2s ease; }
+    .filter-tab.active { background: #222; color: #FFF; border-color: #444; }
+    
+    .audit-feed { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; transition: background-color 0.4s ease; }
+    .log-item { background: #121212; border-left: 3px solid #80E600; padding: 10px 12px; border-radius: 0 6px 6px 0; font-size: 0.8rem; transition: transform 0.2s ease, opacity 0.2s ease; }
+    .log-item.info { border-left-color: #80E600; }
     .log-item.task { border-left-color: #FFB000; }
     .log-item.priority { border-left-color: #FF3333; }
     .log-header { display: flex; justify-content: space-between; color: #666; font-size: 0.7rem; margin-bottom: 4px; }
@@ -183,6 +226,15 @@
     .log-status { font-size: 0.65rem; font-weight: 800; color: #80E600; margin-top: 6px; }
     .log-item.task .log-status { color: #FFB000; }
     .log-item.priority .log-status { color: #FF3333; }
+
+    /* Visual Flash Effect on Feed */
+    .flash-feed-info { animation: feedFlashInfo 0.6s ease-out; }
+    .flash-feed-task { animation: feedFlashTask 0.6s ease-out; }
+    .flash-feed-priority { animation: feedFlashPriority 0.6s ease-out; }
+
+    @keyframes feedFlashInfo { 0% { background-color: rgba(128, 230, 0, 0.15); } 100% { background-color: transparent; } }
+    @keyframes feedFlashTask { 0% { background-color: rgba(255, 176, 0, 0.15); } 100% { background-color: transparent; } }
+    @keyframes feedFlashPriority { 0% { background-color: rgba(255, 51, 51, 0.2); } 100% { background-color: transparent; } }
   </style>
 </head>
 <body>
@@ -192,7 +244,13 @@
       <img src="apple-touch-logo.png" alt="PAiGE">
       COMMAND CENTER
     </div>
-    <span class="live-badge">SYSTEM LIVE</span>
+    <div class="header-actions">
+      <button class="audio-toggle-btn" id="audioToggle" onclick="toggleAudioMute()">
+        <i class="fa-solid fa-volume-high" id="audioIcon"></i>
+        <span id="audioLabel">AUDIO ON</span>
+      </button>
+      <span class="live-badge">SYSTEM LIVE</span>
+    </div>
   </header>
 
   <div class="dashboard-container">
@@ -238,28 +296,27 @@
         </div>
         <div class="map-grid"></div>
         
-        <!-- Dot + Pill Beacons -->
-        <div class="map-beacon" style="top: 35%; left: 42%;">
+        <div class="map-beacon" data-target="CPH2495 (CNC CELL 02)" style="top: 35%; left: 42%;">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> CNC CELL 02</div>
         </div>
         
-        <div class="map-beacon" style="top: 60%; left: 68%;">
+        <div class="map-beacon" data-target="UNIT 2 - JOHN" style="top: 60%; left: 68%;">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 2 - JOHN</div>
         </div>
         
-        <div class="map-beacon" style="top: 25%; left: 22%;">
+        <div class="map-beacon" data-target="UNIT 3 - SARAH" style="top: 25%; left: 22%;">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 3 - SARAH</div>
         </div>
         
-        <div class="map-beacon" style="top: 72%; left: 28%;">
+        <div class="map-beacon" data-target="FORKLIFT 04" style="top: 72%; left: 28%;">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> FORKLIFT 04</div>
         </div>
         
-        <div class="map-beacon" style="top: 68%; left: 52%;">
+        <div class="map-beacon" data-target="UNIT 5 - MIKE" style="top: 68%; left: 52%;">
           <div class="beacon-dot"></div>
           <div class="beacon-pill"><i class="fa-solid fa-signal" style="font-size: 8px;"></i> UNIT 5 - MIKE</div>
         </div>
@@ -284,21 +341,29 @@
 
     <div class="pane" style="border-right: none;">
       <div class="pane-header">Live Audit Log</div>
-      <div class="audit-feed" id="auditFeed">
-        <div class="log-item priority">
-          <div class="log-header"><span>To: CPH2495</span><span>12m ago</span></div>
-          <div class="log-text">Hydraulic Pressure Drop Line 2</div>
-          <div class="log-status">✓ ACKNOWLEDGED</div>
+      <div class="pane-3-container">
+        <div class="filter-bar">
+          <button class="filter-tab active" onclick="filterAuditFeed('ALL', this)">ALL</button>
+          <button class="filter-tab" onclick="filterAuditFeed('INFO', this)">INFO</button>
+          <button class="filter-tab" onclick="filterAuditFeed('TASK', this)">TASKS</button>
+          <button class="filter-tab" onclick="filterAuditFeed('PRIORITY', this)">PRIORITY</button>
         </div>
-        <div class="log-item task">
-          <div class="log-header"><span>To: FORKLIFT 04</span><span>28m ago</span></div>
-          <div class="log-text">Move pallet rack #B4 to Staging Bay</div>
-          <div class="log-status">✓ ASSIGNED</div>
-        </div>
-        <div class="log-item">
-          <div class="log-header"><span>To: ALL UNITS</span><span>45m ago</span></div>
-          <div class="log-text">Shift changeover checklist ready</div>
-          <div class="log-status">✓ DELIVERED</div>
+        <div class="audit-feed" id="auditFeed">
+          <div class="log-item priority" data-type="PRIORITY">
+            <div class="log-header"><span>To: CPH2495</span><span>12m ago</span></div>
+            <div class="log-text">Hydraulic Pressure Drop Line 2</div>
+            <div class="log-status">✓ ACKNOWLEDGED</div>
+          </div>
+          <div class="log-item task" data-type="TASK">
+            <div class="log-header"><span>To: FORKLIFT 04</span><span>28m ago</span></div>
+            <div class="log-text">Move pallet rack #B4 to Staging Bay</div>
+            <div class="log-status">✓ ASSIGNED</div>
+          </div>
+          <div class="log-item info" data-type="INFO">
+            <div class="log-header"><span>To: ALL UNITS</span><span>45m ago</span></div>
+            <div class="log-text">Shift changeover checklist ready</div>
+            <div class="log-status">✓ DELIVERED</div>
+          </div>
         </div>
       </div>
     </div>
@@ -308,6 +373,64 @@
 <script>
   let currentPriority = 'INFO';
   let selectedTarget = 'ALL UNITS (BROADCAST)';
+  let activeFilter = 'ALL';
+  let isAudioMuted = false;
+  
+  // Audio Synthesizer via Web Audio API
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  function toggleAudioMute() {
+    isAudioMuted = !isAudioMuted;
+    const btn = document.getElementById('audioToggle');
+    const icon = document.getElementById('audioIcon');
+    const label = document.getElementById('audioLabel');
+
+    if (isAudioMuted) {
+      btn.classList.add('is-muted');
+      icon.className = 'fa-solid fa-volume-xmark';
+      label.innerText = 'AUDIO MUTED';
+    } else {
+      btn.classList.remove('is-muted');
+      icon.className = 'fa-solid fa-volume-high';
+      label.innerText = 'AUDIO ON';
+    }
+  }
+
+  function playDispatchSound(type) {
+    if (isAudioMuted) return; // Guard clause for muted state
+
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+
+    if (type === 'INFO') {
+      osc.frequency.setValueAtTime(440, now); // Quiet blip
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    } else if (type === 'TASK') {
+      osc.frequency.setValueAtTime(587.33, now); // D5 Tone
+      osc.frequency.setValueAtTime(880, now + 0.1); // A5 Tone
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    } else {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(880, now);
+      osc.frequency.setValueAtTime(440, now + 0.12);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      osc.start(now);
+      osc.stop(now + 0.35);
+    }
+  }
 
   function selectDevice(element, targetName) {
     document.querySelectorAll('.device-card').forEach(card => card.classList.remove('selected'));
@@ -324,12 +447,10 @@
     const msgInput = document.getElementById('msgInput');
     const sendBtn = document.getElementById('sendBtn');
 
-    // Reset button states
     btnInfo.className = 'p-btn';
     btnTask.className = 'p-btn';
     btnPriority.className = 'p-btn';
 
-    // Remove old theme classes
     msgInput.classList.remove('theme-info', 'theme-task', 'theme-priority');
     sendBtn.classList.remove('theme-info', 'theme-task', 'theme-priority');
 
@@ -362,6 +483,22 @@
     }
   }
 
+  function filterAuditFeed(type, tabElement) {
+    activeFilter = type;
+    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+    tabElement.classList.add('active');
+
+    const logs = document.querySelectorAll('#auditFeed .log-item');
+    logs.forEach(log => {
+      const logType = log.getAttribute('data-type');
+      if (type === 'ALL' || logType === type) {
+        log.style.display = 'block';
+      } else {
+        log.style.display = 'none';
+      }
+    });
+  }
+
   function sendDispatch() {
     const input = document.getElementById('msgInput');
     const text = input.value.trim();
@@ -370,11 +507,10 @@
     const feed = document.getElementById('auditFeed');
     const newLog = document.createElement('div');
     
-    let priorityClass = '';
-    if (currentPriority === 'TASK') priorityClass = 'task';
-    if (currentPriority === 'PRIORITY') priorityClass = 'priority';
+    let priorityClass = currentPriority.toLowerCase();
     
     newLog.className = `log-item ${priorityClass}`;
+    newLog.setAttribute('data-type', currentPriority);
     
     newLog.innerHTML = `
       <div class="log-header"><span>To: ${selectedTarget}</span><span>JUST NOW</span></div>
@@ -382,9 +518,37 @@
       <div class="log-status">✓ DISPATCHED (${currentPriority})</div>
     `;
 
+    // Apply active filter state to new item
+    if (activeFilter !== 'ALL' && activeFilter !== currentPriority) {
+      newLog.style.display = 'none';
+    }
+
     feed.insertBefore(newLog, feed.firstChild);
+    
+    // Trigger visual feed flash & sound audio chime
+    playDispatchSound(currentPriority);
+    feed.classList.remove('flash-feed-info', 'flash-feed-task', 'flash-feed-priority');
+    void feed.offsetWidth; // Force reflow
+    feed.classList.add(`flash-feed-${priorityClass}`);
+
+    // Map Beacon Feedback Flash
+    triggerBeaconFlash(selectedTarget, currentPriority);
+
     input.value = '';
     updateCharCount();
+  }
+
+  function triggerBeaconFlash(target, type) {
+    const flashClass = `flash-${type.toLowerCase()}`;
+    const beacons = document.querySelectorAll('.map-beacon');
+
+    beacons.forEach(beacon => {
+      const beaconTarget = beacon.getAttribute('data-target');
+      if (target === 'ALL UNITS (BROADCAST)' || target === beaconTarget) {
+        beacon.classList.add(flashClass);
+        setTimeout(() => beacon.classList.remove(flashClass), 3000);
+      }
+    });
   }
 
   // Telemetry beacon drifting animation
