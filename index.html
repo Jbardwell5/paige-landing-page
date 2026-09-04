@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PAiGE - Frontline &amp; Industrial Communications</title> 
   
-  <!-- Apple Touch Icon & Favicon -->
   <link rel="apple-touch-icon" href="apple-touch-logo.png">
   <link rel="icon" type="image/png" href="apple-touch-logo.png">
 
-  <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome CDN for Social Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
@@ -83,33 +80,37 @@
       color: #80E600;
     }
 
-    /* Main Content Layout */
+    /* Main Content Layout - Updated Layout Spacing */
     main {
       flex: 1;
       display: flex;
       flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
       min-height: calc(100vh - 130px);
       width: 100%;
     }
 
-    /* Left Column: Hero Content Block */
+    /* Left Column: Hero Content Block - Updated Padding & Alignment */
     .hero-content {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      padding: 3rem 4%;
+      align-items: flex-start;
+      padding: 2rem 2rem 2rem 5%;
       z-index: 2;
     }
 
-    /* Inner Wrapper */
+    /* Inner Wrapper - Refined Max-Width */
     .hero-text-block {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      max-width: 620px;
+      max-width: 580px;
       width: 100%;
     }
 
@@ -177,7 +178,7 @@
       box-shadow: 0 0 25px rgba(128, 230, 0, 0.45);
     }
 
-    /* Form Bubble Container */
+    /* Form Bubble Container - Expanded Max-Width */
     .email-signup-form {
       display: flex;
       align-items: center;
@@ -186,7 +187,7 @@
       border-radius: 50px;
       padding: 0.35rem 0.35rem 0.35rem 1.25rem;
       width: 100%;
-      max-width: 480px;
+      max-width: 520px;
       min-height: 52px;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
       position: relative;
@@ -249,7 +250,7 @@
       letter-spacing: 0.01em;
     }
 
-    /* Right Column: Hero Image with Contrast Background */
+    /* Right Column: Hero Image Container - Centered Alignment & Padding */
     .hero-image-container {
       flex: 1;
       position: relative;
@@ -257,16 +258,16 @@
       overflow: hidden;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: center;
       min-height: 500px;
-      padding: 1.5rem 1rem 1.5rem 0;
+      padding: 2rem 2rem 2rem 0;
     }
 
     .hero-image {
       width: 100%;
       max-width: 98%;
       height: 100%;
-      max-height: 92vh;
+      max-height: 80vh;
       object-fit: contain;
       object-position: right center;
       display: block;
@@ -404,7 +405,6 @@
 </head>
 <body>
 
-  <!-- Centered Header Navigation with Sub-Nav -->
   <header>
     <div class="logo-container">
       <a href="#">
@@ -418,26 +418,20 @@
     </nav>
   </header>
 
-  <!-- Split Hero Section -->
   <main>
-    <!-- Left Column -->
     <section class="hero-content">
       <div class="hero-text-block">
         
-        <!-- Subtle Green Pill Badge -->
         <div class="coming-soon-badge">
           <span class="status-dot">●</span> COMING SOON
         </div>
 
-        <!-- Clean White Main Headline -->
         <h1>Modernizing Frontline &amp; Industrial Floor Communication</h1>
 
-        <!-- Primary CTA: Launch Admin Dashboard -->
         <button id="demoBtn" class="btn-demo-trigger">
           <i class="fa-solid fa-gauge-high"></i> LAUNCH COMMAND CENTER
         </button>
 
-        <!-- Secondary Email Capture -->
         <form class="email-signup-form" id="leadForm">
           <input 
             type="email" 
@@ -448,7 +442,6 @@
           />
           <button type="submit" class="submit-btn" id="submitBtn">CONTACT</button>
           
-          <!-- Success Message Container -->
           <div class="form-success-msg" id="successMsg">
             <i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> Thank you! We'll be in touch shortly.
           </div>
@@ -456,7 +449,6 @@
       </div>
     </section>
 
-    <!-- Right Column -->
     <section class="hero-image-container">
       <img 
         src="hero-photo.webp" 
@@ -468,13 +460,11 @@
     </section>
   </main>
 
-  <!-- Footer Section -->
   <footer>
     <div class="footer-banner-container">
       <img src="footer-photo.webp" loading="lazy" alt="Purpose-Built For The Frontline" class="footer-banner-img" />
     </div>
 
-    <!-- Green PAiGE Brand Block & Socials -->
     <div class="footer-brand-section">
       <img src="apple-touch-logo.png" alt="PAiGE" class="footer-green-logo" />
 
@@ -494,7 +484,6 @@
       </div>
     </div>
 
-    <!-- Legal Footer Bar -->
     <div class="footer-bottom">
       <p>&copy; 2026 PAiGE Link LLC. All rights reserved.</p>
       <div class="footer-bottom-links">
@@ -505,7 +494,6 @@
     </div>
   </footer>
 
-  <!-- Firebase & Analytics Integration -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
