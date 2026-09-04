@@ -436,19 +436,19 @@
 
   <header>
     <div class="logo-container">
-      <a href="#">
+      <a href="index.html">
         <img src="apple-touch-logo.png" alt="PAiGE Logo" class="logo-img" />
       </a>
     </div>
 
     <nav class="header-main-nav">
-      <a href="#features" class="nav-link">Features</a>
-      <a href="#hardware" class="nav-link">Hardware</a>
-      <a href="#contact" class="nav-link">Contact</a>
+      <a href="features/" class="nav-link">Features</a>
+      <a href="hardware/" class="nav-link">Hardware</a>
+      <a href="contact/" class="nav-link">Contact</a>
     </nav>
 
     <nav class="header-utility-nav">
-      <a href="/dashboard#demo" class="nav-link-admin">Admin Login</a>
+      <a href="admin/" class="nav-link-admin">Admin Login</a>
     </nav>
   </header>
 
@@ -523,7 +523,7 @@
       <div class="footer-bottom-links">
         <a href="#privacy">Privacy Policy</a>
         <a href="#terms">Terms of Service</a>
-        <a href="#contact">Contact Us</a>
+        <a href="contact/">Contact Us</a>
       </div>
     </div>
   </footer>
@@ -557,7 +557,7 @@
     // Launch Dashboard Handler
     const launchDemo = () => {
       logEvent(analytics, 'launch_demo', { source: 'hero_button' });
-      window.location.href = '/dashboard#demo';
+      window.location.href = 'dashboard/#demo';
     };
 
     demoBtn.addEventListener('click', launchDemo);
