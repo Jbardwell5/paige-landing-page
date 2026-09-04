@@ -132,41 +132,44 @@
       z-index: 1;
     }
 
-    .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#1A1A1A 1px, transparent 1px); background-size: 20px 20px; opacity: 0.6; z-index: 2; pointer-events: none; }
+    .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#1A1A1A 1px, transparent 1px); background-size: 20px 20px; opacity: 0.4; z-index: 2; pointer-events: none; }
     
-    /* Fleet View Custom Map Graphic Layout */
+    /* Fleet View PNG Map Background */
     .fleet-map-bg {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 50%, #0d131a 0%, #050505 80%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: url('dark-regional-map.png') center/contain no-repeat;
+      background-color: #050505;
+      z-index: 1;
     }
 
-    /* Central Hub Hub Indicator */
+    /* Central Hub Node (Howard Interchange Nexus) */
     .hub-node {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 48%;
+      left: 50.5%;
       transform: translate(-50%, -50%);
-      background: rgba(10, 10, 10, 0.9);
-      border: 2px solid #80E600;
-      border-radius: 8px;
-      padding: 8px 14px;
+      background: rgba(10, 10, 10, 0.92);
+      border: 1.5px solid #80E600;
+      border-radius: 6px;
+      padding: 6px 12px;
       text-align: center;
-      box-shadow: 0 0 20px rgba(128, 230, 0, 0.25);
+      box-shadow: 0 0 20px rgba(128, 230, 0, 0.4);
       z-index: 4;
+      backdrop-filter: blur(4px);
     }
-    .hub-title { font-size: 0.75rem; font-weight: 800; color: #FFF; letter-spacing: 0.05em; }
-    .hub-sub { font-size: 0.65rem; color: #80E600; font-weight: 700; margin-top: 2px; }
+    .hub-title { font-size: 0.72rem; font-weight: 800; color: #FFF; letter-spacing: 0.05em; }
+    .hub-sub { font-size: 0.62rem; color: #80E600; font-weight: 700; margin-top: 2px; }
 
-    /* Geofence Ring */
+    /* 5-Mile Geofence Ring */
     .geofence-ring {
       position: absolute;
-      width: 380px;
-      height: 380px;
-      border: 1px dashed rgba(128, 230, 0, 0.4);
+      top: 48%;
+      left: 50.5%;
+      width: 340px;
+      height: 340px;
+      transform: translate(-50%, -50%);
+      border: 1.5px dashed rgba(128, 230, 0, 0.5);
       border-radius: 50%;
       background: rgba(128, 230, 0, 0.02);
       pointer-events: none;
@@ -178,18 +181,20 @@
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 800;
-      color: rgba(128, 230, 0, 0.7);
+      color: rgba(128, 230, 0, 0.9);
       letter-spacing: 0.08em;
       background: #050505;
-      padding: 2px 6px;
+      padding: 2px 8px;
       border-radius: 3px;
+      border: 1px solid rgba(128, 230, 0, 0.3);
+      white-space: nowrap;
     }
 
     @keyframes geofencePulse {
-      0%, 100% { border-color: rgba(128, 230, 0, 0.3); background: rgba(128, 230, 0, 0.02); }
-      50% { border-color: rgba(128, 230, 0, 0.6); background: rgba(128, 230, 0, 0.05); }
+      0%, 100% { border-color: rgba(128, 230, 0, 0.35); background: rgba(128, 230, 0, 0.02); }
+      50% { border-color: rgba(128, 230, 0, 0.7); background: rgba(128, 230, 0, 0.06); }
     }
 
     /* Dot + Pill Beacon Styling */
@@ -200,7 +205,7 @@
       gap: 6px; 
       z-index: 5; 
       transform: translate(-4px, -4px);
-      transition: top 2s ease, left 2s ease, transform 0.2s ease;
+      transition: top 2.5s cubic-bezier(0.25, 0.1, 0.25, 1), left 2.5s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.2s ease;
       cursor: pointer;
     }
 
@@ -237,10 +242,10 @@
 
     /* Compact Label Pill */
     .beacon-pill {
-      background: rgba(10, 10, 10, 0.85);
+      background: rgba(10, 10, 10, 0.88);
       border: 1px solid #80E600;
       backdrop-filter: blur(4px);
-      padding: 3px 7px;
+      padding: 3px 8px;
       border-radius: 4px;
       font-size: 0.68rem;
       font-weight: 700;
@@ -435,15 +440,15 @@
         </div>
         <div class="device-card" data-target="TRUCK #12 - INBOUND" onclick="selectDevice('TRUCK #12 - INBOUND')">
           <div class="device-name">TRUCK #12 - INBOUND</div>
-          <div class="device-meta"><span>ETA: 8 Mins (Dock 4)</span><span>GPS: Active</span></div>
+          <div class="device-meta"><span>ETA: 8 Mins (Dock 4)</span><span>HWY 29 East</span></div>
         </div>
         <div class="device-card" data-target="TRUCK #08 - STAGED" onclick="selectDevice('TRUCK #08 - STAGED')">
           <div class="device-name">TRUCK #08 - STAGED</div>
-          <div class="device-meta"><span>Location: Bay 2 Area</span><span>Batt: 91%</span></div>
+          <div class="device-meta"><span>Location: I-41 Corridor</span><span>Batt: 91%</span></div>
         </div>
         <div class="device-card" data-target="VAN #04 - FIELD TECH" onclick="selectDevice('VAN #04 - FIELD TECH')">
           <div class="device-name">VAN #04 - FIELD TECH</div>
-          <div class="device-meta"><span>Zone: Offsite Site B</span><span>GPS: Active</span></div>
+          <div class="device-meta"><span>Zone: Airport/172 South</span><span>GPS: Active</span></div>
         </div>
       </div>
     </div>
@@ -497,19 +502,19 @@
             <div class="hub-sub">AUTO-PREP ACTIVE</div>
           </div>
 
-          <div class="map-beacon" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 18%; left: 18%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
+          <div class="map-beacon" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 24%; left: 22%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
             <div class="beacon-dot" style="background-color: #FFB000; box-shadow: 0 0 8px #FFB000;"></div>
             <div class="beacon-pill" style="border-color: #FFB000; color: #FFB000;">
               <i class="fa-solid fa-truck" style="font-size: 8px;"></i> TRUCK #12 (8 MIN ETA)
             </div>
           </div>
 
-          <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 62%; left: 58%;" onclick="selectDevice('TRUCK #08 - STAGED')">
+          <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 72%; left: 51.5%;" onclick="selectDevice('TRUCK #08 - STAGED')">
             <div class="beacon-dot"></div>
-            <div class="beacon-pill"><i class="fa-solid fa-truck-ramp-box" style="font-size: 8px;"></i> TRUCK #08 (STAGED)</div>
+            <div class="beacon-pill"><i class="fa-solid fa-truck-ramp-box" style="font-size: 8px;"></i> TRUCK #08 (I-41 N)</div>
           </div>
 
-          <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 80%; left: 22%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
+          <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 80%; left: 32%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
             <div class="beacon-dot"></div>
             <div class="beacon-pill"><i class="fa-solid fa-van-shuttle" style="font-size: 8px;"></i> VAN #04 (FIELD)</div>
           </div>
@@ -573,7 +578,7 @@
   let activeView = 'facility';
   let geofenceTriggered = false;
   
-  // Audio Synthesizer via Web Audio API
+  // Web Audio Synthesizer
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
   function toggleAudioMute() {
@@ -673,7 +678,7 @@
 
       selectDevice('ALL FLEET UNITS');
 
-      // Trigger Geofence Automated Demo Simulation
+      // Trigger Highway Waypoint Animation & Geofence Demo Event
       if (!geofenceTriggered) {
         geofenceTriggered = true;
         simulateGeofenceEvent();
@@ -681,31 +686,38 @@
     }
   }
 
-  // Automated Geofence & Dock Notification Simulation
+  // Automated Highway Route Trajectory and Geofence Triggering
   function simulateGeofenceEvent() {
+    const truck = document.getElementById('truck12Beacon');
+    
+    // Step 1: Move Truck #12 along HWY 29 towards Howard interchange
     setTimeout(() => {
-      const truck = document.getElementById('truck12Beacon');
       if (truck) {
-        truck.style.top = '38%';
+        truck.style.top = '36%';
         truck.style.left = '36%';
       }
 
+      // Step 2: Cross 5-Mile Geofence Ring and trigger dispatch
       setTimeout(() => {
-        // Post automated dispatch message
+        if (truck) {
+          truck.style.top = '44%';
+          truck.style.left = '45%';
+        }
+
         const feed = document.getElementById('auditFeed');
         const autoLog = document.createElement('div');
         autoLog.className = 'log-item task';
         autoLog.setAttribute('data-type', 'TASK');
         autoLog.innerHTML = `
           <div class="log-header"><span>To: DOCK OPERATOR (BAY 4)</span><span>AUTOMATED</span></div>
-          <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter. Prep Dock 4 for staging.</div>
+          <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter on HWY 29. Prep Dock 4.</div>
           <div class="log-status">✓ AUTO-DISPATCH SENT</div>
         `;
         feed.insertBefore(autoLog, feed.firstChild);
         playDispatchSound('TASK');
 
         triggerBeaconFlash('TRUCK #12 - INBOUND', 'TASK');
-      }, 2000);
+      }, 2500);
     }, 1000);
   }
 
@@ -714,7 +726,6 @@
     selectedTarget = targetName;
     document.getElementById('targetName').innerText = targetName;
 
-    // Update Fleet Roster cards selection state
     document.querySelectorAll('.device-card').forEach(card => {
       if (card.getAttribute('data-target') === targetName) {
         card.classList.add('selected');
@@ -724,7 +735,6 @@
       }
     });
 
-    // Update Map Beacons selection state
     document.querySelectorAll('.map-beacon').forEach(beacon => {
       if (beacon.getAttribute('data-target') === targetName) {
         beacon.classList.add('active');
@@ -766,30 +776,37 @@
 
   function updateCharCount() {
     const input = document.getElementById('msgInput');
-    const charCount = document.getElementById('charCount');
-    const remaining = 160 - input.value.length;
-    charCount.innerText = remaining;
+    const counter = document.getElementById('charCount');
+    counter.innerText = 160 - input.value.length;
   }
 
-  function handleKeyDown(event) {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       sendDispatch();
     }
   }
 
-  function filterAuditFeed(type, tabElement) {
+  function triggerBeaconFlash(target, priority) {
+    const beacons = document.querySelectorAll(`.map-beacon[data-target="${target}"]`);
+    beacons.forEach(b => {
+      const cls = priority === 'INFO' ? 'flash-info' : priority === 'TASK' ? 'flash-task' : 'flash-priority';
+      b.classList.add(cls);
+      setTimeout(() => b.classList.remove(cls), 2000);
+    });
+  }
+
+  function filterAuditFeed(type, element) {
     activeFilter = type;
     document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-    tabElement.classList.add('active');
+    element.classList.add('active');
 
-    const logs = document.querySelectorAll('#auditFeed .log-item');
-    logs.forEach(log => {
-      const logType = log.getAttribute('data-type');
-      if (type === 'ALL' || logType === type) {
-        log.style.display = 'block';
+    const items = document.querySelectorAll('.log-item');
+    items.forEach(item => {
+      if (type === 'ALL' || item.getAttribute('data-type') === type) {
+        item.style.display = 'block';
       } else {
-        log.style.display = 'none';
+        item.style.display = 'none';
       }
     });
   }
@@ -800,66 +817,39 @@
     if (!text) return;
 
     const feed = document.getElementById('auditFeed');
-    const newLog = document.createElement('div');
-    
-    let priorityClass = currentPriority.toLowerCase();
-    
-    newLog.className = `log-item ${priorityClass}`;
-    newLog.setAttribute('data-type', currentPriority);
-    
-    newLog.innerHTML = `
-      <div class="log-header"><span>To: ${selectedTarget}</span><span>JUST NOW</span></div>
+    const log = document.createElement('div');
+    const pClass = currentPriority.toLowerCase();
+    log.className = `log-item ${pClass}`;
+    log.setAttribute('data-type', currentPriority);
+
+    const statusMsg = currentPriority === 'INFO' ? '✓ DELIVERED' : currentPriority === 'TASK' ? '✓ ASSIGNED' : '⚡ ALERT SENT';
+
+    log.innerHTML = `
+      <div class="log-header"><span>To: ${selectedTarget}</span><span>Just now</span></div>
       <div class="log-text">${text}</div>
-      <div class="log-status">✓ DISPATCHED (${currentPriority})</div>
+      <div class="log-status">${statusMsg}</div>
     `;
 
-    if (activeFilter !== 'ALL' && activeFilter !== currentPriority) {
-      newLog.style.display = 'none';
-    }
-
-    feed.insertBefore(newLog, feed.firstChild);
+    feed.insertBefore(log, feed.firstChild);
     
+    // Play audio feedback tone
     playDispatchSound(currentPriority);
-    feed.classList.remove('flash-feed-info', 'flash-feed-task', 'flash-feed-priority');
-    void feed.offsetWidth;
-    feed.classList.add(`flash-feed-${priorityClass}`);
 
+    // Visual map beacon pulse
     triggerBeaconFlash(selectedTarget, currentPriority);
+
+    // Flash feed container
+    const flashClass = currentPriority === 'INFO' ? 'flash-feed-info' : currentPriority === 'TASK' ? 'flash-feed-task' : 'flash-feed-priority';
+    feed.classList.add(flashClass);
+    setTimeout(() => feed.classList.remove(flashClass), 600);
 
     input.value = '';
     updateCharCount();
+
+    if (activeFilter !== 'ALL' && activeFilter !== currentPriority) {
+      filterAuditFeed('ALL', document.querySelectorAll('.filter-tab')[0]);
+    }
   }
-
-  function triggerBeaconFlash(target, type) {
-    const flashClass = `flash-${type.toLowerCase()}`;
-    const beacons = document.querySelectorAll('.map-beacon');
-
-    beacons.forEach(beacon => {
-      const beaconTarget = beacon.getAttribute('data-target');
-      if (target === 'ALL UNITS (BROADCAST)' || target === 'ALL FLEET UNITS' || target === beaconTarget) {
-        beacon.classList.add(flashClass);
-        setTimeout(() => beacon.classList.remove(flashClass), 3000);
-      }
-    });
-  }
-
-  // Telemetry beacon drifting animation
-  setInterval(() => {
-    const beacons = document.querySelectorAll('.map-beacon');
-    beacons.forEach(beacon => {
-      // Don't drift truck 12 if it's animating
-      if (beacon.id === 'truck12Beacon') return;
-
-      const deltaX = (Math.random() - 0.5) * 0.8;
-      const deltaY = (Math.random() - 0.5) * 0.8;
-
-      let currentTop = parseFloat(beacon.style.top);
-      let currentLeft = parseFloat(beacon.style.left);
-
-      beacon.style.top = `${(currentTop + deltaY).toFixed(2)}%`;
-      beacon.style.left = `${(currentLeft + deltaX).toFixed(2)}%`;
-    });
-  }, 2500);
 </script>
 </body>
 </html>
