@@ -33,45 +33,53 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Centered Header Navigation */
+    /* Top Navigation Header Bar */
     header {
       background-color: #000000;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem 0.85rem 2rem;
+      padding: 1.25rem 3rem;
       border-bottom: 1px solid #1a1a1a;
-      gap: 0.65rem;
+      position: relative;
     }
 
     .logo-container {
       display: flex;
-      justify-content: center;
       align-items: center;
+      flex: 1;
     }
 
     .logo-img {
-      height: 90px;
+      height: 48px;
       width: auto;
       display: block;
       object-fit: contain;
     }
 
-    /* Sub-Header Utility Links */
-    .header-sub-nav {
+    /* Centered Features, Hardware, and Contact Links */
+    .header-main-nav {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      gap: 2.5rem;
+      flex: 1;
+    }
+
+    /* Right Utility Link: Discreet Admin Login */
+    .header-utility-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 1;
     }
 
     .nav-link {
-      color: #71717a;
+      color: #a1a1aa;
       text-decoration: none;
-      font-size: 0.75rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       transition: color 0.2s ease;
     }
@@ -80,7 +88,24 @@
       color: #80E600;
     }
 
-    /* Main Content Layout - Updated Layout Spacing */
+    /* Subtler & Slightly Smaller Admin Login Link */
+    .nav-link-admin {
+      color: #71717a;
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s ease, opacity 0.2s ease;
+      opacity: 0.85;
+    }
+
+    .nav-link-admin:hover {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    /* Main Content Layout */
     main {
       flex: 1;
       display: flex;
@@ -93,7 +118,7 @@
       width: 100%;
     }
 
-    /* Left Column: Hero Content Block - Updated Padding & Alignment */
+    /* Left Column: Hero Content Block */
     .hero-content {
       flex: 1;
       display: flex;
@@ -104,7 +129,6 @@
       z-index: 2;
     }
 
-    /* Inner Wrapper - Refined Max-Width */
     .hero-text-block {
       display: flex;
       flex-direction: column;
@@ -114,7 +138,6 @@
       width: 100%;
     }
 
-    /* Coming Soon Pill Badge */
     .coming-soon-badge {
       display: inline-flex;
       align-items: center;
@@ -142,7 +165,6 @@
       100% { opacity: 1; }
     }
 
-    /* Clean White Main Headline */
     .hero-text-block h1 {
       font-size: clamp(2.2rem, 4vw, 3.5rem);
       font-weight: 800;
@@ -152,7 +174,6 @@
       margin-bottom: 1.75rem;
     }
 
-    /* Primary CTA Button: Launch Admin Dashboard */
     .btn-demo-trigger {
       background-color: #80E600;
       color: #050505;
@@ -178,7 +199,6 @@
       box-shadow: 0 0 25px rgba(128, 230, 0, 0.45);
     }
 
-    /* Form Bubble Container - Expanded Max-Width */
     .email-signup-form {
       display: flex;
       align-items: center;
@@ -212,7 +232,6 @@
       color: #71717a;
     }
 
-    /* Secondary CTA: De-emphasized Ghost Button */
     .submit-btn {
       background-color: #222222;
       color: #e4e4e7;
@@ -238,7 +257,6 @@
       transform: scale(0.98);
     }
 
-    /* Inline Thank You Message inside Bubble */
     .form-success-msg {
       display: none;
       color: #80E600;
@@ -250,7 +268,7 @@
       letter-spacing: 0.01em;
     }
 
-    /* Right Column: Hero Image Container - Centered Alignment & Padding */
+    /* Right Column: Hero Image Container */
     .hero-image-container {
       flex: 1;
       position: relative;
@@ -367,8 +385,19 @@
 
     /* Responsive Adjustments */
     @media (max-width: 900px) {
-      .header-sub-nav {
-        gap: 1.25rem;
+      header {
+        padding: 1rem 1.5rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .logo-container, .header-main-nav, .header-utility-nav {
+        justify-content: center;
+        flex: auto;
+      }
+
+      .header-main-nav {
+        gap: 1.5rem;
       }
 
       main {
@@ -411,10 +440,15 @@
         <img src="apple-touch-logo.png" alt="PAiGE Logo" class="logo-img" />
       </a>
     </div>
-    <nav class="header-sub-nav">
+
+    <nav class="header-main-nav">
       <a href="#features" class="nav-link">Features</a>
       <a href="#hardware" class="nav-link">Hardware</a>
-      <a href="/dashboard#demo" class="nav-link">Admin Portal</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <nav class="header-utility-nav">
+      <a href="/dashboard#demo" class="nav-link-admin">Admin Login</a>
     </nav>
   </header>
 
