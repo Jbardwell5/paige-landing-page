@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <style>
+<style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
     body { background-color: #080808; color: #E0E0E0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
     
@@ -191,36 +191,36 @@
       50% { border-color: rgba(128, 230, 0, 0.7); background: rgba(128, 230, 0, 0.06); }
     }
 
+    /* MAP BEACON & OFFSET STYLES */
     .map-beacon { 
       position: absolute; 
       display: flex; 
       align-items: center; 
+      justify-content: center;
       gap: 6px; 
-      z-index: 5; 
+      z-index: 10; 
       transform: translate(-4px, -4px);
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, top 1s linear, left 1s linear;
       cursor: pointer;
-    }
-
-    #truck12Beacon {
-      transition: top 1s linear, left 1s linear;
     }
 
     .map-beacon:hover {
       transform: translate(-4px, -4px) scale(1.08);
-      z-index: 10;
+      z-index: 12;
     }
 
     .beacon-dot {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       background-color: #80E600;
       border-radius: 50%;
-      box-shadow: 0 0 8px #80E600;
+      box-shadow: 0 0 10px #80E600;
       position: relative;
       flex-shrink: 0;
+      z-index: 2;
       transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
+    .beacon-dot.alert-amber { background-color: #FFB000; box-shadow: 0 0 10px #FFB000; }
 
     .beacon-dot::after {
       content: '';
@@ -232,27 +232,48 @@
       transition: border-color 0.3s ease;
     }
 
+    .beacon-pulse-ring {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border: 2px solid #FFB000;
+      border-radius: 50%;
+      animation: beaconPulse 1.8s infinite ease-out;
+      z-index: 1;
+    }
+
     @keyframes ripple {
       0% { transform: scale(0.5); opacity: 1; }
       100% { transform: scale(2.2); opacity: 0; }
     }
 
+    @keyframes beaconPulse {
+      0% { transform: scale(0.5); opacity: 1; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+
     .beacon-pill {
-      background: rgba(10, 10, 10, 0.88);
+      position: absolute;
+      background: rgba(10, 10, 10, 0.9);
       border: 1px solid #80E600;
-      backdrop-filter: blur(4px);
+      color: #80E600;
+      font-size: 0.68rem;
+      font-weight: 800;
       padding: 3px 8px;
       border-radius: 4px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #80E600;
       white-space: nowrap;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      backdrop-filter: blur(4px);
       transition: all 0.2s ease;
     }
+
+    .beacon-pill.alert-amber-border { border-color: #FFB000; color: #FFB000; }
+    .beacon-pill.offset-top-right { top: -28px; left: 12px; }
+    .beacon-pill.offset-bottom { top: 16px; left: -20px; }
+    .beacon-pill.offset-left { right: 16px; top: -6px; }
 
     .map-beacon.active .beacon-pill {
       background: #80E600;
@@ -279,15 +300,20 @@
     .map-beacon.flash-priority .beacon-dot::after { border-color: #FF3333; }
     .map-beacon.flash-priority .beacon-pill { border-color: #FF3333; color: #FF3333; box-shadow: 0 0 12px rgba(255, 51, 51, 0.6); }
     
+    /* DISPATCH COMPOSER LAYOUT */
     .dispatch-composer { 
-      padding: 16px 20px 18px 20px; 
-      background: #0A0A0A; 
-      border-top: 1px solid #1A1A1A; 
+      background: #080808; 
+      border-top: 1px solid #1C1C1C; 
+      padding: 8px 12px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 6px; 
     }
 
-    .composer-target { font-size: 0.75rem; color: #888; font-weight: 700; margin-bottom: 10px; }
-    .priority-selector { display: flex; gap: 8px; margin-bottom: 12px; }
-    .p-btn { flex: 1; padding: 8px; border: 1px solid #222; background: #121212; color: #888; font-size: 0.75rem; font-weight: 800; border-radius: 4px; cursor: pointer; text-align: center; transition: all 0.2s ease; }
+    .composer-header-row { display: flex; justify-content: space-between; align-items: center; }
+    .composer-target { font-size: 0.72rem; color: #888; letter-spacing: 0.05em; font-weight: 700; }
+    .priority-selector { display: flex; gap: 8px; }
+    .p-btn { flex: 1; padding: 6px 10px; border: 1px solid #222; background: #121212; color: #888; font-size: 0.72rem; font-weight: 800; border-radius: 4px; cursor: pointer; text-align: center; transition: all 0.2s ease; }
     
     .p-btn.active-info { border-color: #80E600; color: #80E600; background: rgba(128, 230, 0, 0.08); }
     .p-btn.active-task { border-color: #FFB000; color: #FFB000; background: rgba(255, 176, 0, 0.08); }
@@ -334,7 +360,7 @@
       font-size: 0.65rem;
       color: #666;
       text-align: right;
-      margin-top: 4px;
+      margin-top: 2px;
       font-weight: 700;
     }
     
@@ -517,72 +543,79 @@
             </div>
           </div>
 
-          <div id="fleetViewCanvas" class="view-canvas hidden">
-            <div class="fleet-map-bg"></div>
-            <div class="map-grid"></div>
+          <!-- UPDATED FLEET VIEW CANVAS & DISPATCH COMPOSER -->
+      <div id="fleetViewCanvas" class="view-canvas hidden">
+        <div class="fleet-map-bg"></div>
+        <div class="map-grid"></div>
 
-            <div class="geofence-ring">
-              <span class="geofence-tag">5-MILE GEOFENCE BOUNDARY</span>
-            </div>
-
-            <div class="hub-node">
-              <div class="hub-title"><i class="fa-solid fa-warehouse" style="color: #80E600;"></i> MAIN FACILITY DOCKS</div>
-              <div class="hub-sub">AUTO-PREP ACTIVE</div>
-            </div>
-
-            <div class="map-beacon" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 10%; left: 6%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
-              <div class="beacon-dot" style="background-color: #FFB000; box-shadow: 0 0 8px #FFB000;"></div>
-              <div class="beacon-pill" style="border-color: #FFB000; color: #FFB000;">
-                <i class="fa-solid fa-truck" style="font-size: 8px;"></i> TRUCK #12 (12 MIN ETA)
-              </div>
-            </div>
-
-            <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 74%; left: 51.2%;" onclick="selectDevice('TRUCK #08 - STAGED')">
-              <div class="beacon-dot"></div>
-              <div class="beacon-pill"><i class="fa-solid fa-truck-ramp-box" style="font-size: 8px;"></i> TRUCK #08 (US-41)</div>
-            </div>
-
-            <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 61%; left: 24%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
-              <div class="beacon-dot"></div>
-              <div class="beacon-pill"><i class="fa-solid fa-van-shuttle" style="font-size: 8px;"></i> VAN #04 (FIELD)</div>
-            </div>
-          </div>
-
+        <!-- 5-Mile Perimeter Ring -->
+        <div class="geofence-ring">
+          <span class="geofence-tag">5-MILE GEOFENCE BOUNDARY</span>
         </div>
 
-        <div class="dispatch-composer">
-          <div class="composer-target">TARGET: <span id="targetName" style="color:#FFF;">ALL UNITS (BROADCAST)</span></div>
-          
-          <div class="priority-selector">
-            <button class="p-btn active-info" id="btnInfo" onclick="setPriority('INFO')">INFO</button>
-            <button class="p-btn" id="btnTask" onclick="setPriority('TASK')">TASK</button>
-            <button class="p-btn" id="btnPriority" onclick="setPriority('PRIORITY')">PRIORITY ALERT</button>
-          </div>
+        <!-- Central Facility Dock Node -->
+        <div class="hub-node">
+          <div class="hub-title"><i class="fa-solid fa-warehouse" style="color: #80E600;"></i> MAIN FACILITY DOCKS</div>
+          <div class="hub-sub">AUTO-PREP ACTIVE</div>
+        </div>
 
-          <div class="input-row">
-            <textarea id="msgInput" class="dispatch-input theme-info" placeholder="Type page or task dispatch..." maxlength="160" oninput="updateCharCount()" onkeydown="handleKeyDown(event)"></textarea>
-            <button class="send-btn theme-info" id="sendBtn" onclick="sendDispatch()">SEND PAGE</button>
+        <!-- Map Beacons with Pulse Rings & Label Offsets -->
+        <div class="map-beacon active-alert" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 18%; left: 42%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
+          <div class="beacon-pulse-ring"></div>
+          <div class="beacon-dot alert-amber"></div>
+          <div class="beacon-pill offset-top-right alert-amber-border">
+            <i class="fa-solid fa-truck" style="font-size: 0.65rem;"></i> TRUCK #12 (8 MIN ETA)
           </div>
-          <div class="char-counter"><span id="charCount">160</span> characters remaining</div>
+        </div>
+
+        <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 72%; left: 54%;" onclick="selectDevice('TRUCK #08 - STAGED')">
+          <div class="beacon-dot"></div>
+          <div class="beacon-pill offset-bottom"><i class="fa-solid fa-truck-ramp-box" style="font-size: 0.65rem;"></i> TRUCK #08 (I-41 N)</div>
+        </div>
+
+        <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 64%; left: 28%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
+          <div class="beacon-dot"></div>
+          <div class="beacon-pill offset-left"><i class="fa-solid fa-van-shuttle" style="font-size: 0.65rem;"></i> VAN #04 (FIELD)</div>
         </div>
       </div>
 
-      <div class="pane pane-3-container">
-        <div class="pane-header">
-          <span>LIVE AUDIT FEED</span>
-          <span style="color:#80E600;" id="feedCount">0 LOGS</span>
-        </div>
-
-        <div class="filter-bar">
-          <button class="filter-tab active" onclick="filterLogs('ALL', this)">ALL</button>
-          <button class="filter-tab" onclick="filterLogs('INFO', this)">INFO</button>
-          <button class="filter-tab" onclick="filterLogs('TASK', this)">TASK</button>
-          <button class="filter-tab" onclick="filterLogs('PRIORITY', this)">PRIORITY</button>
-        </div>
-
-        <div class="audit-feed" id="auditFeed"></div>
-      </div>
     </div>
+
+    <!-- REFINED DISPATCH COMPOSER -->
+    <div class="dispatch-composer">
+      <div class="composer-header-row">
+        <div class="composer-target">TARGET: <span id="targetName" style="color:#80E600; font-weight: 800;">ALL UNITS (BROADCAST)</span></div>
+        <div class="priority-selector">
+          <button class="p-btn active-info" id="btnInfo" onclick="setPriority('INFO')">INFO</button>
+          <button class="p-btn" id="btnTask" onclick="setPriority('TASK')">TASK</button>
+          <button class="p-btn" id="btnPriority" onclick="setPriority('PRIORITY')">PRIORITY ALERT</button>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <textarea id="msgInput" class="dispatch-input theme-info" placeholder="Type page or task dispatch..." maxlength="160" oninput="updateCharCount()" onkeydown="handleKeyDown(event)"></textarea>
+        <button class="send-btn theme-info" id="sendBtn" onclick="sendDispatch()">SEND PAGE</button>
+      </div>
+      <div class="char-counter"><span id="charCount">160</span> characters remaining</div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANE: LIVE AUDIT FEED -->
+  <div class="pane pane-3-container">
+    <div class="pane-header">
+      <span>LIVE AUDIT FEED</span>
+      <span style="color:#80E600;" id="feedCount">0 LOGS</span>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-tab active" onclick="filterLogs('ALL', this)">ALL</button>
+      <button class="filter-tab" onclick="filterLogs('INFO', this)">INFO</button>
+      <button class="filter-tab" onclick="filterLogs('TASK', this)">TASK</button>
+      <button class="filter-tab" onclick="filterLogs('PRIORITY', this)">PRIORITY</button>
+    </div>
+
+    <div class="audit-feed" id="auditFeed"></div>
+  </div>
 
   <!-- UPDATED HIERARCHY & MATRIX VIEW -->
     <div class="hierarchy-container hidden" id="hierarchyView">
