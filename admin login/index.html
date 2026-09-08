@@ -271,9 +271,16 @@
 
   <script>
     function handleLogin() {
-      // Temporary placeholder alert since user accounts aren't active yet
-      alert("Command Center is currently in demo mode. Authentication routes will activate during your scheduled pilot.");
-    }
+  const emailInput = document.getElementById('adminEmail').value;
+  
+  // Custom toast/inline message instead of a browser alert
+  const noticeBox = document.querySelector('.system-notice');
+  noticeBox.style.borderColor = '#80E600';
+  noticeBox.innerHTML = `
+    <i class="fa-solid fa-circle-notch fa-spin" style="color: #80E600; margin-right: 6px;"></i>
+    <strong>Pilot Mode:</strong> Authentication for <code>${emailInput}</code> will be enabled during your scheduled system deployment.
+  `;
+}
   </script>
 
 </body>
