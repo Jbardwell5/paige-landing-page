@@ -17,7 +17,6 @@
     header { height: 50px; background: #000; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; flex-shrink: 0; }
     .header-left { display: flex; align-items: center; gap: 16px; }
     
-    /* Back Button Styling */
     .back-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid #333;
@@ -38,7 +37,6 @@
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: #80E600; font-size: 0.9rem; letter-spacing: 0.05em; }
     .brand img { height: 28px; }
 
-    /* Header View Switcher Toggle */
     .view-switcher {
       display: flex;
       background: #111;
@@ -70,11 +68,9 @@
       border: 1px solid rgba(128, 230, 0, 0.4);
     }
     
-    /* Header Right Actions */
     .header-actions { display: flex; align-items: center; gap: 10px; }
     .live-badge { background: rgba(128, 230, 0, 0.1); border: 1px solid rgba(128, 230, 0, 0.4); color: #80E600; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; }
     
-    /* Audio Mute Toggle Button */
     .audio-toggle-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid #333;
@@ -92,38 +88,30 @@
     .audio-toggle-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: #555; }
     .audio-toggle-btn.is-muted { color: #666; border-color: #222; background: rgba(0, 0, 0, 0.4); }
     
-    /* Workspace Views Wrapper */
     .workspace-wrapper { flex: 1; height: calc(100vh - 50px); position: relative; overflow: hidden; }
 
-    /* Main 3-Pane Layout (Facility & Fleet Views) */
     .dashboard-container { display: grid; grid-template-columns: 280px 1fr 340px; height: 100%; width: 100%; position: absolute; inset: 0; }
     .dashboard-container.hidden { display: none !important; }
     
-    /* Pane Base Styles */
     .pane { border-right: 1px solid #1A1A1A; display: flex; flex-direction: column; background: #0A0A0A; }
     .pane-header { padding: 12px 16px; border-bottom: 1px solid #1A1A1A; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; color: #888; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
     
-    /* Pane 1: Fleet Roster */
     .roster-list { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
     .device-card { background: #121212; border: 1px solid #222; padding: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
     .device-card:hover, .device-card.selected { border-color: #80E600; background: rgba(128, 230, 0, 0.03); }
     
-    /* Amber Selection Rule for Truck #12 */
     .device-card.selected-amber { border-color: #FFB000 !important; background: rgba(255, 176, 0, 0.08) !important; }
     .device-card.selected-amber .device-name { color: #FFB000 !important; }
 
     .device-name { font-weight: 700; font-size: 0.85rem; color: #FFF; margin-bottom: 4px; }
     .device-meta { font-size: 0.75rem; color: #777; display: flex; justify-content: space-between; }
     
-    /* Pane 2: Facility Map & Dispatch Composer */
     .center-pane { display: flex; flex-direction: column; background: #050505; }
     .map-viewport { flex: 1; position: relative; background: #050505; border-bottom: 1px solid #1A1A1A; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     
-    /* View Switch Containers */
     .view-canvas { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
     .view-canvas.hidden { display: none !important; }
 
-    /* Map Layout Container */
     .map-wrapper {
       position: relative;
       width: 92%;
@@ -143,7 +131,6 @@
 
     .map-grid { position: absolute; inset: 0; background-image: radial-gradient(#1A1A1A 1px, transparent 1px); background-size: 20px 20px; opacity: 0.4; z-index: 2; pointer-events: none; }
     
-    /* Fleet View PNG Map Background */
     .fleet-map-bg {
       position: absolute;
       inset: 0;
@@ -152,7 +139,6 @@
       z-index: 1;
     }
 
-    /* Central Hub Node (Howard Interchange Nexus) */
     .hub-node {
       position: absolute;
       top: 45.5%;
@@ -170,7 +156,6 @@
     .hub-title { font-size: 0.72rem; font-weight: 800; color: #FFF; letter-spacing: 0.05em; }
     .hub-sub { font-size: 0.62rem; color: #80E600; font-weight: 700; margin-top: 2px; }
 
-    /* 5-Mile Geofence Ring */
     .geofence-ring {
       position: absolute;
       top: 45.5%;
@@ -206,7 +191,6 @@
       50% { border-color: rgba(128, 230, 0, 0.7); background: rgba(128, 230, 0, 0.06); }
     }
 
-    /* Dot + Pill Beacon Styling */
     .map-beacon { 
       position: absolute; 
       display: flex; 
@@ -218,7 +202,6 @@
       cursor: pointer;
     }
 
-    /* Smooth slow position transition for Truck #12 */
     #truck12Beacon {
       transition: top 1s linear, left 1s linear;
     }
@@ -254,7 +237,6 @@
       100% { transform: scale(2.2); opacity: 0; }
     }
 
-    /* Compact Label Pill */
     .beacon-pill {
       background: rgba(10, 10, 10, 0.88);
       border: 1px solid #80E600;
@@ -272,14 +254,12 @@
       transition: all 0.2s ease;
     }
 
-    /* Active Direct Map Selection State */
     .map-beacon.active .beacon-pill {
       background: #80E600;
       color: #000;
       box-shadow: 0 0 12px rgba(128, 230, 0, 0.8);
     }
 
-    /* Active Amber State for Truck #12 */
     .map-beacon.active-amber .beacon-pill {
       background: #FFB000 !important;
       color: #000 !important;
@@ -287,7 +267,6 @@
       box-shadow: 0 0 12px rgba(255, 176, 0, 0.8) !important;
     }
 
-    /* Map Beacon Active Trigger States */
     .map-beacon.flash-info .beacon-dot { background-color: #80E600; box-shadow: 0 0 14px #80E600; }
     .map-beacon.flash-info .beacon-dot::after { border-color: #80E600; }
     .map-beacon.flash-info .beacon-pill { border-color: #80E600; color: #80E600; box-shadow: 0 0 12px rgba(128, 230, 0, 0.6); }
@@ -300,7 +279,6 @@
     .map-beacon.flash-priority .beacon-dot::after { border-color: #FF3333; }
     .map-beacon.flash-priority .beacon-pill { border-color: #FF3333; color: #FF3333; box-shadow: 0 0 12px rgba(255, 51, 51, 0.6); }
     
-    /* Dispatch Composer Spacing Improvements */
     .dispatch-composer { 
       padding: 16px 20px 18px 20px; 
       background: #0A0A0A; 
@@ -311,12 +289,10 @@
     .priority-selector { display: flex; gap: 8px; margin-bottom: 12px; }
     .p-btn { flex: 1; padding: 8px; border: 1px solid #222; background: #121212; color: #888; font-size: 0.75rem; font-weight: 800; border-radius: 4px; cursor: pointer; text-align: center; transition: all 0.2s ease; }
     
-    /* Priority Button Active States */
     .p-btn.active-info { border-color: #80E600; color: #80E600; background: rgba(128, 230, 0, 0.08); }
     .p-btn.active-task { border-color: #FFB000; color: #FFB000; background: rgba(255, 176, 0, 0.08); }
     .p-btn.active-priority { border-color: #FF3333; color: #FF3333; background: rgba(255, 51, 51, 0.08); }
     
-    /* Dynamic Priority Theming for Input & Send Button */
     .input-row { display: flex; gap: 10px; align-items: stretch; }
     
     .dispatch-input { 
@@ -362,7 +338,6 @@
       font-weight: 700;
     }
     
-    /* Pane 3: Audit Log Feed & Filter Bar */
     .pane-3-container { position: relative; display: flex; flex-direction: column; flex: 1; overflow: hidden; }
     .filter-bar { display: flex; gap: 6px; padding: 8px 12px; background: #0E0E0E; border-bottom: 1px solid #1A1A1A; }
     .filter-tab { flex: 1; padding: 4px 6px; background: #141414; border: 1px solid #222; border-radius: 4px; color: #666; font-size: 0.65rem; font-weight: 800; cursor: pointer; text-align: center; transition: all 0.2s ease; }
@@ -379,7 +354,6 @@
     .log-item.task .log-status { color: #FFB000; }
     .log-item.priority .log-status { color: #FF3333; }
 
-    /* Visual Flash Effect on Feed */
     .flash-feed-info { animation: feedFlashInfo 0.6s ease-out; }
     .flash-feed-task { animation: feedFlashTask 0.6s ease-out; }
     .flash-feed-priority { animation: feedFlashPriority 0.6s ease-out; }
@@ -388,7 +362,6 @@
     @keyframes feedFlashTask { 0% { background-color: rgba(255, 176, 0, 0.15); } 100% { background-color: transparent; } }
     @keyframes feedFlashPriority { 0% { background-color: rgba(255, 51, 51, 0.2); } 100% { background-color: transparent; } }
 
-    /* Hierarchy Container Styles */
     .hierarchy-container { display: flex; flex-direction: column; height: 100%; width: 100%; position: absolute; inset: 0; background: #080808; }
     .hierarchy-container.hidden { display: none !important; }
     .hierarchy-split { flex: 1; display: grid; grid-template-columns: 380px 1fr; overflow: hidden; }
@@ -421,7 +394,6 @@
 
   <header>
     <div class="header-left">
-      <!-- FIXED: Back Button action works dynamically across pages/frames -->
       <a href="javascript:void(0)" onclick="history.back(); return false;" class="back-btn">
         <i class="fa-solid fa-arrow-left"></i> BACK
       </a>
@@ -558,7 +530,6 @@
               <div class="hub-sub">AUTO-PREP ACTIVE</div>
             </div>
 
-            <!-- TRUCK #12: Starts well outside the 5-mile ring on Hwy 29 (Top-Left trajectory) -->
             <div class="map-beacon" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 10%; left: 6%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
               <div class="beacon-dot" style="background-color: #FFB000; box-shadow: 0 0 8px #FFB000;"></div>
               <div class="beacon-pill" style="border-color: #FFB000; color: #FFB000;">
@@ -566,13 +537,11 @@
               </div>
             </div>
 
-            <!-- TRUCK #08: Positioned directly on US-41 corridor -->
             <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 74%; left: 51.2%;" onclick="selectDevice('TRUCK #08 - STAGED')">
               <div class="beacon-dot"></div>
               <div class="beacon-pill"><i class="fa-solid fa-truck-ramp-box" style="font-size: 8px;"></i> TRUCK #08 (US-41)</div>
             </div>
 
-            <!-- VAN #04: Positioned directly on SR-32 / Hwy 29 roadway near Hobart -->
             <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 61%; left: 24%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
               <div class="beacon-dot"></div>
               <div class="beacon-pill"><i class="fa-solid fa-van-shuttle" style="font-size: 8px;"></i> VAN #04 (FIELD)</div>
@@ -615,17 +584,16 @@
       </div>
     </div>
 
-    <!-- View 3: Hierarchy Container -->
     <div class="hierarchy-container hidden" id="hierarchyView">
       <div class="hierarchy-split">
         <div class="hierarchy-left-pane">
           <div class="tree-actions">
-            <button class="action-btn-sm"><i class="fa-solid fa-plus"></i> ADD GROUP</button>
-            <button class="action-btn-sm"><i class="fa-solid fa-folder-tree"></i> EXPAND ALL</button>
+            <button class="action-btn-sm" onclick="addNodeModal()"><i class="fa-solid fa-plus"></i> ADD GROUP</button>
+            <button class="action-btn-sm" onclick="expandAllTreeNodes()"><i class="fa-solid fa-folder-tree"></i> EXPAND ALL</button>
           </div>
           <div class="tree-scroll-area">
             <div class="tree-node">
-              <div class="tree-node-content selected">
+              <div class="tree-node-content selected" onclick="selectHierarchyNode('PLANT_1', this)">
                 <i class="fa-solid fa-building node-icon"></i>
                 <span class="node-title">Plant 1 - Green Bay</span>
                 <span class="node-tag">HQ</span>
@@ -637,14 +605,14 @@
           <div class="matrix-section">
             <div class="matrix-title"><i class="fa-solid fa-walkie-talkie"></i> CHANNEL TALKGROUP PERMISSIONS</div>
             <div class="channel-grid">
-              <div class="channel-card active">
+              <div class="channel-card active" onclick="toggleChannel(this)">
                 <div class="channel-info">
                   <span class="channel-name">Channel 1: Plant Master</span>
                   <span class="channel-access">Broadcast &amp; Reply</span>
                 </div>
                 <div class="checkbox-custom"><i class="fa-solid fa-check" style="font-size: 10px;"></i></div>
               </div>
-              <div class="channel-card active">
+              <div class="channel-card active" onclick="toggleChannel(this)">
                 <div class="channel-info">
                   <span class="channel-name">Channel 2: Logistics &amp; Docks</span>
                   <span class="channel-access">Inbound/Outbound</span>
@@ -658,470 +626,350 @@
     </div>
 
   </div>
-
   <script>
-  // --- Global Application State ---
-  let currentPriority = 'INFO';
-  let selectedTarget = 'ALL UNITS (BROADCAST)';
-  let activeFilter = 'ALL';
-  let isAudioMuted = false;
-  let activeView = 'facility';
-  let geofenceTriggered = false;
-  let draggedWorker = null;
-  
-  // --- Web Audio Synthesizer ---
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-  // Unlock AudioContext on first user interaction (Browser Autoplay Policy Compliance)
-  function unlockAudioContext() {
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-  }
-
-  function toggleAudioMute() {
-    isAudioMuted = !isAudioMuted;
-    const btn = document.getElementById('audioToggle');
-    const icon = document.getElementById('audioIcon');
-    const label = document.getElementById('audioLabel');
-
-    if (isAudioMuted) {
-      btn.classList.add('is-muted');
-      icon.className = 'fa-solid fa-volume-xmark';
-      label.innerText = 'AUDIO MUTED';
-    } else {
-      btn.classList.remove('is-muted');
-      icon.className = 'fa-solid fa-volume-high';
-      label.innerText = 'AUDIO ON';
-    }
-  }
-
-  function playDispatchSound(type) {
-    if (isAudioMuted) return;
-
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+    // --- Global Application State ---
+    let currentPriority = 'INFO';
+    let selectedTarget = 'ALL UNITS (BROADCAST)';
+    let activeFilter = 'ALL';
+    let isAudioMuted = false;
+    let activeView = 'facility';
+    let geofenceTriggered = false;
+    let draggedWorker = null;
+    let logCounter = 0;
     
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    // --- Web Audio Synthesizer ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    const now = audioCtx.currentTime;
-
-    if (type === 'INFO') {
-      osc.frequency.setValueAtTime(440, now);
-      gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-      osc.start(now);
-      osc.stop(now + 0.15);
-    } else if (type === 'TASK') {
-      osc.frequency.setValueAtTime(587.33, now);
-      osc.frequency.setValueAtTime(880, now + 0.1);
-      gain.gain.setValueAtTime(0.1, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-      osc.start(now);
-      osc.stop(now + 0.25);
-    } else {
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(880, now);
-      osc.frequency.setValueAtTime(440, now + 0.12);
-      gain.gain.setValueAtTime(0.15, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-      osc.start(now);
-      osc.stop(now + 0.35);
-    }
-  }
-
-  // --- 3-Way View Switching Logic ---
-  function switchMainView(viewName) {
-    activeView = viewName;
-    const facilityBtn = document.getElementById('toggleFacilityBtn');
-    const fleetBtn = document.getElementById('toggleFleetBtn');
-    const hierarchyBtn = document.getElementById('toggleHierarchyBtn');
-
-    const spatialContainer = document.getElementById('spatialDashboard');
-    const hierarchyContainer = document.getElementById('hierarchyViewContainer');
-
-    const facilityCanvas = document.getElementById('facilityViewCanvas');
-    const fleetCanvas = document.getElementById('fleetViewCanvas');
-    const facilityRoster = document.getElementById('facilityRoster');
-    const fleetRoster = document.getElementById('fleetRoster');
-    const rosterTitle = document.getElementById('rosterTitle');
-    const rosterCount = document.getElementById('rosterCount');
-    const mapTitle = document.getElementById('mapTitle');
-
-    facilityBtn.classList.remove('active');
-    fleetBtn.classList.remove('active');
-    hierarchyBtn.classList.remove('active');
-
-    if (viewName === 'facility') {
-      facilityBtn.classList.add('active');
-      spatialContainer.classList.remove('hidden');
-      hierarchyContainer.classList.add('hidden');
-
-      facilityCanvas.classList.remove('hidden');
-      fleetCanvas.classList.add('hidden');
-
-      facilityRoster.style.display = 'flex';
-      fleetRoster.style.display = 'none';
-
-      rosterTitle.innerText = 'Facility Roster';
-      rosterCount.innerText = '5 Active';
-      mapTitle.innerText = 'Facility Telemetry & Live Map';
-
-      selectDevice('ALL UNITS (BROADCAST)');
-    } else if (viewName === 'fleet') {
-      fleetBtn.classList.add('active');
-      spatialContainer.classList.remove('hidden');
-      hierarchyContainer.classList.add('hidden');
-
-      fleetCanvas.classList.remove('hidden');
-      facilityCanvas.classList.add('hidden');
-
-      fleetRoster.style.display = 'flex';
-      facilityRoster.style.display = 'none';
-
-      rosterTitle.innerText = 'Fleet Roster';
-      rosterCount.innerText = '3 Vehicles Active';
-      mapTitle.innerText = 'GPS Fleet Tracking & Dock Geofence';
-
-      selectDevice('ALL FLEET UNITS');
-
-      // Trigger Highway Waypoint Animation & Geofence Demo Event
-      if (!geofenceTriggered) {
-        geofenceTriggered = true;
-        simulateGeofenceEvent();
+    function unlockAudioContext() {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
       }
-    } else if (viewName === 'hierarchy') {
-      hierarchyBtn.classList.add('active');
-      spatialContainer.classList.add('hidden');
-      hierarchyContainer.classList.remove('hidden');
-      playDispatchSound('INFO');
     }
-  }
 
-  // --- Automated Highway Route Trajectory and Geofence Triggering ---
-  function simulateGeofenceEvent() {
-    const truck = document.getElementById('truck12Beacon');
-    
-    setTimeout(() => {
-      if (truck) {
-        truck.style.top = '36%';
-        truck.style.left = '36%';
+    function toggleAudioMute() {
+      isAudioMuted = !isAudioMuted;
+      const btn = document.getElementById('audioToggle');
+      const icon = document.getElementById('audioIcon');
+      const label = document.getElementById('audioLabel');
+
+      if (isAudioMuted) {
+        btn.classList.add('is-muted');
+        icon.className = 'fa-solid fa-volume-xmark';
+        label.innerText = 'AUDIO MUTED';
+      } else {
+        btn.classList.remove('is-muted');
+        icon.className = 'fa-solid fa-volume-high';
+        label.innerText = 'AUDIO ON';
       }
+    }
 
+    function playDispatchSound(type) {
+      if (isAudioMuted) return;
+      unlockAudioContext();
+      
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      const now = audioCtx.currentTime;
+
+      if (type === 'INFO') {
+        osc.frequency.setValueAtTime(440, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } else if (type === 'TASK') {
+        osc.frequency.setValueAtTime(587.33, now);
+        osc.frequency.setValueAtTime(880, now + 0.1);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.setValueAtTime(440, now + 0.12);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+      }
+    }
+
+    // --- View Switcher ---
+    function switchMainView(viewName) {
+      activeView = viewName;
+      const facilityBtn = document.getElementById('toggleFacilityBtn');
+      const fleetBtn = document.getElementById('toggleFleetBtn');
+      const hierarchyBtn = document.getElementById('toggleHierarchyBtn');
+
+      const spatialContainer = document.getElementById('spatialDashboard');
+      const hierarchyContainer = document.getElementById('hierarchyView');
+
+      const facilityCanvas = document.getElementById('facilityViewCanvas');
+      const fleetCanvas = document.getElementById('fleetViewCanvas');
+      const facilityRoster = document.getElementById('facilityRoster');
+      const fleetRoster = document.getElementById('fleetRoster');
+      const rosterTitle = document.getElementById('rosterTitle');
+      const rosterCount = document.getElementById('rosterCount');
+      const mapTitle = document.getElementById('mapTitle');
+
+      facilityBtn.classList.remove('active');
+      fleetBtn.classList.remove('active');
+      hierarchyBtn.classList.remove('active');
+
+      if (viewName === 'facility') {
+        facilityBtn.classList.add('active');
+        spatialContainer.classList.remove('hidden');
+        hierarchyContainer.classList.add('hidden');
+
+        facilityCanvas.classList.remove('hidden');
+        fleetCanvas.classList.add('hidden');
+
+        facilityRoster.style.display = 'flex';
+        fleetRoster.style.display = 'none';
+
+        rosterTitle.innerText = 'Facility Roster';
+        rosterCount.innerText = '5 Active';
+        mapTitle.innerText = 'Facility Telemetry & Live Map';
+
+        selectDevice('ALL UNITS (BROADCAST)');
+      } else if (viewName === 'fleet') {
+        fleetBtn.classList.add('active');
+        spatialContainer.classList.remove('hidden');
+        hierarchyContainer.classList.add('hidden');
+
+        fleetCanvas.classList.remove('hidden');
+        facilityCanvas.classList.add('hidden');
+
+        fleetRoster.style.display = 'flex';
+        facilityRoster.style.display = 'none';
+
+        rosterTitle.innerText = 'Fleet Roster';
+        rosterCount.innerText = '3 Vehicles Active';
+        mapTitle.innerText = 'GPS Fleet Tracking & Dock Geofence';
+
+        selectDevice('ALL FLEET UNITS');
+
+        if (!geofenceTriggered) {
+          geofenceTriggered = true;
+          simulateGeofenceEvent();
+        }
+      } else if (viewName === 'hierarchy') {
+        hierarchyBtn.classList.add('active');
+        spatialContainer.classList.add('hidden');
+        hierarchyContainer.classList.remove('hidden');
+        playDispatchSound('INFO');
+      }
+    }
+
+    // --- Geofence Simulation Engine ---
+    function simulateGeofenceEvent() {
+      const truck = document.getElementById('truck12Beacon');
+      
       setTimeout(() => {
         if (truck) {
-          truck.style.top = '44%';
-          truck.style.left = '45%';
+          truck.style.top = '36%';
+          truck.style.left = '36%';
         }
 
-        const feed = document.getElementById('auditFeed');
-        const autoLog = document.createElement('div');
-        autoLog.className = 'log-item task';
-        autoLog.setAttribute('data-type', 'TASK');
-        autoLog.innerHTML = `
-          <div class="log-header"><span>To: DOCK OPERATOR (BAY 4)</span><span>AUTOMATED</span></div>
-          <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter on HWY 29. Prep Dock 4.</div>
-          <div class="log-status">✓ AUTO-DISPATCH SENT</div>
-        `;
-        feed.insertBefore(autoLog, feed.firstChild);
-        playDispatchSound('TASK');
-
-        triggerBeaconFlash('TRUCK #12 - INBOUND', 'TASK');
-      }, 2500);
-    }, 1000);
-  }
-
-  // --- Device & Target Selection Logic ---
-  function selectDevice(targetName) {
-    selectedTarget = targetName;
-    const targetElem = document.getElementById('targetName');
-    if (targetElem) targetElem.innerText = targetName;
-
-    document.querySelectorAll('.device-card').forEach(card => {
-      if (card.getAttribute('data-target') === targetName) {
-        card.classList.add('selected');
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } else {
-        card.classList.remove('selected');
-      }
-    });
-
-    document.querySelectorAll('.map-beacon').forEach(beacon => {
-      if (beacon.getAttribute('data-target') === targetName) {
-        beacon.classList.add('active');
-      } else {
-        beacon.classList.remove('active');
-      }
-    });
-  }
-
-  function setPriority(type) {
-    currentPriority = type;
-    const btnInfo = document.getElementById('btnInfo');
-    const btnTask = document.getElementById('btnTask');
-    const btnPriority = document.getElementById('btnPriority');
-    const msgInput = document.getElementById('msgInput');
-    const sendBtn = document.getElementById('sendBtn');
-
-    if (btnInfo) btnInfo.className = 'p-btn';
-    if (btnTask) btnTask.className = 'p-btn';
-    if (btnPriority) btnPriority.className = 'p-btn';
-
-    if (msgInput) msgInput.classList.remove('theme-info', 'theme-task', 'theme-priority');
-    if (sendBtn) sendBtn.classList.remove('theme-info', 'theme-task', 'theme-priority');
-
-    if (type === 'INFO') {
-      if (btnInfo) btnInfo.className = 'p-btn active-info';
-      if (msgInput) msgInput.classList.add('theme-info');
-      if (sendBtn) sendBtn.classList.add('theme-info');
-    } else if (type === 'TASK') {
-      if (btnTask) btnTask.className = 'p-btn active-task';
-      if (msgInput) msgInput.classList.add('theme-task');
-      if (sendBtn) sendBtn.classList.add('theme-task');
-    } else if (type === 'PRIORITY') {
-      if (btnPriority) btnPriority.className = 'p-btn active-priority';
-      if (msgInput) msgInput.classList.add('theme-priority');
-      if (sendBtn) sendBtn.classList.add('theme-priority');
-    }
-  }
-
-  function updateCharCount() {
-    const input = document.getElementById('msgInput');
-    const countDisplay = document.getElementById('charCount');
-    if (input && countDisplay) {
-      countDisplay.innerText = 160 - input.value.length;
-    }
-  }
-
-  function handleKeyDown(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendDispatch();
-    }
-  }
-
-  function sendDispatch() {
-    const input = document.getElementById('msgInput');
-    if (!input) return;
-
-    const text = input.value.trim();
-    if (!text) return;
-
-    const feed = document.getElementById('auditFeed');
-    const newLog = document.createElement('div');
-    const lowerType = currentPriority.toLowerCase();
-
-    newLog.className = `log-item ${lowerType}`;
-    newLog.setAttribute('data-type', currentPriority);
-    newLog.innerHTML = `
-      <div class="log-header"><span>To: ${selectedTarget}</span><span>Just now</span></div>
-      <div class="log-text">${escapeHtml(text)}</div>
-      <div class="log-status">✓ SENT</div>
-    `;
-
-    if (feed) {
-      feed.insertBefore(newLog, feed.firstChild);
-      feed.classList.remove('flash-feed-info', 'flash-feed-task', 'flash-feed-priority');
-      void feed.offsetWidth;
-      feed.classList.add(`flash-feed-${lowerType}`);
-    }
-
-    playDispatchSound(currentPriority);
-    triggerBeaconFlash(selectedTarget, currentPriority);
-
-    input.value = '';
-    updateCharCount();
-  }
-
-  function triggerBeaconFlash(targetName, priorityType) {
-    const lowerType = priorityType.toLowerCase();
-    document.querySelectorAll('.map-beacon').forEach(beacon => {
-      if (beacon.getAttribute('data-target') === targetName || targetName.startsWith('ALL')) {
-        beacon.classList.remove('flash-info', 'flash-task', 'flash-priority');
-        void beacon.offsetWidth;
-        beacon.classList.add(`flash-${lowerType}`);
-
         setTimeout(() => {
-          beacon.classList.remove(`flash-${lowerType}`);
-        }, 3000);
-      }
-    });
-  }
-
-  function filterAuditFeed(filterType, element) {
-    activeFilter = filterType;
-    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-    if (element) element.classList.add('active');
-
-    document.querySelectorAll('.log-item').forEach(item => {
-      if (filterType === 'ALL' || item.getAttribute('data-type') === filterType) {
-        item.style.display = 'block';
-      } else {
-        item.style.display = 'none';
-      }
-    });
-  }
-
-  function escapeHtml(string) {
-    return String(string).replace(/[&<>"']/g, function (s) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s];
-    });
-  }
-
-  // --- Hierarchy & Matrix Interaction Logic ---
-  function selectHierarchyNode(nodeKey, element) {
-    document.querySelectorAll('.tree-node-content').forEach(node => node.classList.remove('selected'));
-    if (element) element.classList.add('selected');
-
-    const titleElem = document.getElementById('nodeSelectedTitle');
-    const deviceTag = document.getElementById('targetDeviceTag');
-    const prioritySelect = document.getElementById('audioPrioritySelect');
-
-    if (!titleElem || !deviceTag || !prioritySelect) return;
-
-    if (nodeKey === 'PLANT_MANAGER') {
-      titleElem.innerText = 'PLANT MANAGER (J. Miller)';
-      deviceTag.innerText = 'Sonim XP8 / Enterprise Master Console';
-      prioritySelect.value = '3';
-    } else if (nodeKey === 'FLOOR_SUPERVISOR') {
-      titleElem.innerText = 'FLOOR SUPERVISOR (M. Davis)';
-      deviceTag.innerText = 'Kyocera DuraForce Pro 3';
-      prioritySelect.value = '2';
-    } else if (nodeKey === 'LOGISTICS_LEAD') {
-      titleElem.innerText = 'LOGISTICS LEAD (Team Alpha)';
-      deviceTag.innerText = 'Samsung XCover / Enterprise PTT';
-      prioritySelect.value = '2';
-    } else if (nodeKey.startsWith('PICKER')) {
-      titleElem.innerText = `${element.querySelector('.node-title')?.innerText || 'Picker Unit'}`;
-      deviceTag.innerText = 'Rugged Handheld Scanner (Android 13)';
-      prioritySelect.value = '1';
-    } else {
-      titleElem.innerText = `${element.querySelector('.node-title')?.innerText || 'Field Unit'}`;
-      deviceTag.innerText = 'Samsung XCover Field Unit';
-      prioritySelect.value = '1';
-    }
-
-    playDispatchSound('INFO');
-  }
-
-  function toggleChannel(card) {
-    if (card) card.classList.toggle('active');
-    playDispatchSound('INFO');
-  }
-
-  function saveMatrixConfiguration() {
-    playDispatchSound('TASK');
-    alert('Hierarchy & Matrix configuration successfully synced to cloud fleet profile.');
-  }
-
-  function testShiftOverrideRule() {
-    playDispatchSound('PRIORITY');
-    alert('Shift Override Engine simulated: Shift Claim scanned via NFC. All direct report channels auto-bound.');
-  }
-
-  function addNodeModal() {
-    const nodeName = prompt('Enter new node / position title:');
-    if (nodeName) {
-      alert(`Node "${nodeName}" added to pending hierarchy tree layout.`);
-    }
-  }
-
-  function expandAllTreeNodes() {
-    playDispatchSound('INFO');
-    const childrenContainers = document.querySelectorAll('.tree-children');
-    childrenContainers.forEach(container => {
-      container.classList.remove('hidden');
-      container.style.display = 'block';
-    });
-  }
-
-  // --- HTML5 Drag & Drop Logic ---
-  function handleDragStart(e, workerName) {
-    draggedWorker = workerName;
-    e.dataTransfer.setData('text/plain', workerName);
-    e.dataTransfer.effectAllowed = 'move';
-    if (e.target) e.target.classList.add('dragging');
-  }
-
-  function handleDragEnd(e) {
-    if (e.target) e.target.classList.remove('dragging');
-    document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
-    draggedWorker = null;
-  }
-
-  function handleDragOver(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    e.currentTarget.classList.add('drag-over');
-  }
-
-  function handleDragLeave(e) {
-    e.currentTarget.classList.remove('drag-over');
-  }
-
-  function handleDrop(e, targetNodeTitle) {
-    e.preventDefault();
-    e.currentTarget.classList.remove('drag-over');
-
-    if (draggedWorker) {
-      const childrenContainer = document.getElementById('logisticsChildren');
-      if (childrenContainer) {
-        const newNode = document.createElement('div');
-        newNode.className = 'tree-node';
-        newNode.innerHTML = `
-          <div class="tree-node-content" onclick="selectHierarchyNode('NEW_WORKER', this)">
-            <i class="fa-solid fa-user" style="color: #80E600; font-size: 0.75rem;"></i>
-            <span class="node-title">${escapeHtml(draggedWorker)}</span>
-            <span class="node-tag">Assigned</span>
-          </div>
-        `;
-        childrenContainer.appendChild(newNode);
-      }
-
-      // Remove from unassigned dock
-      const unassignedList = document.getElementById('unassignedList');
-      if (unassignedList) {
-        const draggableElems = unassignedList.querySelectorAll('.draggable-worker');
-        draggableElems.forEach(elem => {
-          if (elem.innerText.includes(draggedWorker.split(' ')[0])) {
-            elem.remove();
+          if (truck) {
+            truck.style.top = '44%';
+            truck.style.left = '45%';
           }
-        });
-      }
 
-      // Update counter
-      const countElem = document.getElementById('unassignedCount');
-      if (countElem) {
-        countElem.innerText = Math.max(0, parseInt(countElem.innerText || '0') - 1);
-      }
+          const feed = document.getElementById('auditFeed');
+          const autoLog = document.createElement('div');
+          autoLog.className = 'log-item task';
+          autoLog.setAttribute('data-type', 'TASK');
+          autoLog.innerHTML = `
+            <div class="log-header"><span>To: DOCK OPERATOR (BAY 4)</span><span>AUTOMATED</span></div>
+            <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter on HWY 29. Prep Dock 4.</div>
+            <div class="log-status">✓ AUTO-DISPATCH SENT</div>
+          `;
+          feed.insertBefore(autoLog, feed.firstChild);
+          logCounter++;
+          document.getElementById('feedCount').innerText = `${logCounter} LOGS`;
+          playDispatchSound('TASK');
 
-      playDispatchSound('TASK');
-      draggedWorker = null;
-    }
-  }
-
-  // --- Initial DOM Initialization Listener ---
-  document.addEventListener('DOMContentLoaded', () => {
-    // Register audio unlock events on first interaction
-    document.addEventListener('click', unlockAudioContext, { once: true });
-    document.addEventListener('keydown', unlockAudioContext, { once: true });
-
-    // Input listeners
-    const msgInput = document.getElementById('msgInput');
-    if (msgInput) {
-      msgInput.addEventListener('input', updateCharCount);
-      msgInput.addEventListener('keydown', handleKeyDown);
+          triggerBeaconFlash('TRUCK #12 - INBOUND', 'TASK');
+        }, 2500);
+      }, 1000);
     }
 
-    // Set initial active state
-    switchMainView('facility');
-    setPriority('INFO');
-    updateCharCount();
-  });
-</script>
+    // --- Selection Logic ---
+    function selectDevice(targetName) {
+      selectedTarget = targetName;
+      const targetElem = document.getElementById('targetName');
+      if (targetElem) targetElem.innerText = targetName;
+
+      document.querySelectorAll('.device-card').forEach(card => {
+        if (card.getAttribute('data-target') === targetName) {
+          card.classList.add('selected');
+        } else {
+          card.classList.remove('selected');
+        }
+      });
+
+      document.querySelectorAll('.map-beacon').forEach(beacon => {
+        if (beacon.getAttribute('data-target') === targetName) {
+          beacon.classList.add('active');
+        } else {
+          beacon.classList.remove('active');
+        }
+      });
+    }
+
+    function setPriority(type) {
+      currentPriority = type;
+      const btnInfo = document.getElementById('btnInfo');
+      const btnTask = document.getElementById('btnTask');
+      const btnPriority = document.getElementById('btnPriority');
+      const msgInput = document.getElementById('msgInput');
+      const sendBtn = document.getElementById('sendBtn');
+
+      if (btnInfo) btnInfo.className = 'p-btn';
+      if (btnTask) btnTask.className = 'p-btn';
+      if (btnPriority) btnPriority.className = 'p-btn';
+
+      if (msgInput) msgInput.classList.remove('theme-info', 'theme-task', 'theme-priority');
+      if (sendBtn) sendBtn.classList.remove('theme-info', 'theme-task', 'theme-priority');
+
+      if (type === 'INFO') {
+        if (btnInfo) btnInfo.className = 'p-btn active-info';
+        if (msgInput) msgInput.classList.add('theme-info');
+        if (sendBtn) sendBtn.classList.add('theme-info');
+      } else if (type === 'TASK') {
+        if (btnTask) btnTask.className = 'p-btn active-task';
+        if (msgInput) msgInput.classList.add('theme-task');
+        if (sendBtn) sendBtn.classList.add('theme-task');
+      } else if (type === 'PRIORITY') {
+        if (btnPriority) btnPriority.className = 'p-btn active-priority';
+        if (msgInput) msgInput.classList.add('theme-priority');
+        if (sendBtn) sendBtn.classList.add('theme-priority');
+      }
+    }
+
+    function updateCharCount() {
+      const input = document.getElementById('msgInput');
+      const countDisplay = document.getElementById('charCount');
+      if (input && countDisplay) {
+        countDisplay.innerText = 160 - input.value.length;
+      }
+    }
+
+    function handleKeyDown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendDispatch();
+      }
+    }
+
+    function sendDispatch() {
+      const input = document.getElementById('msgInput');
+      if (!input) return;
+
+      const text = input.value.trim();
+      if (!text) return;
+
+      const feed = document.getElementById('auditFeed');
+      const newLog = document.createElement('div');
+      const lowerType = currentPriority.toLowerCase();
+
+      newLog.className = `log-item ${lowerType}`;
+      newLog.setAttribute('data-type', currentPriority);
+      newLog.innerHTML = `
+        <div class="log-header"><span>To: ${selectedTarget}</span><span>Just now</span></div>
+        <div class="log-text">${escapeHtml(text)}</div>
+        <div class="log-status">✓ SENT</div>
+      `;
+
+      if (feed) {
+        feed.insertBefore(newLog, feed.firstChild);
+        logCounter++;
+        document.getElementById('feedCount').innerText = `${logCounter} LOGS`;
+        feed.classList.remove('flash-feed-info', 'flash-feed-task', 'flash-feed-priority');
+        void feed.offsetWidth;
+        feed.classList.add(`flash-feed-${lowerType}`);
+      }
+
+      playDispatchSound(currentPriority);
+      triggerBeaconFlash(selectedTarget, currentPriority);
+
+      input.value = '';
+      updateCharCount();
+    }
+
+    function triggerBeaconFlash(targetName, priorityType) {
+      const lowerType = priorityType.toLowerCase();
+      document.querySelectorAll('.map-beacon').forEach(beacon => {
+        if (beacon.getAttribute('data-target') === targetName || targetName.startsWith('ALL')) {
+          beacon.classList.remove('flash-info', 'flash-task', 'flash-priority');
+          void beacon.offsetWidth;
+          beacon.classList.add(`flash-${lowerType}`);
+
+          setTimeout(() => {
+            beacon.classList.remove(`flash-${lowerType}`);
+          }, 3000);
+        }
+      });
+    }
+
+    // --- Fixed Audit Filter Function ---
+    function filterLogs(filterType, element) {
+      activeFilter = filterType;
+      document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+      if (element) element.classList.add('active');
+
+      document.querySelectorAll('.log-item').forEach(item => {
+        if (filterType === 'ALL' || item.getAttribute('data-type') === filterType) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function escapeHtml(string) {
+      return String(string).replace(/[&<>"']/g, function (s) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s];
+      });
+    }
+
+    function selectHierarchyNode(nodeKey, element) {
+      document.querySelectorAll('.tree-node-content').forEach(node => node.classList.remove('selected'));
+      if (element) element.classList.add('selected');
+      playDispatchSound('INFO');
+    }
+
+    function toggleChannel(card) {
+      if (card) card.classList.toggle('active');
+      playDispatchSound('INFO');
+    }
+
+    function addNodeModal() {
+      const nodeName = prompt('Enter new node / position title:');
+      if (nodeName) {
+        alert(`Node "${nodeName}" added to hierarchy tree layout.`);
+      }
+    }
+
+    function expandAllTreeNodes() {
+      playDispatchSound('INFO');
+    }
+
+    // --- DOM Loaded Setup ---
+    document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('click', unlockAudioContext, { once: true });
+      document.addEventListener('keydown', unlockAudioContext, { once: true });
+
+      switchMainView('facility');
+      setPriority('INFO');
+      updateCharCount();
+    });
+  </script>
 </body>
 </html>
