@@ -584,44 +584,210 @@
       </div>
     </div>
 
+  <!-- UPDATED HIERARCHY & MATRIX VIEW -->
     <div class="hierarchy-container hidden" id="hierarchyView">
       <div class="hierarchy-split">
+        
+        <!-- LEFT PANE: STREAMLINED TREE -->
         <div class="hierarchy-left-pane">
           <div class="tree-actions">
             <button class="action-btn-sm" onclick="addNodeModal()"><i class="fa-solid fa-plus"></i> ADD GROUP</button>
             <button class="action-btn-sm" onclick="expandAllTreeNodes()"><i class="fa-solid fa-folder-tree"></i> EXPAND ALL</button>
           </div>
+          
           <div class="tree-scroll-area">
-            <div class="tree-node">
-              <div class="tree-node-content selected" onclick="selectHierarchyNode('PLANT_1', this)">
-                <i class="fa-solid fa-building node-icon"></i>
-                <span class="node-title">Plant 1 - Green Bay</span>
-                <span class="node-tag">HQ</span>
+            <!-- Root Level -->
+            <div class="tree-branch">
+              <div class="tree-node-header">
+                <i class="fa-solid fa-chevron-down tree-arrow"></i>
+                <i class="fa-solid fa-user-tie node-icon"></i>
+                <span class="node-title">Plant Manager (J. Miller)</span>
+                <span class="node-tag">Level 1</span>
+              </div>
+              
+              <!-- Child Level 1 -->
+              <div class="tree-children">
+                <div class="tree-node-header">
+                  <i class="fa-solid fa-chevron-down tree-arrow"></i>
+                  <i class="fa-solid fa-user-gear node-icon"></i>
+                  <span class="node-title">Floor Supervisor (M. Davis)</span>
+                  <span class="node-tag">Level 2</span>
+                </div>
+                
+                <!-- Child Level 2 -->
+                <div class="tree-children">
+                  <div class="tree-node-header">
+                    <i class="fa-solid fa-chevron-down tree-arrow"></i>
+                    <i class="fa-solid fa-truck-ramp-box node-icon"></i>
+                    <span class="node-title">Logistics Lead (S. Reed)</span>
+                    <span class="node-tag">Team Alpha</span>
+                  </div>
+                  
+                  <!-- Leaf Items -->
+                  <div class="tree-children">
+                    <div class="tree-leaf-item" onclick="selectHierarchyNode('picker1', this)">
+                      <i class="fa-solid fa-user"></i>
+                      <span>Picker 01 (D. Vance)</span>
+                    </div>
+                    <div class="tree-leaf-item selected" onclick="selectHierarchyNode('picker2', this)">
+                      <i class="fa-solid fa-user" style="color: #80E600;"></i>
+                      <span style="color: #80E600; font-weight: 800;">Picker 02 (A. Smith)</span>
+                    </div>
+                    <div class="tree-leaf-item" onclick="selectHierarchyNode('picker3', this)">
+                      <i class="fa-solid fa-user"></i>
+                      <span>Picker 03 (T. Higgins)</span>
+                    </div>
+                    <div class="tree-leaf-item" onclick="selectHierarchyNode('jdoe', this)">
+                      <i class="fa-solid fa-user-clock" style="color: #777;"></i>
+                      <span style="color: #888;">J. Doe (Pending Shift)</span>
+                      <span class="leaf-badge">Assigned</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Collapsed Nodes -->
+                <div class="tree-node-header collapsed">
+                  <i class="fa-solid fa-chevron-right tree-arrow"></i>
+                  <i class="fa-solid fa-microchip node-icon"></i>
+                  <span class="node-title">Assembly Lead (R. Vance)</span>
+                </div>
+                <div class="tree-node-header collapsed">
+                  <i class="fa-solid fa-chevron-right tree-arrow"></i>
+                  <i class="fa-solid fa-wrench node-icon"></i>
+                  <span class="node-title">Maintenance Lead (B. Cox)</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- RIGHT PANE: COMPACT PRIVILEGE MATRIX -->
         <div class="hierarchy-right-pane">
+          
+          <!-- Top Target & Action Header -->
+          <div class="matrix-header-bar">
+            <div class="target-profile-info">
+              <div class="target-title">Picker 02 (A. Smith)</div>
+              <div class="target-subtitle">Target Device Profile: <span style="color: #80E600;">Rugged Handheld Scanner (Android 13)</span></div>
+            </div>
+            <button class="save-matrix-btn" onclick="saveMatrixSettings()">
+              <i class="fa-solid fa-floppy-disk"></i> SAVE MATRIX
+            </button>
+          </div>
+
+          <!-- Section 1: Talk Groups -->
           <div class="matrix-section">
-            <div class="matrix-title"><i class="fa-solid fa-walkie-talkie"></i> CHANNEL TALKGROUP PERMISSIONS</div>
+            <div class="matrix-title"><i class="fa-solid fa-walkie-talkie"></i> CHANNEL ACCESS &amp; TALK GROUPS</div>
+            
             <div class="channel-grid">
+              <!-- Active / Selected -->
               <div class="channel-card active" onclick="toggleChannel(this)">
                 <div class="channel-info">
-                  <span class="channel-name">Channel 1: Plant Master</span>
-                  <span class="channel-access">Broadcast &amp; Reply</span>
+                  <span class="channel-name">Team Alpha Channel</span>
+                  <span class="channel-access">Full Duplex / Speak &amp; Listen</span>
                 </div>
-                <div class="checkbox-custom"><i class="fa-solid fa-check" style="font-size: 10px;"></i></div>
+                <div class="checkbox-custom"><i class="fa-solid fa-check"></i></div>
               </div>
-              <div class="channel-card active" onclick="toggleChannel(this)">
+
+              <!-- Unselected / Available -->
+              <div class="channel-card" onclick="toggleChannel(this)">
                 <div class="channel-info">
-                  <span class="channel-name">Channel 2: Logistics &amp; Docks</span>
-                  <span class="channel-access">Inbound/Outbound</span>
+                  <span class="channel-name">Leads Broad-Call Channel</span>
+                  <span class="channel-access">Speak &amp; Listen</span>
                 </div>
-                <div class="checkbox-custom"><i class="fa-solid fa-check" style="font-size: 10px;"></i></div>
+                <div class="checkbox-custom"><i class="fa-solid fa-check"></i></div>
+              </div>
+
+              <!-- Restricted / Disabled State -->
+              <div class="channel-card restricted">
+                <div class="channel-info">
+                  <span class="channel-name">Assembly Line 02 Channel</span>
+                  <span class="channel-access"><i class="fa-solid fa-lock" style="font-size: 0.65rem;"></i> No Access (Restricted)</span>
+                </div>
+                <div class="checkbox-custom disabled"><i class="fa-solid fa-ban"></i></div>
+              </div>
+
+              <!-- Listen Only State -->
+              <div class="channel-card">
+                <div class="channel-info">
+                  <span class="channel-name">Plant-Wide Emergency</span>
+                  <span class="channel-access">Listen Only (Global Override)</span>
+                </div>
+                <div class="checkbox-custom"><i class="fa-solid fa-check"></i></div>
               </div>
             </div>
           </div>
+
+          <!-- Section 2: PTT Overrides -->
+          <div class="matrix-section">
+            <div class="matrix-title"><i class="fa-solid fa-shield-halved"></i> PTT PRIVILEGES &amp; OVERRIDES</div>
+            
+            <div class="privilege-rows">
+              
+              <div class="privilege-row">
+                <div class="priv-label-group">
+                  <span class="priv-title">Audio Priority Level</span>
+                  <span class="priv-desc">Determines channel talkover authority during active transmissions</span>
+                </div>
+                <select class="matrix-dropdown">
+                  <option selected>Level 1: Standard Worker</option>
+                  <option>Level 2: Supervisor Override</option>
+                  <option>Level 3: Executive All-Call</option>
+                </select>
+              </div>
+
+              <div class="privilege-row">
+                <div class="priv-label-group">
+                  <span class="priv-title">Direct PTT Reach</span>
+                  <span class="priv-desc">Restricts direct point-to-point voice pinging capability</span>
+                </div>
+                <select class="matrix-dropdown">
+                  <option selected>Direct Reports Only</option>
+                  <option>Same Shift Workers</option>
+                  <option>Plant Wide Direct Ping</option>
+                </select>
+              </div>
+
+              <div class="privilege-row">
+                <div class="priv-label-group">
+                  <span class="priv-title">Channel Switching</span>
+                  <span class="priv-desc">Allow worker hardware key to manually change active talk groups</span>
+                </div>
+                <select class="matrix-dropdown">
+                  <option selected>Allowed (Physical Key)</option>
+                  <option>Locked to Assigned Channel</option>
+                </select>
+              </div>
+
+              <div class="privilege-row">
+                <div class="priv-label-group">
+                  <span class="priv-title">Emergency All-Call Broadcast</span>
+                  <span class="priv-desc">Permission to initiate plant-wide safety override page</span>
+                </div>
+                <select class="matrix-dropdown warning-val">
+                  <option selected>Disabled</option>
+                  <option>Enabled (Requires Confirmation)</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+
         </div>
+      </div>
+
+      <!-- BOTTOM RULE BAR -->
+      <div class="shift-rule-bar">
+        <div class="rule-label">
+          <i class="fa-solid fa-gears" style="color: #80E600;"></i>
+          <span>SHIFT OVERRIDE RULE ENGINE</span>
+        </div>
+        <div class="rule-active-text">
+          Active Rule: <span style="color: #80E600;">"Auto-bind Direct Report channels upon Shift Claim (NFC / Barcode ID)"</span>
+        </div>
+        <button class="test-rule-btn" onclick="testRuleEngine()">
+          <i class="fa-solid fa-bolt"></i> TEST RULE ENGINE
+        </button>
       </div>
     </div>
 
