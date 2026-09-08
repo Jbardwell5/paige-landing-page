@@ -400,14 +400,34 @@
     const contactForm = document.getElementById('contactPageForm');
     const submitBtn = document.getElementById('submitBtn');
     const successMsg = document.getElementById('contactSuccessMsg');
+    const topicSelect = document.getElementById('contactTopic');
+    const msgTextarea = document.getElementById('contactMsg');
+
+    // Parse URL parameters for hardware/tier referrals
+    const urlParams = new URLSearchParams(window.location.search);
+    const tier = urlParams.get('tier');
+    const hardware = urlParams.get('hardware');
+
+    if (tier) {
+      if (topicSelect) topicSelect.value = 'pilot';
+      if (msgTextarea) {
+        msgTextarea.value = `Inquiring about deploying Tier ${tier} hardware setup for our facility.`;
+      }
+    } else if (hardware) {
+      if (topicSelect) topicSelect.value = 'hardware';
+      if (msgTextarea) {
+        const devName = hardware === 'zebra' ? 'Zebra TC22/TC27' : 'Honeywell ScanPal EDA52';
+        msgTextarea.value = `Inquiring about integrating PAiGE with ${devName} devices on our shop floor.`;
+      }
+    }
 
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const name = document.getElementById('contactName').value;
       const email = document.getElementById('contactEmail').value;
-      const topic = document.getElementById('contactTopic').value;
-      const message = document.getElementById('contactMsg').value;
+      const topic = topicSelect.value;
+      const message = msgTextarea.value;
 
       submitBtn.innerText = "SENDING...";
       submitBtn.disabled = true;
