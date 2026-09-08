@@ -247,6 +247,19 @@
       box-shadow: 0 0 25px rgba(128, 230, 0, 0.4);
     }
 
+    .form-success-msg {
+      display: none;
+      background-color: rgba(128, 230, 0, 0.1);
+      border: 1px solid #80E600;
+      color: #80E600;
+      padding: 1.25rem;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+    }
+
     /* Footer */
     footer {
       background-color: #0d0d0d;
@@ -346,8 +359,12 @@
             <textarea id="contactMsg" class="form-textarea" placeholder="Tell us about your facility or operational goals..."></textarea>
           </div>
 
-          <button type="submit" class="btn-submit">Send Message</button>
+          <button type="submit" id="submitBtn" class="btn-submit">Send Message</button>
         </form>
+
+        <div class="form-success-msg" id="contactSuccessMsg">
+          <i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> Thank you! Your message has been sent successfully.
+        </div>
       </div>
     </section>
   </main>
@@ -361,5 +378,65 @@
     </div>
   </footer>
 
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCp0OoxW6kFurcYnKuvQDQ3dSZgXtVpXOE",
+      authDomain: "paigelink-landing.firebaseapp.com",
+      projectId: "paigelink-landing",
+      storageBucket: "paigelink-landing.appspot.com",
+      messagingSenderId: "1087272062200",
+      appId: "1:1087272062200:web:1a4f43d9a8cb9196c77f0d",
+      measurementId: "G-D7YPPK7JQ0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const analytics = getAnalytics(app);
+
+    const contactForm = document.getElementById('contactPageForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMsg = document.getElementById('contactSuccessMsg');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const topic = document.getElementById('contactTopic').value;
+      const message = document.getElementById('contactMsg').value;
+
+      submitBtn.innerText = "SENDING...";
+      submitBtn.disabled = true;
+
+      try {
+        await addDoc(collection(db, "leads"), {
+          name: name,
+          email: email,
+          topic: topic,
+          message: message,
+          source: 'contact_page',
+          timestamp: serverTimestamp()
+        });
+
+        logEvent(analytics, 'generate_lead', {
+          method: 'contact_page_form',
+          inquiry_type: topic
+        });
+
+        contactForm.style.display = 'none';
+        successMsg.style.display = 'block';
+
+      } catch (error) {
+        console.error("Error submitting contact form: ", error);
+        submitBtn.innerText = "SEND MESSAGE";
+        submitBtn.disabled = false;
+        alert("There was an issue sending your message. Please try again or email us directly.");
+      }
+    });
+  </script>
 </body>
 </html>
