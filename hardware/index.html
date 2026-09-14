@@ -83,7 +83,7 @@
     /* Hero Section */
     .hardware-hero {
       text-align: center;
-      max-width: 800px;
+      max-width: 850px;
       margin: 0 auto 4rem auto;
     }
 
@@ -113,7 +113,7 @@
 
     .hardware-hero p {
       color: #a1a1aa;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       line-height: 1.6;
     }
 
@@ -194,13 +194,14 @@
       font-size: 0.88rem;
       margin-bottom: 0.75rem;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 8px;
     }
 
     .spec-list li i {
       color: #80E600;
       font-size: 0.8rem;
+      margin-top: 3px;
     }
 
     .btn-card {
@@ -224,6 +225,50 @@
       background-color: #80E600;
       color: #050505;
       border-color: #80E600;
+    }
+
+    /* Portfolio Table */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 4rem;
+      background: #0d0d0d;
+      border: 1px solid #1f1f1f;
+      border-radius: 12px;
+    }
+
+    .portfolio-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .portfolio-table th {
+      background-color: #121212;
+      color: #80E600;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #222;
+    }
+
+    .portfolio-table td {
+      padding: 1.25rem;
+      border-bottom: 1px solid #1a1a1a;
+      color: #a1a1aa;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .portfolio-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .portfolio-table td strong {
+      color: #ffffff;
     }
 
     /* Warehouse 2-Column Grid */
@@ -281,7 +326,7 @@
     <section class="hardware-hero">
       <div class="category-badge">Tested &amp; Certified</div>
       <h1>Purpose-Built Industrial Hardware Options</h1>
-      <p>PAiGE integrates seamlessly across ultra-rugged mobile handhelds, dedicated push-to-talk smart radios, and barcode scanning systems.</p>
+      <p>Structuring the portfolio into Enterprise Tier (Sonim XP10), Pro Tier (Kyocera DuraForce PRO 3), and a Supervisor Tier (Samsung Galaxy XCover) aligns perfectly with frontline workflows and procurement budgets.</p>
     </section>
 
     <div class="section-title">
@@ -290,51 +335,92 @@
     </div>
 
     <section class="tier-grid">
-      <div class="hardware-card">
-        <div>
-          <div class="tier-tag">Tier 1 • Value</div>
-          <div class="device-title">Kyocera DuraForce Ultra 5G</div>
-          <div class="device-sub">Ultra-rugged baseline performance built for harsh shop floor environments.</div>
-          <ul class="spec-list">
-            <li><i class="fa-solid fa-check"></i> MIL-STD-810H &amp; IP68 Waterproof</li>
-            <li><i class="fa-solid fa-check"></i> Sapphire Shield™ Touchscreen</li>
-            <li><i class="fa-solid fa-check"></i> Glove &amp; Wet Touch Operation</li>
-            <li><i class="fa-solid fa-check"></i> Ultra-Loud Dual Front Speakers</li>
-          </ul>
-        </div>
-        <a href="../contact/index.html?tier=1" class="btn-card">Deploy Tier 1</a>
-      </div>
-
-      <div class="hardware-card">
-        <div>
-          <div class="tier-tag">Tier 2 • Pro</div>
-          <div class="device-title">Samsung Galaxy XCover</div>
-          <div class="device-sub">Slim, durable, and highly versatile device with customizable hardware keys.</div>
-          <ul class="spec-list">
-            <li><i class="fa-solid fa-check"></i> Programmable XCover Side Button</li>
-            <li><i class="fa-solid fa-check"></i> Knox Vault Security Integration</li>
-            <li><i class="fa-solid fa-check"></i> Replaceable Battery Capability</li>
-            <li><i class="fa-solid fa-check"></i> Light, Ergonomic Form Factor</li>
-          </ul>
-        </div>
-        <a href="../contact/index.html?tier=2" class="btn-card">Deploy Tier 2</a>
-      </div>
-
+      <!-- Top Tier Card -->
       <div class="hardware-card featured">
         <div>
-          <div class="tier-tag">Tier 3 • Enterprise</div>
-          <div class="device-title">Sonim XP10 Smart Radio</div>
-          <div class="device-sub">The ultimate mission-critical handheld smart radio for extreme environments.</div>
+          <div class="tier-tag">Top Tier • Ultra-Rugged</div>
+          <div class="device-title">Sonim XP10 / XP9900</div>
+          <div class="device-sub">Target Persona: Plant Floor Operators, Hazardous Area Techs, Heavy Industrial</div>
           <ul class="spec-list">
-            <li><i class="fa-solid fa-check"></i> Dedicated Tactile PTT &amp; SOS Buttons</li>
-            <li><i class="fa-solid fa-check"></i> 100dB+ Noise Cancelling Audio</li>
-            <li><i class="fa-solid fa-check"></i> Class I, Div 2 Hazardous Location Rated</li>
-            <li><i class="fa-solid fa-check"></i> Multi-Shift Ultra-Battery Life</li>
+            <li><i class="fa-solid fa-check"></i> Ultra-loud 100+ dB front speakers for high-noise areas</li>
+            <li><i class="fa-solid fa-check"></i> Physical tri-color LED &amp; continuous looping alerts</li>
+            <li><i class="fa-solid fa-check"></i> Maximum drop protection for extreme plant environments</li>
+            <li><i class="fa-solid fa-check"></i> Dedicated tactile PTT &amp; Emergency SOS buttons</li>
           </ul>
         </div>
-        <a href="../contact/index.html?tier=3" class="btn-card">Deploy Tier 3</a>
+        <a href="../contact/index.html?tier=top" class="btn-card">Deploy Top Tier</a>
+      </div>
+
+      <!-- Middle Tier Card -->
+      <div class="hardware-card">
+        <div>
+          <div class="tier-tag">Middle Tier • Slim Industrial</div>
+          <div class="device-title">Kyocera DuraForce PRO 3</div>
+          <div class="device-sub">Target Persona: Mobile Field Technicians, Logistics, Yard Supervisors</div>
+          <ul class="spec-list">
+            <li><i class="fa-solid fa-check"></i> True IP68 / MIL-STD-810H industrial durability</li>
+            <li><i class="fa-solid fa-check"></i> Full Android parity (camera flash strobing, loud stereo sound)</li>
+            <li><i class="fa-solid fa-check"></i> Dedicated customizable hardware buttons</li>
+            <li><i class="fa-solid fa-check"></i> Lighter smartphone form factor without losing reliability</li>
+          </ul>
+        </div>
+        <a href="../contact/index.html?tier=middle" class="btn-card">Deploy Middle Tier</a>
+      </div>
+
+      <!-- Supervisor Tier Card -->
+      <div class="hardware-card">
+        <div>
+          <div class="tier-tag">Supervisor Tier • Enterprise Hybrid</div>
+          <div class="device-title">Samsung Galaxy XCover 6 / 7 Pro</div>
+          <div class="device-sub">Target Persona: Shift Managers, Safety Directors, Plant Supervisors</div>
+          <ul class="spec-list">
+            <li><i class="fa-solid fa-check"></i> Sleek corporate device for office/plant hybrid workflows</li>
+            <li><i class="fa-solid fa-check"></i> Enterprise MDM &amp; email access with PAiGE integration</li>
+            <li><i class="fa-solid fa-check"></i> Reliable dispatch &amp; task alerts via standard notifications</li>
+            <li><i class="fa-solid fa-check"></i> Programmable XCover key and replaceable battery</li>
+          </ul>
+        </div>
+        <a href="../contact/index.html?tier=supervisor" class="btn-card">Deploy Supervisor Tier</a>
       </div>
     </section>
+
+    <div class="section-title">
+      <i class="fa-solid fa-table"></i>
+      Revised 3-Tier Hardware Portfolio Matrix
+    </div>
+
+    <div class="table-container">
+      <table class="portfolio-table">
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Device Model</th>
+            <th>Target Persona / Role</th>
+            <th>Key Rationale &amp; Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Top Tier (Ultra-Rugged)</strong></td>
+            <td>Sonim XP9900 / XP10</td>
+            <td>Plant Floor Operators, Hazardous Area Techs, Heavy Industrial</td>
+            <td>Maximum durability, ultra-loud 100+ dB front speakers, physical tri-color LED, and continuous looping alerts (USAGE_ALARM). Built for environments where drop protection and high noise are critical.</td>
+          </tr>
+          <tr>
+            <td><strong>Middle Tier (Slim Industrial)</strong></td>
+            <td>Kyocera DuraSport 5G / DuraForce PRO 3</td>
+            <td>Mobile Field Technicians, Logistics, Yard Supervisors</td>
+            <td>True IP68/MIL-STD-810H durability with full Android feature parity (camera flash strobing, loud stereo speakers, dedicated hardware buttons). Gives field workers a lighter smartphone form factor without sacrificing industrial alert reliability.</td>
+          </tr>
+          <tr>
+            <td><strong>Supervisor Tier (Enterprise Hybrid)</strong></td>
+            <td>Samsung Galaxy XCover 6 / 7 Pro</td>
+            <td>Shift Managers, Safety Directors, Plant Supervisors</td>
+            <td>Sleek corporate device for office/plant hybrid managers who need email/MDM access alongside your app. Does not require 100+ dB audio or physical RGB LEDs, but receives dispatches and task alerts reliably via standard notification channels.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="section-title">
       <i class="fa-solid fa-barcode"></i>
