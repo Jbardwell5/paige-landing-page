@@ -174,30 +174,54 @@
       margin-bottom: 1.75rem;
     }
 
-    .btn-demo-trigger {
-      background-color: #80E600;
-      color: #050505;
-      font-family: 'Inter', sans-serif;
-      font-weight: 900;
-      font-size: 0.9rem;
-      letter-spacing: 0.05em;
-      padding: 0.95rem 1.9rem;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 1.75rem;
-      transition: all 0.2s ease;
-      box-shadow: 0 0 15px rgba(128, 230, 0, 0.25);
-    }
+ .btn-primary-demo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #80E600;
+  color: #050505;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  padding: 1rem 1.75rem;
+  border-radius: 30px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 15px rgba(128, 230, 0, 0.35);
+}
 
-    .btn-demo-trigger:hover {
-      background-color: #92fc00;
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 0 25px rgba(128, 230, 0, 0.45);
-    }
+/* Hover & Active Glow Effects */
+.btn-primary-demo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(128, 230, 0, 0.7);
+  background-color: #8eff00;
+}
+
+/* Continuous Subtle Pulsing Ring */
+.pulse-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 30px;
+  border: 2px solid #80E600;
+  animation: radar-pulse 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+  pointer-events: none;
+}
+
+@keyframes radar-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.15, 1.4);
+    opacity: 0;
+  }
+}
 
     .email-signup-form {
       display: flex;
@@ -462,9 +486,10 @@
 
         <h1>Modernizing Frontline &amp; Industrial Floor Communication</h1>
 
-        <button id="demoBtn" class="btn-demo-trigger">
-          <i class="fa-solid fa-gauge-high"></i> LAUNCH COMMAND CENTER
-        </button>
+       <a href="../dashboard#demo" class="btn-primary-demo">
+  <span class="pulse-ring"></span>
+  <i class="fa-solid fa-play"></i> LAUNCH DEMO COMMAND CENTER
+</a>
 
         <form class="email-signup-form" id="leadForm">
           <input 
