@@ -149,18 +149,14 @@
       flex-direction: column;
       justify-content: space-between;
       position: relative;
-      transition: border-color 0.2s ease, transform 0.2s ease;
+      transition: all 0.25s ease;
     }
 
+    /* Hover effect applies smoothly to ANY active hover */
     .hardware-card:hover {
-      border-color: rgba(128, 230, 0, 0.4);
-      transform: translateY(-3px);
-    }
-
-    /* Highlight Featured/Plant Floor Card */
-    .hardware-card.featured {
-      border-color: rgba(128, 230, 0, 0.3);
+      border-color: rgba(128, 230, 0, 0.5);
       background: linear-gradient(180deg, #101509 0%, #0d0d0d 100%);
+      transform: translateY(-4px);
     }
 
     .tier-tag {
@@ -359,7 +355,7 @@
     </nav>
   </header>
 
-<main>
+  <main>
     <section class="hardware-hero">
       <div class="category-badge">Tested &amp; Certified</div>
       <h1>Purpose-Built Industrial Hardware Options</h1>
@@ -373,7 +369,7 @@
 
     <section class="tier-grid">
       <!-- Plant Floor / Ultra-Rugged Card -->
-      <div class="hardware-card featured">
+      <div class="hardware-card">
         <div>
           <div class="tier-tag">Plant Floor Tier • Ultra-Rugged</div>
           <div class="device-title">Sonim XP10</div>
@@ -449,12 +445,12 @@
             <td>Mobile Field Technicians, Logistics, Yard Supervisors</td>
             <td>True IP68/IP69K durability with full Android feature parity (camera flash strobing, loud stereo speakers, dedicated hardware buttons). Gives field workers a lighter, ergonomic smartphone form factor.</td>
           </tr>
-         <tr>
-  <td><strong>Enterprise Hybrid Tier (Light Duty)</strong></td>
-  <td>Samsung Galaxy XCover 7</td>
-  <td>Shift Managers, Cross-Functional Staff, High-Volume Fleets</td>
-  <td>Sleek corporate device for hybrid leaders or enterprise fleet rollouts needing Knox MDM integration. Receives priority dispatches and task alerts reliably in moderate-noise environments.</td>
-</tr>
+          <tr>
+            <td><strong>Enterprise Hybrid Tier (Light Duty)</strong></td>
+            <td>Samsung Galaxy XCover 7</td>
+            <td>Shift Managers, Cross-Functional Staff, High-Volume Fleets</td>
+            <td>Sleek corporate device for hybrid leaders or enterprise fleet rollouts needing Knox MDM integration. Receives priority dispatches and task alerts reliably in moderate-noise environments.</td>
+          </tr>
         </tbody>
       </table>
     </div>
