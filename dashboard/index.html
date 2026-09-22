@@ -498,7 +498,7 @@
     </div>
   </header>
 
-  <!-- High-Visibility Demo Environment Alert Banner -->
+ <!-- High-Visibility Demo Environment Alert Banner -->
   <div class="demo-banner">
     <div class="demo-banner-content">
       <span class="demo-banner-tag">Demo Sandbox</span>
@@ -513,14 +513,17 @@
 
   <div class="workspace-wrapper">
 
+    <!-- SPATIAL DASHBOARD (CONTAINER FOR LEFT ROSTER + CENTER MAP + COMPOSER) -->
     <div class="dashboard-container" id="spatialDashboard">
       
+      <!-- LEFT PANE: ROSTER LISTS -->
       <div class="pane">
         <div class="pane-header">
           <span id="rosterTitle">Facility Roster</span>
           <span style="color:#80E600;" id="rosterCount">5 Active</span>
         </div>
         
+        <!-- Facility Roster -->
         <div class="roster-list" id="facilityRoster">
           <div class="device-card selected" data-target="ALL UNITS (BROADCAST)" onclick="selectDevice('ALL UNITS (BROADCAST)')">
             <div class="device-name">ALL UNITS (BROADCAST)</div>
@@ -548,6 +551,7 @@
           </div>
         </div>
 
+        <!-- Fleet Roster -->
         <div class="roster-list" id="fleetRoster" style="display: none;">
           <div class="device-card selected" data-target="ALL FLEET UNITS" onclick="selectDevice('ALL FLEET UNITS')">
             <div class="device-name">ALL FLEET UNITS</div>
@@ -568,10 +572,12 @@
         </div>
       </div>
 
+      <!-- CENTER PANE: MAP VIEWPORTS & DISPATCH COMPOSER -->
       <div class="center-pane">
         <div class="pane-header" id="mapTitle">Facility Telemetry &amp; Live Map</div>
         <div class="map-viewport">
           
+          <!-- FACILITY CANVAS -->
           <div id="facilityViewCanvas" class="view-canvas">
             <div class="map-wrapper">
               <img src="facility-schematic.png" alt="Facility Floorplan Schematic" class="schematic-img" />
@@ -604,81 +610,80 @@
             </div>
           </div>
 
-          <!-- UPDATED FLEET VIEW CANVAS & DISPATCH COMPOSER -->
-      <div id="fleetViewCanvas" class="view-canvas hidden">
-        <div class="fleet-map-bg"></div>
-        <div class="map-grid"></div>
+          <!-- FLEET CANVAS -->
+          <div id="fleetViewCanvas" class="view-canvas hidden">
+            <div class="fleet-map-bg"></div>
+            <div class="map-grid"></div>
 
-        <!-- 5-Mile Perimeter Ring -->
-        <div class="geofence-ring">
-          <span class="geofence-tag">5-MILE GEOFENCE BOUNDARY</span>
-        </div>
+            <div class="geofence-ring">
+              <span class="geofence-tag">5-MILE GEOFENCE BOUNDARY</span>
+            </div>
 
-        <!-- Central Facility Dock Node -->
-        <div class="hub-node">
-          <div class="hub-title"><i class="fa-solid fa-warehouse" style="color: #80E600;"></i> MAIN FACILITY DOCKS</div>
-          <div class="hub-sub">AUTO-PREP ACTIVE</div>
-        </div>
+            <div class="hub-node">
+              <div class="hub-title"><i class="fa-solid fa-warehouse" style="color: #80E600;"></i> MAIN FACILITY DOCKS</div>
+              <div class="hub-sub">AUTO-PREP ACTIVE</div>
+            </div>
 
-        <!-- Map Beacons with Pulse Rings & Label Offsets -->
-        <div class="map-beacon active-alert" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 18%; left: 42%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
-          <div class="beacon-pulse-ring"></div>
-          <div class="beacon-dot alert-amber"></div>
-          <div class="beacon-pill offset-top-right alert-amber-border">
-            <i class="fa-solid fa-truck" style="font-size: 0.65rem;"></i> TRUCK #12 (8 MIN ETA)
+            <div class="map-beacon active-alert" id="truck12Beacon" data-target="TRUCK #12 - INBOUND" style="top: 18%; left: 42%;" onclick="selectDevice('TRUCK #12 - INBOUND')">
+              <div class="beacon-pulse-ring"></div>
+              <div class="beacon-dot alert-amber"></div>
+              <div class="beacon-pill offset-top-right alert-amber-border">
+                <i class="fa-solid fa-truck" style="font-size: 0.65rem;"></i> TRUCK #12 (8 MIN ETA)
+              </div>
+            </div>
+
+            <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 72%; left: 54%;" onclick="selectDevice('TRUCK #08 - STAGED')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill offset-bottom"><i class="fa-solid fa-truck-ramp-box" style="font-size: 0.65rem;"></i> TRUCK #08 (I-41 N)</div>
+            </div>
+
+            <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 64%; left: 28%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
+              <div class="beacon-dot"></div>
+              <div class="beacon-pill offset-left"><i class="fa-solid fa-van-shuttle" style="font-size: 0.65rem;"></i> VAN #04 (FIELD)</div>
+            </div>
           </div>
+
         </div>
 
-        <div class="map-beacon" data-target="TRUCK #08 - STAGED" style="top: 72%; left: 54%;" onclick="selectDevice('TRUCK #08 - STAGED')">
-          <div class="beacon-dot"></div>
-          <div class="beacon-pill offset-bottom"><i class="fa-solid fa-truck-ramp-box" style="font-size: 0.65rem;"></i> TRUCK #08 (I-41 N)</div>
-        </div>
+        <!-- DISPATCH COMPOSER -->
+        <div class="dispatch-composer">
+          <div class="composer-header-row">
+            <div class="composer-target">TARGET: <span id="targetName" style="color:#80E600; font-weight: 800;">ALL UNITS (BROADCAST)</span></div>
+            <div class="priority-selector">
+              <button class="p-btn active-info" id="btnInfo" onclick="setPriority('INFO')">INFO</button>
+              <button class="p-btn" id="btnTask" onclick="setPriority('TASK')">TASK</button>
+              <button class="p-btn" id="btnPriority" onclick="setPriority('PRIORITY')">PRIORITY ALERT</button>
+            </div>
+          </div>
 
-        <div class="map-beacon" data-target="VAN #04 - FIELD TECH" style="top: 64%; left: 28%;" onclick="selectDevice('VAN #04 - FIELD TECH')">
-          <div class="beacon-dot"></div>
-          <div class="beacon-pill offset-left"><i class="fa-solid fa-van-shuttle" style="font-size: 0.65rem;"></i> VAN #04 (FIELD)</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- REFINED DISPATCH COMPOSER -->
-    <div class="dispatch-composer">
-      <div class="composer-header-row">
-        <div class="composer-target">TARGET: <span id="targetName" style="color:#80E600; font-weight: 800;">ALL UNITS (BROADCAST)</span></div>
-        <div class="priority-selector">
-          <button class="p-btn active-info" id="btnInfo" onclick="setPriority('INFO')">INFO</button>
-          <button class="p-btn" id="btnTask" onclick="setPriority('TASK')">TASK</button>
-          <button class="p-btn" id="btnPriority" onclick="setPriority('PRIORITY')">PRIORITY ALERT</button>
+          <div class="input-row">
+            <textarea id="msgInput" class="dispatch-input theme-info" placeholder="Type page or task dispatch..." maxlength="160" oninput="updateCharCount()" onkeydown="handleKeyDown(event)"></textarea>
+            <button class="send-btn theme-info" id="sendBtn" onclick="sendDispatch()">SEND PAGE</button>
+          </div>
+          <div class="char-counter"><span id="charCount">160</span> characters remaining</div>
         </div>
       </div>
 
-      <div class="input-row">
-        <textarea id="msgInput" class="dispatch-input theme-info" placeholder="Type page or task dispatch..." maxlength="160" oninput="updateCharCount()" onkeydown="handleKeyDown(event)"></textarea>
-        <button class="send-btn theme-info" id="sendBtn" onclick="sendDispatch()">SEND PAGE</button>
+    </div>
+
+    <!-- RIGHT PANE: LIVE AUDIT FEED -->
+    <div class="pane pane-3-container">
+      <div class="pane-header">
+        <span>LIVE AUDIT FEED</span>
+        <span style="color:#80E600;" id="feedCount">0 LOGS</span>
       </div>
-      <div class="char-counter"><span id="charCount">160</span> characters remaining</div>
-    </div>
-  </div>
 
-  <!-- RIGHT PANE: LIVE AUDIT FEED -->
-  <div class="pane pane-3-container">
-    <div class="pane-header">
-      <span>LIVE AUDIT FEED</span>
-      <span style="color:#80E600;" id="feedCount">0 LOGS</span>
-    </div>
+      <div class="filter-bar">
+        <button class="filter-tab active" onclick="filterLogs('ALL', this)">ALL</button>
+        <button class="filter-tab" onclick="filterLogs('INFO', this)">INFO</button>
+        <button class="filter-tab" onclick="filterLogs('TASK', this)">TASK</button>
+        <button class="filter-tab" onclick="filterLogs('PRIORITY', this)">PRIORITY</button>
+      </div>
 
-    <div class="filter-bar">
-      <button class="filter-tab active" onclick="filterLogs('ALL', this)">ALL</button>
-      <button class="filter-tab" onclick="filterLogs('INFO', this)">INFO</button>
-      <button class="filter-tab" onclick="filterLogs('TASK', this)">TASK</button>
-      <button class="filter-tab" onclick="filterLogs('PRIORITY', this)">PRIORITY</button>
+      <div class="audit-feed" id="auditFeed"></div>
     </div>
 
-    <div class="audit-feed" id="auditFeed"></div>
-  </div>
-
-  <!-- UPDATED HIERARCHY & MATRIX VIEW -->
+    <!-- HIERARCHY & MATRIX VIEW -->
     <div class="hierarchy-container hidden" id="hierarchyView">
       <div class="hierarchy-split">
         
@@ -774,7 +779,6 @@
             <div class="matrix-title"><i class="fa-solid fa-walkie-talkie"></i> CHANNEL ACCESS &amp; TALK GROUPS</div>
             
             <div class="channel-grid">
-              <!-- Active / Selected -->
               <div class="channel-card active" onclick="toggleChannel(this)">
                 <div class="channel-info">
                   <span class="channel-name">Team Alpha Channel</span>
@@ -783,7 +787,6 @@
                 <div class="checkbox-custom"><i class="fa-solid fa-check"></i></div>
               </div>
 
-              <!-- Unselected / Available -->
               <div class="channel-card" onclick="toggleChannel(this)">
                 <div class="channel-info">
                   <span class="channel-name">Leads Broad-Call Channel</span>
@@ -792,7 +795,6 @@
                 <div class="checkbox-custom"><i class="fa-solid fa-check"></i></div>
               </div>
 
-              <!-- Restricted / Disabled State -->
               <div class="channel-card restricted">
                 <div class="channel-info">
                   <span class="channel-name">Assembly Line 02 Channel</span>
@@ -801,7 +803,6 @@
                 <div class="checkbox-custom disabled"><i class="fa-solid fa-ban"></i></div>
               </div>
 
-              <!-- Listen Only State -->
               <div class="channel-card">
                 <div class="channel-info">
                   <span class="channel-name">Plant-Wide Emergency</span>
@@ -817,7 +818,6 @@
             <div class="matrix-title"><i class="fa-solid fa-shield-halved"></i> PTT PRIVILEGES &amp; OVERRIDES</div>
             
             <div class="privilege-rows">
-              
               <div class="privilege-row">
                 <div class="priv-label-group">
                   <span class="priv-title">Audio Priority Level</span>
@@ -863,7 +863,6 @@
                   <option>Enabled (Requires Confirmation)</option>
                 </select>
               </div>
-
             </div>
           </div>
 
@@ -886,6 +885,7 @@
     </div>
 
   </div>
+
   <script>
     // --- Global Application State ---
     let currentPriority = 'INFO';
@@ -894,7 +894,6 @@
     let isAudioMuted = false;
     let activeView = 'facility';
     let geofenceTriggered = false;
-    let draggedWorker = null;
     let logCounter = 0;
     
     // --- Web Audio Synthesizer ---
@@ -912,14 +911,16 @@
       const icon = document.getElementById('audioIcon');
       const label = document.getElementById('audioLabel');
 
-      if (isAudioMuted) {
-        btn.classList.add('is-muted');
-        icon.className = 'fa-solid fa-volume-xmark';
-        label.innerText = 'AUDIO MUTED';
-      } else {
-        btn.classList.remove('is-muted');
-        icon.className = 'fa-solid fa-volume-high';
-        label.innerText = 'AUDIO ON';
+      if (btn && icon && label) {
+        if (isAudioMuted) {
+          btn.classList.add('is-muted');
+          icon.className = 'fa-solid fa-volume-xmark';
+          label.innerText = 'AUDIO MUTED';
+        } else {
+          btn.classList.remove('is-muted');
+          icon.className = 'fa-solid fa-volume-high';
+          label.innerText = 'AUDIO ON';
+        }
       }
     }
 
@@ -976,40 +977,40 @@
       const rosterCount = document.getElementById('rosterCount');
       const mapTitle = document.getElementById('mapTitle');
 
-      facilityBtn.classList.remove('active');
-      fleetBtn.classList.remove('active');
-      hierarchyBtn.classList.remove('active');
+      if (facilityBtn) facilityBtn.classList.remove('active');
+      if (fleetBtn) fleetBtn.classList.remove('active');
+      if (hierarchyBtn) hierarchyBtn.classList.remove('active');
 
       if (viewName === 'facility') {
-        facilityBtn.classList.add('active');
-        spatialContainer.classList.remove('hidden');
-        hierarchyContainer.classList.add('hidden');
+        if (facilityBtn) facilityBtn.classList.add('active');
+        if (spatialContainer) spatialContainer.classList.remove('hidden');
+        if (hierarchyContainer) hierarchyContainer.classList.add('hidden');
 
-        facilityCanvas.classList.remove('hidden');
-        fleetCanvas.classList.add('hidden');
+        if (facilityCanvas) facilityCanvas.classList.remove('hidden');
+        if (fleetCanvas) fleetCanvas.classList.add('hidden');
 
-        facilityRoster.style.display = 'flex';
-        fleetRoster.style.display = 'none';
+        if (facilityRoster) facilityRoster.style.display = 'flex';
+        if (fleetRoster) fleetRoster.style.display = 'none';
 
-        rosterTitle.innerText = 'Facility Roster';
-        rosterCount.innerText = '5 Active';
-        mapTitle.innerText = 'Facility Telemetry & Live Map';
+        if (rosterTitle) rosterTitle.innerText = 'Facility Roster';
+        if (rosterCount) rosterCount.innerText = '5 Active';
+        if (mapTitle) mapTitle.innerText = 'Facility Telemetry & Live Map';
 
         selectDevice('ALL UNITS (BROADCAST)');
       } else if (viewName === 'fleet') {
-        fleetBtn.classList.add('active');
-        spatialContainer.classList.remove('hidden');
-        hierarchyContainer.classList.add('hidden');
+        if (fleetBtn) fleetBtn.classList.add('active');
+        if (spatialContainer) spatialContainer.classList.remove('hidden');
+        if (hierarchyContainer) hierarchyContainer.classList.add('hidden');
 
-        fleetCanvas.classList.remove('hidden');
-        facilityCanvas.classList.add('hidden');
+        if (fleetCanvas) fleetCanvas.classList.remove('hidden');
+        if (facilityCanvas) facilityCanvas.classList.add('hidden');
 
-        fleetRoster.style.display = 'flex';
-        facilityRoster.style.display = 'none';
+        if (fleetRoster) fleetRoster.style.display = 'flex';
+        if (facilityRoster) facilityRoster.style.display = 'none';
 
-        rosterTitle.innerText = 'Fleet Roster';
-        rosterCount.innerText = '3 Vehicles Active';
-        mapTitle.innerText = 'GPS Fleet Tracking & Dock Geofence';
+        if (rosterTitle) rosterTitle.innerText = 'Fleet Roster';
+        if (rosterCount) rosterCount.innerText = '3 Vehicles Active';
+        if (mapTitle) mapTitle.innerText = 'GPS Fleet Tracking & Dock Geofence';
 
         selectDevice('ALL FLEET UNITS');
 
@@ -1018,9 +1019,9 @@
           simulateGeofenceEvent();
         }
       } else if (viewName === 'hierarchy') {
-        hierarchyBtn.classList.add('active');
-        spatialContainer.classList.add('hidden');
-        hierarchyContainer.classList.remove('hidden');
+        if (hierarchyBtn) hierarchyBtn.classList.add('active');
+        if (spatialContainer) spatialContainer.classList.add('hidden');
+        if (hierarchyContainer) hierarchyContainer.classList.remove('hidden');
         playDispatchSound('INFO');
       }
     }
@@ -1042,20 +1043,23 @@
           }
 
           const feed = document.getElementById('auditFeed');
-          const autoLog = document.createElement('div');
-          autoLog.className = 'log-item task';
-          autoLog.setAttribute('data-type', 'TASK');
-          autoLog.innerHTML = `
-            <div class="log-header"><span>To: DOCK OPERATOR (BAY 4)</span><span>AUTOMATED</span></div>
-            <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter on HWY 29. Prep Dock 4.</div>
-            <div class="log-status">✓ AUTO-DISPATCH SENT</div>
-          `;
-          feed.insertBefore(autoLog, feed.firstChild);
-          logCounter++;
-          document.getElementById('feedCount').innerText = `${logCounter} LOGS`;
-          playDispatchSound('TASK');
+          if (feed) {
+            const autoLog = document.createElement('div');
+            autoLog.className = 'log-item task';
+            autoLog.setAttribute('data-type', 'TASK');
+            autoLog.innerHTML = `
+              <div class="log-header"><span>To: DOCK OPERATOR (BAY 4)</span><span>AUTOMATED</span></div>
+              <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter on HWY 29. Prep Dock 4.</div>
+              <div class="log-status">✓ AUTO-DISPATCH SENT</div>
+            `;
+            feed.insertBefore(autoLog, feed.firstChild);
+            logCounter++;
+            const feedCount = document.getElementById('feedCount');
+            if (feedCount) feedCount.innerText = `${logCounter} LOGS`;
+            playDispatchSound('TASK');
 
-          triggerBeaconFlash('TRUCK #12 - INBOUND', 'TASK');
+            triggerBeaconFlash('TRUCK #12 - INBOUND', 'TASK');
+          }
         }, 2500);
       }, 1000);
     }
@@ -1150,7 +1154,8 @@
       if (feed) {
         feed.insertBefore(newLog, feed.firstChild);
         logCounter++;
-        document.getElementById('feedCount').innerText = `${logCounter} LOGS`;
+        const feedCount = document.getElementById('feedCount');
+        if (feedCount) feedCount.innerText = `${logCounter} LOGS`;
         feed.classList.remove('flash-feed-info', 'flash-feed-task', 'flash-feed-priority');
         void feed.offsetWidth;
         feed.classList.add(`flash-feed-${lowerType}`);
@@ -1178,7 +1183,6 @@
       });
     }
 
-    // --- Fixed Audit Filter Function ---
     function filterLogs(filterType, element) {
       activeFilter = filterType;
       document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
@@ -1200,7 +1204,7 @@
     }
 
     function selectHierarchyNode(nodeKey, element) {
-      document.querySelectorAll('.tree-node-content').forEach(node => node.classList.remove('selected'));
+      document.querySelectorAll('.tree-leaf-item').forEach(node => node.classList.remove('selected'));
       if (element) element.classList.add('selected');
       playDispatchSound('INFO');
     }
@@ -1208,6 +1212,16 @@
     function toggleChannel(card) {
       if (card) card.classList.toggle('active');
       playDispatchSound('INFO');
+    }
+
+    function saveMatrixSettings() {
+      playDispatchSound('INFO');
+      alert('Hierarchy privilege matrix saved successfully.');
+    }
+
+    function testRuleEngine() {
+      playDispatchSound('TASK');
+      alert('Shift Rule Engine evaluated: 0 conflicts detected. Auto-bind conditions valid.');
     }
 
     function addNodeModal() {
