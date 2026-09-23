@@ -187,7 +187,7 @@
       z-index: 1;
     }
 
-    /* Facility Hub Node */
+    /* Hub Node */
     .hub-node {
       position: absolute;
       top: 48%;
@@ -330,7 +330,6 @@
       box-shadow: 0 0 12px rgba(128, 230, 0, 0.8);
     }
 
-    /* Selected Active Amber State (Orange Fill & Dark Text) */
     .map-beacon.active-amber .beacon-pill,
     .map-beacon.active-alert .beacon-pill {
       background: #FFB000 !important;
@@ -476,7 +475,6 @@
     .channel-card { background: #111; border: 1px solid #222; padding: 10px 12px; border-radius: 5px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
     .channel-card.active { border-color: rgba(128, 230, 0, 0.4); background: rgba(128, 230, 0, 0.03); }
     
-    /* Striped restricted channel styling */
     .channel-card.restricted {
       opacity: 0.45;
       background: repeating-linear-gradient(45deg, #0d0d0d, #0d0d0d 10px, #121212 10px, #121212 20px);
@@ -498,6 +496,11 @@
     
     .matrix-dropdown { background: #161616; border: 1px solid #333; color: #DDD; font-size: 0.75rem; font-weight: 700; padding: 6px 10px; border-radius: 4px; outline: none; }
     .matrix-dropdown.warning-val { border-color: #FFB000 !important; color: #FFB000 !important; background: rgba(255, 176, 0, 0.08) !important; }
+
+    /* Worker Profile & Adaptation Styles */
+    .overlay-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .chip-btn { background: #141414; border: 1px solid #333; color: #888; font-size: 0.7rem; font-weight: 700; padding: 5px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+    .chip-btn.selected { background: rgba(128, 230, 0, 0.1); border-color: #80E600; color: #80E600; }
 
     .shift-rule-bar { background: #0D0D0D; border-top: 1px solid #1C1C1C; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; }
     .rule-label { display: flex; align-items: center; gap: 8px; font-weight: 800; color: #888; }
@@ -687,7 +690,7 @@
 
         </div>
 
-       <!-- DISPATCH COMPOSER -->
+        <!-- DISPATCH COMPOSER -->
         <div class="dispatch-composer">
           <div class="composer-header-row">
             <div class="composer-target">TARGET: <span id="targetName" style="color:#80E600; font-weight: 800;">ALL UNITS (BROADCAST)</span></div>
@@ -797,7 +800,7 @@
           </div>
         </div>
 
-        <!-- RIGHT PANE: COMPACT PRIVILEGE MATRIX -->
+        <!-- RIGHT PANE: COMPACT PRIVILEGE MATRIX & WORKER ADAPTATION -->
         <div class="hierarchy-right-pane">
           
           <!-- Top Target & Action Header -->
@@ -898,6 +901,62 @@
                 <select class="matrix-dropdown">
                   <option selected>Disabled</option>
                   <option>Enabled (Requires Confirmation)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Worker Profile & Accessibility Adaptation -->
+          <div class="matrix-section">
+            <div class="matrix-title"><i class="fa-solid fa-universal-access"></i> WORKER PROFILE &amp; ACCESSIBILITY ADAPTATION</div>
+            
+            <div class="privilege-rows">
+              <div class="privilege-row">
+                <div class="priv-label-group">
+                  <span class="priv-title">Primary Language &amp; Translation</span>
+                  <span class="priv-desc">Auto-translates incoming PTT &amp; templates into worker's native language</span>
+                </div>
+                <select class="matrix-dropdown">
+                  <option selected>English (US)</option>
+                  <option>Spanish (Español)</option>
+                  <option>Hmong (Hmoob)</option>
+                  <option>Polish (Polski)</option>
+                </select>
+              </div>
+
+              <div class="privilege-row">
+                <div class="priv-label-group">
+                  <span class="priv-title">Ambient Environment Profile</span>
+                  <span class="priv-desc">Adjusts audio gain, visual flashes, and haptic vibration intensity</span>
+                </div>
+                <select class="matrix-dropdown">
+                  <option>Standard Warehouse</option>
+                  <option selected>High-Noise Floor / CNC Floor (Audio Boost)</option>
+                  <option>Quiet Zone / Clean Room</option>
+                </select>
+              </div>
+
+              <div class="privilege-row">
+                <div class="priv-label-group">
+                  <span class="priv-title">Foreground App Overlays</span>
+                  <span class="priv-desc">Toggle auxiliary productivity tools pinned over the PTT interface</span>
+                </div>
+                <div class="overlay-chips">
+                  <button class="chip-btn selected" onclick="toggleChip(this)"><i class="fa-solid fa-map"></i> Dock Maps</button>
+                  <button class="chip-btn selected" onclick="toggleChip(this)"><i class="fa-solid fa-barcode"></i> Camera Scanner</button>
+                  <button class="chip-btn" onclick="toggleChip(this)"><i class="fa-solid fa-globe"></i> Web / WMS Kiosk</button>
+                </div>
+              </div>
+
+              <div class="privilege-row">
+                <div class="priv-label-group">
+                  <span class="priv-title">Hardware Side-Key PTT Mapping</span>
+                  <span class="priv-desc">Configures device physical button behavior (Single / Double / Long)</span>
+                </div>
+                <select class="matrix-dropdown">
+                  <option selected>Single Click: Talk | Hold 3s: Emergency SOS</option>
+                  <option>Single Click: Quick Ack | Double: Next Task</option>
+                  <option>Latch Mode (Press to Start / Press to Stop)</option>
                 </select>
               </div>
             </div>
@@ -1232,7 +1291,7 @@
       if (element) element.classList.add('active');
 
       document.querySelectorAll('.log-item').forEach(item => {
-        if (filterType === 'ALL' || item.getAttribute('data-type') === filterType) {
+        if (filterType === 'ALL' || item.getAttribute('data-type'] === filterType) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';
@@ -1266,9 +1325,16 @@
       }
     }
 
+    function toggleChip(chip) {
+      if (chip) {
+        chip.classList.toggle('selected');
+        playDispatchSound('INFO');
+      }
+    }
+
     function saveMatrixSettings() {
       playDispatchSound('INFO');
-      alert('Hierarchy privilege matrix saved successfully.');
+      alert('Hierarchy privilege matrix and worker profile settings saved successfully.');
     }
 
     function testRuleEngine() {
