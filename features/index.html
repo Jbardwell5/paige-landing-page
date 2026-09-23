@@ -142,6 +142,13 @@
       transform: translateY(-3px);
     }
 
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
     .card-icon {
       width: 52px;
       height: 52px;
@@ -154,6 +161,22 @@
       justify-content: center;
       font-size: 1.4rem;
       margin-bottom: 1.5rem;
+    }
+
+    .card-header .card-icon {
+      margin-bottom: 0;
+    }
+
+    .badge-roadmap {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #ffb703;
+      background: rgba(255, 183, 3, 0.1);
+      border: 1px solid rgba(255, 183, 3, 0.3);
+      padding: 3px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
     .feature-card h3 {
@@ -274,87 +297,96 @@
       <p>Explore how PAiGE bridges communication between manufacturing plant floors, field technicians, and management dispatch.</p>
     </section>
 
-    <section class="capabilities-grid">
-      <!-- Row 1 -->
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-tower-cell"></i></div>
-          <h3>Push-to-Talk &amp; Instant Voice</h3>
-          <p>Instantaneous channel dispatch designed for rugged high-noise environments with direct push-to-talk capability.</p>
-        </div>
-      </div>
+   <section class="capabilities-grid">
+  <!-- Row 1: Core Operations -->
+  <div class="feature-card">
+    <div>
+      <div class="card-icon"><i class="fa-solid fa-tower-cell"></i></div>
+      <h3>Push-to-Talk &amp; Instant Voice</h3>
+      <p>Instantaneous channel dispatch designed for rugged high-noise environments with direct push-to-talk capability.</p>
+    </div>
+  </div>
 
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-language"></i></div>
-          <h3>Talk-to-Translate</h3>
-          <p>Break down multi-lingual shift barriers. Speak in your native tongue while PAiGE transcribes and translates real-time audio streams for receiving crew members.</p>
-        </div>
-      </div>
+  <div class="feature-card">
+    <div>
+      <div class="card-icon"><i class="fa-solid fa-sliders"></i></div>
+      <h3>Command Center Control</h3>
+      <p>Real-time fleet status, personnel routing, and channel assignment controlled from a single centralized web console.</p>
+    </div>
+  </div>
 
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-sliders"></i></div>
-          <h3>Command Center Control</h3>
-          <p>Real-time fleet status, personnel routing, and channel assignment controlled from a single centralized web console.</p>
-        </div>
-      </div>
+  <div class="feature-card">
+    <div>
+      <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
+      <h3>Visual LED Status Tracking</h3>
+      <p>Instant visual cue indicators for machine states, line stoppages, and supervisor assistance requests.</p>
+    </div>
+    <div class="led-indicators">
+      <div class="led-item"><span class="dot dot-green"></span> Operational</div>
+      <div class="led-item"><span class="dot dot-amber"></span> Maintenance</div>
+      <div class="led-item"><span class="dot dot-red"></span> Stoppage</div>
+    </div>
+  </div>
 
-      <!-- Row 2 -->
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-          <h3>ISA-18.2 Aligned Alerting &amp; Visual Safety</h3>
-          <p>Engineered around ISA-18.2 alarm management principles to eliminate notification noise. Integrated with ANSI Z535 visual safety color tiers (Info, Task, Critical).</p>
-        </div>
-      </div>
+  <!-- Row 2: Infrastructure & Standards -->
+  <div class="feature-card">
+    <div>
+      <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <h3>ISA-18.2 Aligned Alerting &amp; Visual Safety</h3>
+      <p>Engineered around ISA-18.2 alarm management principles to eliminate notification noise. Integrated with ANSI Z535 visual safety color tiers (Info, Task, Critical).</p>
+    </div>
+  </div>
 
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-person-falling-burst"></i></div>
-          <h3>Man-Down &amp; Motion Telemetry</h3>
-          <p>Sensor-driven worker safety monitoring. Prolonged inactivity, freefall, or sudden impact automatically triggers priority alerts with location data to safety leads.</p>
-        </div>
-      </div>
+  <div class="feature-card">
+    <div>
+      <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <h3>Rugged Device Fleet Management</h3>
+      <p>Purpose-built Android hardware provisioned, locked down, and managed remotely over cellular or plant Wi-Fi networks.</p>
+    </div>
+  </div>
 
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-bell"></i></div>
-          <h3>Admin Panic Escalation</h3>
-          <p>One-touch emergency override. Instantly cuts through routine channel traffic to broadcast site-wide emergency audio and coordinates directly to all system admins.</p>
-        </div>
-      </div>
+  <div class="feature-card">
+    <div>
+      <div class="card-icon"><i class="fa-solid fa-signal"></i></div>
+      <h3>Cellular &amp; LTE Carrier Independence</h3>
+      <p>Eliminate Wi-Fi dead zones and IT bottlenecks. Devices operate seamlessly across nationwide LTE networks and multi-building industrial campuses without requiring access to local plant Wi-Fi.</p>
+    </div>
+  </div>
 
-      <!-- Row 3 -->
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
-          <h3>Visual LED Status Tracking</h3>
-          <p>Instant visual cue indicators for machine states, line stoppages, and supervisor assistance requests.</p>
-        </div>
-        <div class="led-indicators">
-          <div class="led-item"><span class="dot dot-green"></span> Operational</div>
-          <div class="led-item"><span class="dot dot-amber"></span> Maintenance</div>
-          <div class="led-item"><span class="dot dot-red"></span> Stoppage</div>
-        </div>
+  <!-- Row 3: Platform Roadmap -->
+  <div class="feature-card">
+    <div>
+      <div class="card-header">
+        <div class="card-icon"><i class="fa-solid fa-language"></i></div>
+        <span class="badge-roadmap">Roadmap</span>
       </div>
+      <h3>Talk-to-Translate</h3>
+      <p>Break down multi-lingual shift barriers. Speak in your native tongue while PAiGE transcribes and translates real-time audio streams for receiving crew members.</p>
+    </div>
+  </div>
 
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
-          <h3>Rugged Device Fleet Management</h3>
-          <p>Purpose-built Android hardware provisioned, locked down, and managed remotely over cellular or plant Wi-Fi networks.</p>
-        </div>
+  <div class="feature-card">
+    <div>
+      <div class="card-header">
+        <div class="card-icon"><i class="fa-solid fa-person-falling-burst"></i></div>
+        <span class="badge-roadmap">Roadmap</span>
       </div>
+      <h3>Man-Down &amp; Motion Telemetry</h3>
+      <p>Sensor-driven worker safety monitoring. Prolonged inactivity, freefall, or sudden impact automatically triggers priority alerts with location data to safety leads.</p>
+    </div>
+  </div>
 
-      <div class="feature-card">
-        <div>
-          <div class="card-icon"><i class="fa-solid fa-signal"></i></div>
-          <h3>Cellular &amp; LTE Carrier Independence</h3>
-          <p>Eliminate Wi-Fi dead zones and IT bottlenecks. Devices operate seamlessly across nationwide LTE networks and multi-building industrial campuses without requiring access to local plant Wi-Fi.</p>
-        </div>
+  <div class="feature-card">
+    <div>
+      <div class="card-header">
+        <div class="card-icon"><i class="fa-solid fa-bell"></i></div>
+        <span class="badge-roadmap">Roadmap</span>
       </div>
-    </section>
+      <h3>Admin Panic Escalation</h3>
+      <p>One-touch emergency override. Instantly cuts through routine channel traffic to broadcast site-wide emergency audio and coordinates directly to all system admins.</p>
+    </div>
+  </div>
+</section>
 
     <section class="interactive-preview">
       <h2>Command Center Interface</h2>
