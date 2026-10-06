@@ -735,24 +735,24 @@
       // Step 1: Initial approach down HWY 29 corridor (starts after 3 seconds)
       setTimeout(() => {
         if (truck) {
-          truck.style.top = '25%';
-          truck.style.left = '23%';
+          truck.style.top = '18%';
+          truck.style.left = '22%';
         }
       }, 3000);
 
       // Step 2: Approaching the 5-mile geofence boundary (at 7 seconds)
       setTimeout(() => {
         if (truck) {
-          truck.style.top = '32%';
-          truck.style.left = '32%';
+          truck.style.top = '24%';
+          truck.style.left = '30%';
         }
       }, 7000);
 
       // Step 3: Final approach & Geofence trigger event (at 12 seconds)
       setTimeout(() => {
         if (truck) {
-          truck.style.top = '40%';
-          truck.style.left = '42%';
+          truck.style.top = '32%';
+          truck.style.left = '38%';
         }
 
         const feed = document.getElementById('auditFeed');
