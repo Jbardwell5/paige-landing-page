@@ -45,7 +45,7 @@
     .canvas-layer { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
 
     /* Beacons & Pins */
-    .map-beacon { position: absolute; transform: translate(-50%, -50%); cursor: pointer; display: flex; align-items: center; gap: 0.3rem; }
+    .map-beacon { position: absolute; transform: translate(-50%, -50%); cursor: pointer; display: flex; align-items: center; gap: 0.3rem; transition: all 4s ease-in-out; }
     .beacon-dot { width: 12px; height: 12px; background: #80E600; border-radius: 50%; box-shadow: 0 0 10px #80E600; position: relative; z-index: 2; }
     .beacon-dot.alert-amber { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
     .beacon-pulse-ring { position: absolute; width: 28px; height: 28px; border: 2px solid #f59e0b; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pulseRing 1.5s infinite; z-index: 1; }
@@ -732,38 +732,48 @@
     function simulateGeofenceEvent() {
       const truck = document.getElementById('truck12Beacon');
       
+      // Step 1: Initial approach down HWY 29 corridor (starts after 3 seconds)
+      setTimeout(() => {
+        if (truck) {
+          truck.style.top = '25%';
+          truck.style.left = '23%';
+        }
+      }, 3000);
+
+      // Step 2: Approaching the 5-mile geofence boundary (at 7 seconds)
       setTimeout(() => {
         if (truck) {
           truck.style.top = '32%';
           truck.style.left = '32%';
         }
+      }, 7000);
 
-        setTimeout(() => {
-          if (truck) {
-            truck.style.top = '40%';
-            truck.style.left = '42%';
-          }
+      // Step 3: Final approach & Geofence trigger event (at 12 seconds)
+      setTimeout(() => {
+        if (truck) {
+          truck.style.top = '40%';
+          truck.style.left = '42%';
+        }
 
-          const feed = document.getElementById('auditFeed');
-          if (feed) {
-            const autoLog = document.createElement('div');
-            autoLog.className = 'log-item task';
-            autoLog.setAttribute('data-type', 'TASK');
-            autoLog.innerHTML = `
-              <div class="log-header"><span>To: DOCK OPERATOR (BAY 4)</span><span>AUTOMATED</span></div>
-              <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter on HWY 29. Prep Dock 4.</div>
-              <div class="log-status">✓ AUTO-DISPATCH SENT</div>
-            `;
-            feed.insertBefore(autoLog, feed.firstChild);
-            logCounter++;
-            const feedCount = document.getElementById('feedCount');
-            if (feedCount) feedCount.innerText = `${logCounter} LOGS`;
-            playDispatchSound('TASK');
+        const feed = document.getElementById('auditFeed');
+        if (feed) {
+          const autoLog = document.createElement('div');
+          autoLog.className = 'log-item task';
+          autoLog.setAttribute('data-type', 'TASK');
+          autoLog.innerHTML = `
+            <div class="log-header"><span>To: DOCK OPERATOR (BAY 4)</span><span>AUTOMATED</span></div>
+            <div class="log-text">⚡ GEOFENCE ALERT: Truck #12 crossed 5-mi perimeter on HWY 29. Prep Dock 4.</div>
+            <div class="log-status">✓ AUTO-DISPATCH SENT</div>
+          `;
+          feed.insertBefore(autoLog, feed.firstChild);
+          logCounter++;
+          const feedCount = document.getElementById('feedCount');
+          if (feedCount) feedCount.innerText = `${logCounter} LOGS`;
+          playDispatchSound('TASK');
 
-            triggerBeaconFlash('TRUCK #12 - INBOUND', 'TASK');
-          }
-        }, 5000);
-      }, 1500);
+          triggerBeaconFlash('TRUCK #12 - INBOUND', 'TASK');
+        }
+      }, 12000);
     }
 
     function selectDevice(targetName) {
