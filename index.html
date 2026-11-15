@@ -51,12 +51,13 @@
       flex: 1;
     }
 
-    .logo-img {
-      height: 48px;
-      width: auto;
-      display: block;
-      object-fit: contain;
-    }
+  .logo-img {
+  height: 64px; /* Compensates for the extra empty space in the SVG canvas */
+  width: auto;
+  display: block;
+  object-fit: contain;
+  transform: translateY(-2px); /* Fine-tune between -2px and +3px to align letter baselines with nav text */
+}
 
     /* Centered Software, Features, Hardware, and Contact Links */
     .header-main-nav {
